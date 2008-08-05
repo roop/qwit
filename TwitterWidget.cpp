@@ -1,6 +1,8 @@
 #ifndef TwitterWidget_cpp
 #define TwitterWidget_cpp
 
+#include <QScrollBar>
+
 #include "TwitterWidget.h"
 
 #include <iostream>
@@ -69,6 +71,8 @@ void TwitterWidget::updateItems() {
 		TwitterWidgetItem &item = items[i];
 		int statusItemHeight = fontMetrics.boundingRect(0, 0, statusItemWidth, 1000, Qt::AlignTop | Qt::TextWordWrap, item.status->toPlainText()).height() + 5;
 		item.status->move(ICON_SIZE + 2 * MARGIN, height + MARGIN);
+		item.status->resize(statusItemWidth, statusItemHeight);
+		statusItemHeight += item.status->verticalScrollBar()->maximum() - item.status->verticalScrollBar()->minimum();
 		item.status->resize(statusItemWidth, statusItemHeight);
 		item.icon->move(MARGIN, height + MARGIN);
 		

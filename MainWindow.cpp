@@ -116,6 +116,8 @@ void MainWindow::sendStatus() {
 	}
 	twitter.sendStatus(username, password, status);
 	statusTextEdit->setText("");
+	charsLeftLabel->setText(QString::number(statusTextEdit->getMaxStatusCharacter()));
+	charsLeftLabel->setForegroundRole(QPalette::Light);
 	twitterWidget->setFocus(Qt::OtherFocusReason);
 }
 	
@@ -192,6 +194,7 @@ void MainWindow::resetSettings() {
 	
 QString MainWindow::formatDateTime(const QDateTime &time) {
 	int seconds = time.secsTo(QDateTime::currentDateTime());
+	if (seconds < 15) return "Just now";
 	if (seconds < 45) return "about " + QString::number(seconds) + " second" + (seconds == 1 ? "" : "s") + " ago";
 	int minutes = seconds / 60 + (seconds % 60 >= 30);
 	if (minutes < 30) return "about " + QString::number(minutes) + " minute" + (minutes == 1 ? "" : "s") + " ago";
