@@ -8,9 +8,9 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += MainWindow.h UserpicsDownloader.h StatusLineEdit.h TwitterWidget.h Twitter.h
-FORMS += mainwindow.ui
-SOURCES += qwit.cpp MainWindow.cpp UserpicsDownloader.cpp StatusLineEdit.cpp TwitterWidget.cpp Twitter.cpp
+HEADERS += MainWindow.h UserpicsDownloader.h StatusTextEdit.h TwitterWidget.h Twitter.h OptionsDialog.h
+FORMS += MainWindow.ui OptionsDialog.ui
+SOURCES += qwit.cpp MainWindow.cpp UserpicsDownloader.cpp StatusTextEdit.cpp TwitterWidget.cpp Twitter.cpp OptionsDialog.cpp
 QT += network
 QT += xml
 RESOURCES = qwit.qrc

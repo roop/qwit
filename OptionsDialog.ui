@@ -1,0 +1,209 @@
+<ui version="4.0" >
+ <class>OptionsDialog</class>
+ <widget class="QDialog" name="OptionsDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>257</width>
+    <height>489</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Options</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <layout class="QVBoxLayout" >
+     <item>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>Email:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>usernameLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="usernameLineEdit" />
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2" >
+       <property name="text" >
+        <string>Password:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>passwordLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="passwordLineEdit" >
+       <property name="echoMode" >
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="savePasswordCheckBox" >
+       <property name="text" >
+        <string>save password</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3" >
+       <property name="text" >
+        <string>Update interval:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>intervalLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="intervalLineEdit" />
+     </item>
+     <item>
+      <widget class="QCheckBox" name="useProxyCheckBox" >
+       <property name="text" >
+        <string>use proxy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8" >
+       <property name="text" >
+        <string>Proxy address:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>proxyAddressLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="proxyAddressLineEdit" />
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9" >
+       <property name="text" >
+        <string>Proxy port:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>proxyPortLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="proxyPortLineEdit" />
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6" >
+       <property name="text" >
+        <string>Proxy username:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>proxyUsernameLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="proxyUsernameLineEdit" />
+     </item>
+     <item>
+      <widget class="QLabel" name="label_7" >
+       <property name="text" >
+        <string>Proxy password:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>proxyPasswordLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="proxyPasswordLineEdit" >
+       <property name="echoMode" >
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="proxySavePasswordCheckBox" >
+       <property name="text" >
+        <string>save proxy password</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QHBoxLayout" >
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" >
+           <item>
+            <widget class="QPushButton" name="savePushButton" >
+             <property name="text" >
+              <string>Save options</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="resetPushButton" >
+             <property name="text" >
+              <string>Reset options</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

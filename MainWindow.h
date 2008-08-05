@@ -25,11 +25,12 @@
 #include <QDir>
 
 #include "UserpicsDownloader.h"
-#include "StatusLineEdit.h"
+#include "StatusTextEdit.h"
 #include "TwitterWidget.h"
 #include "Twitter.h"
+#include "OptionsDialog.h"
 
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
 
 class MainWindow: public QDialog, public Ui::MainWindow {
 	Q_OBJECT
@@ -53,8 +54,9 @@ public:
 	TwitterWidget *twitterWidget;
 	QScrollArea *scrollArea;
 	UserpicsDownloader userpicsDownloader;
-	StatusLineEdit *statusLineEdit;
+	StatusTextEdit *statusTextEdit;
 	Twitter twitter;
+	OptionsDialog *optionsDialog;
 	
 	MainWindow(QWidget *parent = 0);
 	void setupTrayIcon();
@@ -71,6 +73,7 @@ public slots:
 	void homeUpdated(const QByteArray &buffer);
 	void statusUpdated();
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
+	void leftCharsNumberChanged(int length);
 	void quit();
 
 protected:

@@ -5,8 +5,6 @@
 
 #include "MainWindow.h"
 
-#include "ui_mainwindow.h"
-
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
@@ -20,28 +18,39 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	
-	vboxLayout->insertWidget(0, scrollArea);
+	vboxLayout->insertWidget(1, scrollArea);
 	
-	statusLineEdit = new StatusLineEdit(this);
-	statusLineEdit->setObjectName(QString::fromUtf8("statusLineEdit"));
+	statusTextEdit = new StatusTextEdit(this);
+	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
+	statusTextEdit->setFixedHeight(40);
+	QFont font = statusTextEdit->document()->defaultFont();
+	font.setFamily("Verdana");
+	statusTextEdit->document()->setDefaultFont(font);
 	
-	vboxLayout->insertWidget(0, statusLineEdit);
+	charsLeftLabel->setText(QString::number(statusTextEdit->getMaxStatusCharacter()));
+	charsLeftLabel->setForegroundRole(QPalette::Light);
+
+	vboxLayout->insertWidget(1, statusTextEdit);
+	
+	optionsDialog = new OptionsDialog(this);
+	optionsDialog->setModal(true);
 	
 	lastId = 0;
 	acceptClose = false;
 	
-	connect(statusLineEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
-	connect(savePushButton, SIGNAL(pressed()), this, SLOT(saveSettings()));
-	connect(resetPushButton, SIGNAL(pressed()), this, SLOT(resetSettings()));
+	connect(statusTextEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
+	connect(optionsDialog->savePushButton, SIGNAL(pressed()), this, SLOT(saveSettings()));
+	connect(optionsDialog->resetPushButton, SIGNAL(pressed()), this, SLOT(resetSettings()));
 	
 	connect(refreshPushButton, SIGNAL(pressed()), this, SLOT(updateHome()));
+	connect(optionsPushButton, SIGNAL(pressed()), optionsDialog, SLOT(showNormal()));
 	
 	connect(&twitter, SIGNAL(homeUpdated(const QByteArray&)), this, SLOT(homeUpdated(const QByteArray&)));
 	connect(&twitter, SIGNAL(statusUpdated()), this, SLOT(statusUpdated()));
 	
-	setupTrayIcon();
+	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
 	
-	statusLineEdit->setText("What are you doing?");
+	setupTrayIcon();
 }
 
 void MainWindow::setupTrayIcon() {
@@ -78,16 +87,16 @@ void MainWindow::loadSettings() {
 	proxyPassword = settings.value("proxyPassword", "").toString();
 	settings.endGroup();
 	
-	usernameLineEdit->setText(username);
-	passwordLineEdit->setText(password);
-	savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
-	intervalLineEdit->setText(QString::number(interval));
-	useProxyCheckBox->setCheckState(useProxy ? Qt::Checked : Qt::Unchecked);
-	proxyAddressLineEdit->setText(proxyAddress);
-	proxyPortLineEdit->setText(QString::number(proxyPort));
-	proxyUsernameLineEdit->setText(proxyUsername);
-	proxyPasswordLineEdit->setText(proxyPassword);
-	proxySavePasswordCheckBox->setCheckState(proxySavePassword ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->usernameLineEdit->setText(username);
+	optionsDialog->passwordLineEdit->setText(password);
+	optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->intervalLineEdit->setText(QString::number(interval));
+	optionsDialog->useProxyCheckBox->setCheckState(useProxy ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->proxyAddressLineEdit->setText(proxyAddress);
+	optionsDialog->proxyPortLineEdit->setText(QString::number(proxyPort));
+	optionsDialog->proxyUsernameLineEdit->setText(proxyUsername);
+	optionsDialog->proxyPasswordLineEdit->setText(proxyPassword);
+	optionsDialog->proxySavePasswordCheckBox->setCheckState(proxySavePassword ? Qt::Checked : Qt::Unchecked);
 	
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -96,13 +105,17 @@ void MainWindow::loadSettings() {
 	}
 	
 	if ((username == "") || (password == "")) {
-		statusLineEdit->setDisabled(true);
+		statusTextEdit->setDisabled(true);
 	}
 }
 	
 void MainWindow::sendStatus() {
-	twitter.sendStatus(username, password, statusLineEdit->text());
-	statusLineEdit->setText(WHAT_ARE_YOU_DOING);
+	QString status = statusTextEdit->toPlainText().simplified();
+	if (status == "") {
+		return;
+	}
+	twitter.sendStatus(username, password, status);
+	statusTextEdit->setText("");
 	twitterWidget->setFocus(Qt::OtherFocusReason);
 }
 	
@@ -114,19 +127,21 @@ void MainWindow::updateHome() {
 }
 	
 void MainWindow::saveSettings() {
+	optionsDialog->hide();
+	
 	QSettings settings("arti", "qwit");
 	
-	username = usernameLineEdit->text();
-	password = passwordLineEdit->text();
-	bool savePassword = savePasswordCheckBox->checkState() == Qt::Checked;
-	interval = intervalLineEdit->text().toInt();
+	username = optionsDialog->usernameLineEdit->text();
+	password = optionsDialog->passwordLineEdit->text();
+	bool savePassword = optionsDialog->savePasswordCheckBox->checkState() == Qt::Checked;
+	interval = optionsDialog->intervalLineEdit->text().toInt();
 	
-	useProxy = useProxyCheckBox->checkState() == Qt::Checked;
-	proxyAddress = proxyAddressLineEdit->text();
-	proxyPort = proxyPortLineEdit->text().toInt();
-	proxyUsername = proxyUsernameLineEdit->text();
-	proxyPassword = proxyPasswordLineEdit->text();
-	bool proxySavePassword = proxySavePasswordCheckBox->checkState() == Qt::Checked;
+	useProxy = optionsDialog->useProxyCheckBox->checkState() == Qt::Checked;
+	proxyAddress = optionsDialog->proxyAddressLineEdit->text();
+	proxyPort = optionsDialog->proxyPortLineEdit->text().toInt();
+	proxyUsername = optionsDialog->proxyUsernameLineEdit->text();
+	proxyPassword = optionsDialog->proxyPasswordLineEdit->text();
+	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
 	
 	settings.beginGroup("MainWindow");
 	settings.setValue("size", size());
@@ -162,19 +177,17 @@ void MainWindow::saveSettings() {
 	}
 	
 	if ((username == "") || (password == "")) {
-		statusLineEdit->setDisabled(true);
-		statusLineEdit->setDisabled(true);
+		statusTextEdit->setDisabled(true);
 	} else {
-		statusLineEdit->setDisabled(false);
-		statusLineEdit->setDisabled(false);
+		statusTextEdit->setDisabled(false);
 	}
 	updateHome();
 }
 	
 void MainWindow::resetSettings() {
-	usernameLineEdit->setText(username);
-	passwordLineEdit->setText(password);
-	intervalLineEdit->setText(QString::number(interval));
+	optionsDialog->usernameLineEdit->setText(username);
+	optionsDialog->passwordLineEdit->setText(password);
+	optionsDialog->intervalLineEdit->setText(QString::number(interval));
 }
 	
 QString MainWindow::formatDateTime(const QDateTime &time) {
@@ -331,6 +344,12 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 
 void MainWindow::statusUpdated() {
 	updateHome();
+}
+
+void MainWindow::leftCharsNumberChanged(int count) {
+	if (count >= 0) charsLeftLabel->setForegroundRole(QPalette::Light);
+	else charsLeftLabel->setForegroundRole(QPalette::Dark);
+	charsLeftLabel->setText(QString::number(count));
 }
 
 #endif
