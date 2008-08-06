@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images" >
         <file>qwit.png</file>
+        <file>reply.png</file>
     </qresource>
 </RCC>

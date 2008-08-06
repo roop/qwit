@@ -48,15 +48,20 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	connect(&twitter, SIGNAL(homeUpdated(const QByteArray&)), this, SLOT(homeUpdated(const QByteArray&)));
 	connect(&twitter, SIGNAL(statusUpdated()), this, SLOT(statusUpdated()));
 	
+	connect(twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
+	
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
 	
 	setupTrayIcon();
 }
 
 void MainWindow::setupTrayIcon() {
+	showhideAction = new QAction(tr("&Show / Hide"), this);
+	connect(showhideAction, SIGNAL(triggered()), this, SLOT(showhide()));
 	quitAction = new QAction(tr("&Quit"), this);
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
 	trayIconMenu = new QMenu(this);
+	trayIconMenu->addAction(showhideAction);
 	trayIconMenu->addAction(quitAction);
 	trayIcon = new QSystemTrayIcon(this);
 	trayIcon->setContextMenu(trayIconMenu);
@@ -100,8 +105,10 @@ void MainWindow::loadSettings() {
 	
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
+		userpicsDownloader.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
 		twitter.dontUseProxy();
+		userpicsDownloader.dontUseProxy();
 	}
 	
 	if ((username == "") || (password == "")) {
@@ -125,7 +132,7 @@ void MainWindow::updateHome() {
 	if (password == "") {
 		return;
 	}
-	twitter.updateHome(username, password);
+	twitter.updateHome(username, password, lastId);
 }
 	
 void MainWindow::saveSettings() {
@@ -174,8 +181,10 @@ void MainWindow::saveSettings() {
 	
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
+		userpicsDownloader.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
 		twitter.dontUseProxy();
+		userpicsDownloader.dontUseProxy();
 	}
 	
 	if ((username == "") || (password == "")) {
@@ -206,11 +215,7 @@ QString MainWindow::formatDateTime(const QDateTime &time) {
 	
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) {
 	if (reason == QSystemTrayIcon::Trigger) {
-		if (this->isVisible()) {
-			this->hide();
-		} else {
-			this->show();
-		}
+		showhide();
 	}
 }
 	
@@ -259,6 +264,9 @@ void MainWindow::showEvent(QShowEvent *event) {
 	resize(settings.value("size", QSize(200, 600)).toSize());
 	move(settings.value("pos", QPoint(200, 200)).toPoint());
 	settings.endGroup();
+	
+	statusTextEdit->setFocus(Qt::OtherFocusReason);
+	
 	event->accept();
 }
 	
@@ -268,7 +276,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void MainWindow::homeUpdated(const QByteArray &buffer) {
-	twitterWidget->clear();
+//	twitterWidget->clear();
 	
 	QDomDocument document;
 	
@@ -280,10 +288,11 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 	QString html = "";
 	QString trayMessage = "";
 	int maxId = lastId;
+	int j = 0;
 	while (!node.isNull()) {
 		QDomNode node2 = node.firstChild();
-		QString message, timeStr, user, image;
-		int id = 0;
+		QString message = "", timeStr = "", user = "", image = "";
+		int id = 0, replyUserID = 0, replyStatusId = 0;
 		while (!node2.isNull()) {
 			if (node2.toElement().tagName() == "created_at") {
 				timeStr = node2.toElement().text();
@@ -291,6 +300,10 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 				message = node2.toElement().text();
 			} else if (node2.toElement().tagName() == "id") {
 				id = node2.toElement().text().toInt();
+			} else if (node2.toElement().tagName() == "in_reply_to_status_id") {
+				replyStatusId = node2.toElement().text().toInt();
+			} else if (node2.toElement().tagName() == "in_reply_to_user_id") {
+				replyUserID = node2.toElement().text().toInt();
 			} else if (node2.toElement().tagName() == "user") {
 				QDomNode node3 = node2.firstChild();
 				while (!node3.isNull()) {
@@ -336,7 +349,7 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 		imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 		userpicsDownloader.download(image, imageFileName);
 		
-		twitterWidget->addItem(imageFileName, user, message, formatDateTime(time.toLocalTime()), id);
+		twitterWidget->addItem(imageFileName, user, message.simplified(), formatDateTime(time.toLocalTime()), id, replyStatusId, j++);
 		node = node.nextSibling();
 	}
 	lastId = maxId;
@@ -355,18 +368,12 @@ void MainWindow::leftCharsNumberChanged(int count) {
 	charsLeftLabel->setText(QString::number(count));
 }
 
-#endif
+void MainWindow::showhide() {
+	if (isVisible()) {
+		hide();
+	} else {
+		show();
+	}
+}
 
-/*
-#ifdef Q_WS_WIN
-    QSettings settings;
-    settings.setPath("Microsoft", "Windows", QSettings::User);
-    if (appTickerConfig->getstartTicker()) {
-        // Want to start on boot up
-        settings.writeEntry("/CurrentVersion/Run/ticker.exe", this->argv0);
-    } else {
-        // Do not want to start on boot up
-        settings.removeEntry("/CurrentVersion/Run/ticker.exe");
-    }
 #endif
-*/

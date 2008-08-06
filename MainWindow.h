@@ -42,6 +42,7 @@ public:
 	QString password;
 	int interval;
 	QAction *quitAction;
+	QAction *showhideAction;
 	QMenu *trayIconMenu;
 	QSystemTrayIcon *trayIcon;
 	int lastId;
@@ -74,6 +75,7 @@ public slots:
 	void statusUpdated();
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 	void leftCharsNumberChanged(int length);
+	void showhide();
 	void quit();
 
 protected:

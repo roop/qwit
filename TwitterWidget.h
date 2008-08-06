@@ -24,17 +24,26 @@ private:
 
 	QVector<TwitterWidgetItem> items;
 	
-	QString convertUrlsToLinks(const QString &text);
+	QString prepare(const QString &text, const int &replyStatusId);
 	
 public:
 
+	TwitterWidget();
 	void clear();
-	void addItem(const QString &userpic, const QString &username, const QString &status, const QString &time, const int &messageId);
+	void addItem(const QString &userpic, const QString &username, const QString &status, const QString &time, int messageId, int replyStatusId, int i = -1);
 	void updateItems();
 	
 protected:
 
 	void resizeEvent(QResizeEvent *event);
+	
+public slots:
+
+	void replyClicked(const QUrl &url);
+	
+signals:
+	
+	void reply(const QString &);
 };
 
 #endif

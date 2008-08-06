@@ -24,7 +24,7 @@ void UserpicsDownloader::startDownload() {
 		http.setProxy("", 0);
 	}
 	http.setHost(url.host(), url.port(80));
-	http.get(url.path(), &file);
+	http.get(QUrl::toPercentEncoding(url.path()), &file);
 }
 	
 void UserpicsDownloader::download(const QString &url, const QString &filename) {

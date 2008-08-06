@@ -51,20 +51,22 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	statusHttp.request(header, data);
 }
 
-void Twitter::updateHome(QString username, QString password) {
+void Twitter::updateHome(QString username, QString password, int lastStatusId) {
 	cout << "Updating" << endl;
 	
 	QUrl url(HOME_XML_URL);
+	
 	if (proxyAddress != "") {
 		homeHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
 		homeHttp.setProxy("", 0);
 	}
+	
 	homeHttp.setHost(url.host(), url.port(80));
 	homeHttp.setUser(username, password);
 	
 	buffer.open(QIODevice::WriteOnly);
-	homeHttp.get(url.path(), &buffer);
+	homeHttp.get(url.path() + (lastStatusId ? "?since_id=" + QString::number(lastStatusId) : ""), &buffer);
 }
 
 void Twitter::statusHttpDone(bool error) {

@@ -24,6 +24,10 @@ signals:
 	
 	void returnPressed();
 	void leftCharsNumberChanged(int);
+	
+public slots:
+	
+	void reply(const QString &username);
 };
 
 #endif

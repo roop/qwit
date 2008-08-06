@@ -2,6 +2,7 @@
 #define TwitterWidget_cpp
 
 #include <QScrollBar>
+#include <QDesktopServices>
 
 #include "TwitterWidget.h"
 
@@ -9,7 +10,11 @@
 
 using namespace std;
 
-QString TwitterWidget::convertUrlsToLinks(const QString &text) {
+TwitterWidget::TwitterWidget(): QWidget() {
+	QDesktopServices::setUrlHandler("reply", this, "replyClicked");
+}
+
+QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
 	QString s = text;
 	s.replace(" www.", " http://www.");
 	if (s.startsWith("www.")) s = "http://" + s;
@@ -20,10 +25,19 @@ QString TwitterWidget::convertUrlsToLinks(const QString &text) {
 		int k = s.indexOf(" ", j);
 		if (k == -1) k = s.length();
 		QString url = s.mid(j, k - j);
-		t += "<a href=\"" + url + "\">" + url + "</a>";
+		t += "<a href=\"" + url + "\" style=\"text-decoration:none\">" + url + "</a>";
 		i = k;
 	}
 	t += s.mid(i);
+	if (replyStatusId && (t[0] == '@')) {
+		s = t;
+		int i = s.indexOf(" ");
+		if (i == -1) {
+			i = s.length();
+		}
+		QString username = s.mid(1, i - 1);
+		t = "@<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none\">" + username + "</a>" + s.mid(i);
+	}
 	return t;
 }
 	
@@ -36,10 +50,10 @@ void TwitterWidget::clear() {
 	items.clear();
 }
 	
-void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QString &time, const int &messageId) {
+void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QString &time, int messageId, int replyStatusId, int i) {
 	TwitterWidgetItem item = TwitterWidgetItem();
 	item.status = new QTextBrowser(this);
-	item.status->setHtml(convertUrlsToLinks(status));
+	item.status->setHtml(prepare(status, replyStatusId));
 	item.status->setReadOnly(true);
 	item.status->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	item.status->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -52,9 +66,11 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.icon = new QLabel(this);
 	item.icon->setPixmap(QPixmap(userpic));
 	
-	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none;color:#00f\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none;color:#00f\">" + time + "</a>", this);
+	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + time + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
+	item.sign->setAlignment(Qt::AlignRight);
 	item.sign->setOpenExternalLinks(true);
-	items.push_back(item);
+	if (i == -1) i = items.size();
+	items.insert(i, item);
 	
 	item.status->show();
 	item.icon->show();
@@ -90,6 +106,10 @@ void TwitterWidget::resizeEvent(QResizeEvent *event) {
 	}
 	updateItems();
 	event->accept();
+}
+
+void TwitterWidget::replyClicked(const QUrl &url) {
+	emit reply(url.host());
 }
 
 #endif

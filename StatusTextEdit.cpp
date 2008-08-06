@@ -39,4 +39,18 @@ void StatusTextEdit::keyPressEvent(QKeyEvent *e) {
 	if (a != b) emit leftCharsNumberChanged(MAX_STATUS_CHARACTERS - b);
 }
 
+void StatusTextEdit::reply(const QString &username) {
+	QString text = toPlainText().simplified();
+	if (text[0] == '@') {
+		int i = text.indexOf(" ");
+		if (i == -1) {
+			i = text.length();
+		}
+		text = text.mid(i + 1).simplified();
+	}
+	setText("@" + username + " " + text);
+	setFocus(Qt::OtherFocusReason);
+	moveCursor(QTextCursor::NextWord);
+}
+
 #endif
