@@ -1,8 +1,6 @@
 #ifndef MainWindow_cpp
 #define MainWindow_cpp
 
-#include <iostream>
-
 #include "MainWindow.h"
 
 using namespace std;
@@ -22,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
-	statusTextEdit->setFixedHeight(40);
 	QFont font = statusTextEdit->document()->defaultFont();
 	font.setFamily("Verdana");
 	statusTextEdit->document()->setDefaultFont(font);
@@ -51,6 +48,10 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	connect(twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
 	
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
+	
+	connect(&twitter, SIGNAL(stateChanged(const QString&)), this, SLOT(updateState(const QString&)));
+	connect(&userpicsDownloader, SIGNAL(stateChanged(const QString&)), this, SLOT(updateState(const QString&)));
+	connect(&userpicsDownloader, SIGNAL(userpicDownloaded(const QString&)), twitterWidget, SLOT(reloadUserpic(const QString&)));
 	
 	setupTrayIcon();
 }
@@ -276,8 +277,6 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void MainWindow::homeUpdated(const QByteArray &buffer) {
-//	twitterWidget->clear();
-	
 	QDomDocument document;
 	
 	document.setContent(buffer);
@@ -373,7 +372,13 @@ void MainWindow::showhide() {
 		hide();
 	} else {
 		show();
+		twitterWidget->updateItems();
 	}
+}
+
+void MainWindow::updateState(const QString &state) {
+	stateLabel->setText(state);
+	stateLabel->setToolTip(state);
 }
 
 #endif

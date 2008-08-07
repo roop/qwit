@@ -41,8 +41,9 @@ public slots:
 
 signals:
 	
-	void homeUpdated(const QByteArray &buffer);
+	void homeUpdated(const QByteArray &);
 	void statusUpdated();
+	void stateChanged(const QString &);
 };
 
 #endif

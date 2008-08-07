@@ -16,6 +16,18 @@
    <iconset resource="qwit.qrc" >:/images/qwit.png</iconset>
   </property>
   <layout class="QGridLayout" >
+   <property name="leftMargin" >
+    <number>9</number>
+   </property>
+   <property name="topMargin" >
+    <number>9</number>
+   </property>
+   <property name="rightMargin" >
+    <number>9</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>5</number>
+   </property>
    <item row="0" column="0" >
     <layout class="QVBoxLayout" >
      <item>
@@ -246,6 +258,9 @@
          <property name="text" >
           <string>Options</string>
          </property>
+         <property name="autoDefault" >
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -262,6 +277,28 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="stateLabel" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Preferred" hsizetype="Ignored" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape" >
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow" >
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="text" >
+        <string>TextLabel</string>
+       </property>
+       <property name="indent" >
+        <number>-1</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

@@ -10,7 +10,7 @@
 #include <QUrl>
 #include <QFileInfo>
 
-class UserpicsDownloader: QObject {
+class UserpicsDownloader: public QObject {
 	Q_OBJECT
 	
 	QQueue<QPair<QString, QString> > queue;
@@ -32,6 +32,11 @@ public:
 public slots:
 
 	void httpDone(bool error);
+	
+signals:
+	
+	void stateChanged(const QString &);
+	void userpicDownloaded(const QString &);
 };
 
 #endif

@@ -4,10 +4,9 @@
 #include <QUrl>
 #include <QHttpRequestHeader>
 #include <QByteArray>
+#include <QDateTime>
 
 #include "Twitter.h"
-
-#include <iostream>
 
 using namespace std;
 
@@ -29,8 +28,6 @@ void Twitter::dontUseProxy() {
 }
 
 void Twitter::sendStatus(QString username, QString password, QString status) {
-	cout << "Sending status: " << qPrintable(status) << endl;
-	
 	QUrl url(STATUS_UPDATE_URL);
 
 	QHttpRequestHeader header;
@@ -49,11 +46,11 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(status);
 	statusHttp.request(header, data);
+
+	emit stateChanged("Sending status...");
 }
 
 void Twitter::updateHome(QString username, QString password, int lastStatusId) {
-	cout << "Updating" << endl;
-	
 	QUrl url(HOME_XML_URL);
 	
 	if (proxyAddress != "") {
@@ -67,22 +64,26 @@ void Twitter::updateHome(QString username, QString password, int lastStatusId) {
 	
 	buffer.open(QIODevice::WriteOnly);
 	homeHttp.get(url.path() + (lastStatusId ? "?since_id=" + QString::number(lastStatusId) : ""), &buffer);
+	
+	emit stateChanged("Updating friends timeline...");
 }
 
 void Twitter::statusHttpDone(bool error) {
 	if (error) {
-		cerr << "Error occured: " << qPrintable(statusHttp.errorString()) << endl;
+		emit stateChanged("Error sending status: " + statusHttp.errorString());
 		return;
 	}
+	emit stateChanged("Status send at " + QDateTime::currentDateTime().toString("hh:mm:ss"));
 	emit statusUpdated();
 }
 
 void Twitter::homeHttpDone(bool error) {
 	if (error) {
-		cerr << "Error occured: " << qPrintable(homeHttp.errorString()) << endl;
+		emit stateChanged("Error while updating friends timeline: " + homeHttp.errorString());
 		return;
 	}
 	buffer.close();
+	emit stateChanged("Friends timeline updated at " + QDateTime::currentDateTime().toString("hh:mm:ss"));
 	emit homeUpdated(buffer.data());
 }
 

@@ -3,6 +3,7 @@
 
 #include <QScrollBar>
 #include <QDesktopServices>
+#include <QPalette>
 
 #include "TwitterWidget.h"
 
@@ -62,9 +63,15 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	QFont font = item.status->document()->defaultFont();
 	font.setFamily("Verdana");
 	item.status->document()->setDefaultFont(font);
+	if (items.size() & 1) {
+		item.color = QColor(230, 230, 230);
+	} else {
+		item.color = QColor("white");
+	}
 	
 	item.icon = new QLabel(this);
 	item.icon->setPixmap(QPixmap(userpic));
+	item.iconFileName = userpic;
 	
 	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + time + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
 	item.sign->setAlignment(Qt::AlignRight);
@@ -86,6 +93,9 @@ void TwitterWidget::updateItems() {
 		QFontMetrics fontMetrics(items[i].status->font());
 		TwitterWidgetItem &item = items[i];
 		int statusItemHeight = fontMetrics.boundingRect(0, 0, statusItemWidth, 1000, Qt::AlignTop | Qt::TextWordWrap, item.status->toPlainText()).height() + 5;
+		if (statusItemHeight < ICON_SIZE) {
+			statusItemHeight = ICON_SIZE;
+		}
 		item.status->move(ICON_SIZE + 2 * MARGIN, height + MARGIN);
 		item.status->resize(statusItemWidth, statusItemHeight);
 		statusItemHeight += item.status->verticalScrollBar()->maximum() - item.status->verticalScrollBar()->minimum();
@@ -94,7 +104,10 @@ void TwitterWidget::updateItems() {
 		
 		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + 2 * MARGIN);
 		int itemHeight = statusItemHeight + item.sign->height() + MARGIN;
-		height += max(ICON_SIZE, itemHeight) + 2 * MARGIN;
+		itemHeight = max(ICON_SIZE, itemHeight) + 2 * MARGIN;
+		item.top = height;
+		item.height = itemHeight;
+		height += itemHeight;
 	}
 	resize(width(), height);
 }
@@ -110,6 +123,26 @@ void TwitterWidget::resizeEvent(QResizeEvent *event) {
 
 void TwitterWidget::replyClicked(const QUrl &url) {
 	emit reply(url.host());
+}
+
+void TwitterWidget::reloadUserpic(const QString &userpic) {
+	for (int i = 0; i < items.size(); ++i) if (items[i].iconFileName == userpic) {
+		TwitterWidgetItem &item = items[i];
+		item.icon->setPixmap(QPixmap(item.iconFileName));
+		item.icon->resize(ICON_SIZE, ICON_SIZE);
+	}
+}
+
+void TwitterWidget::paintEvent(QPaintEvent *event) {
+	QPainter painter(this);
+	for (int i = 0; i < items.size(); ++i) {
+		TwitterWidgetItem &item = items[i];
+		painter.fillRect(0, items[i].top, width(), items[i].height, QBrush(item.color));
+		QPalette p = palette();
+		p.setColor(QPalette::Active, QPalette::Base, item.color);
+		p.setColor(QPalette::Inactive, QPalette::Base, item.color);
+		item.status->setPalette(p);
+	}
 }
 
 #endif

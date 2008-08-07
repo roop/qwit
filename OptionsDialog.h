@@ -8,9 +8,7 @@ class OptionsDialog: public QDialog, public Ui::OptionsDialog {
 
 public:
 
-	OptionsDialog(QWidget *parent): QDialog(parent) {
-		setupUi(this);
-	}
+	OptionsDialog(QWidget *parent);
 	
 };
 

@@ -12,6 +12,10 @@ public:
 	QTextBrowser *status;
 	QLabel *icon;
 	QLabel *sign;
+	QString iconFileName;
+	int top;
+	int height;
+	QColor color;
 };
 
 const int ICON_SIZE = 48;
@@ -36,10 +40,12 @@ public:
 protected:
 
 	void resizeEvent(QResizeEvent *event);
+	void paintEvent(QPaintEvent *event);
 	
 public slots:
 
 	void replyClicked(const QUrl &url);
+	void reloadUserpic(const QString &userpic);
 	
 signals:
 	

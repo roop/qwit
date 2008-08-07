@@ -24,12 +24,13 @@ void UserpicsDownloader::startDownload() {
 		http.setProxy("", 0);
 	}
 	http.setHost(url.host(), url.port(80));
-	http.get(QUrl::toPercentEncoding(url.path()), &file);
+	http.get(QUrl::toPercentEncoding(url.path(), "/"), &file);
+	emit stateChanged("Downloading " + item.first);
 }
 	
 void UserpicsDownloader::download(const QString &url, const QString &filename) {
 	QFileInfo fi = QFileInfo(filename);
-	if (fi.exists() && (fi.size() > 100)) return;
+	if (fi.exists() && (fi.size() > 0)) return;
 	queue.enqueue(qMakePair(url, filename));
 	if (queue.size() == 1) {
 		startDownload();
@@ -38,10 +39,12 @@ void UserpicsDownloader::download(const QString &url, const QString &filename) {
 
 void UserpicsDownloader::httpDone(bool error) {
 	if (error) {
-		cerr << "Error occurred: " << qPrintable(http.errorString()) << endl;
+		emit stateChanged("Error while downloading userpic: " + http.errorString());
 	}
+	QPair<QString, QString> item = queue.dequeue();
 	file.close();
-	queue.dequeue();
+	emit userpicDownloaded(item.second);
+	emit stateChanged("Downloaded " + item.first);
 	if (queue.size()) {
 		startDownload();
 	}

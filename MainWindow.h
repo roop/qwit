@@ -77,6 +77,7 @@ public slots:
 	void leftCharsNumberChanged(int length);
 	void showhide();
 	void quit();
+	void updateState(const QString &state);
 
 protected:
 	
