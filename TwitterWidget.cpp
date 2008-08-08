@@ -32,10 +32,8 @@ QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
 	t += s.mid(i);
 	if (replyStatusId && (t[0] == '@')) {
 		s = t;
-		int i = s.indexOf(" ");
-		if (i == -1) {
-			i = s.length();
-		}
+		int i = 1;
+		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
 		t = "@<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none\">" + username + "</a>" + s.mid(i);
 	}
@@ -63,11 +61,6 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	QFont font = item.status->document()->defaultFont();
 	font.setFamily("Verdana");
 	item.status->document()->setDefaultFont(font);
-	if (items.size() & 1) {
-		item.color = QColor(230, 230, 230);
-	} else {
-		item.color = QColor("white");
-	}
 	
 	item.icon = new QLabel(this);
 	item.icon->setPixmap(QPixmap(userpic));
@@ -82,6 +75,10 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.status->show();
 	item.icon->show();
 	item.sign->show();
+	
+	while (items.size() > MAX_ITEMS_SIZE) {
+		items.pop_back();
+	}
 	
 	updateItems();
 }
@@ -102,9 +99,16 @@ void TwitterWidget::updateItems() {
 		item.status->resize(statusItemWidth, statusItemHeight);
 		item.icon->move(MARGIN, height + MARGIN);
 		
-		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + 2 * MARGIN);
+		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
+		
+		if (i & 1) {
+			item.color = QColor(230, 230, 230);
+		} else {
+			item.color = QColor("white");
+		}
+		
 		int itemHeight = statusItemHeight + item.sign->height() + MARGIN;
-		itemHeight = max(ICON_SIZE, itemHeight) + 2 * MARGIN;
+		itemHeight = max(ICON_SIZE, item.sign->y() + item.sign->height()) + MARGIN - height;
 		item.top = height;
 		item.height = itemHeight;
 		height += itemHeight;
@@ -143,6 +147,7 @@ void TwitterWidget::paintEvent(QPaintEvent *event) {
 		p.setColor(QPalette::Inactive, QPalette::Base, item.color);
 		item.status->setPalette(p);
 	}
+	event->accept();
 }
 
 #endif

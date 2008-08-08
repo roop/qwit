@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>268</width>
+    <width>293</width>
     <height>535</height>
    </rect>
   </property>
@@ -16,18 +16,6 @@
    <iconset resource="qwit.qrc" >:/images/qwit.png</iconset>
   </property>
   <layout class="QGridLayout" >
-   <property name="leftMargin" >
-    <number>9</number>
-   </property>
-   <property name="topMargin" >
-    <number>9</number>
-   </property>
-   <property name="rightMargin" >
-    <number>9</number>
-   </property>
-   <property name="bottomMargin" >
-    <number>5</number>
-   </property>
    <item row="0" column="0" >
     <layout class="QVBoxLayout" >
      <item>
@@ -229,24 +217,70 @@
       </layout>
      </item>
      <item>
+      <widget class="QTabWidget" name="tabWidget" >
+       <property name="tabPosition" >
+        <enum>QTabWidget::South</enum>
+       </property>
+       <property name="currentIndex" >
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="homeTab" >
+        <attribute name="title" >
+         <string>Home</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="publicTab" >
+        <attribute name="title" >
+         <string>Public</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="repliesTab" >
+        <attribute name="title" >
+         <string>Replies</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" >
+       <property name="spacing" >
+        <number>0</number>
+       </property>
        <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
+        <widget class="QLabel" name="stateLabel" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Ignored" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeHint" >
-          <size>
-           <width>31</width>
-           <height>16</height>
-          </size>
+         <property name="frameShape" >
+          <enum>QFrame::Panel</enum>
          </property>
-        </spacer>
+         <property name="frameShadow" >
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <property name="text" >
+          <string>TextLabel</string>
+         </property>
+         <property name="indent" >
+          <number>-1</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="refreshPushButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
-          <string>Refresh now</string>
+          <string/>
+         </property>
+         <property name="icon" >
+          <iconset resource="qwit.qrc" >:/images/reload.png</iconset>
          </property>
          <property name="autoDefault" >
           <bool>false</bool>
@@ -255,8 +289,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="optionsPushButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
-          <string>Options</string>
+          <string/>
+         </property>
+         <property name="icon" >
+          <iconset resource="qwit.qrc" >:/images/options.png</iconset>
          </property>
          <property name="autoDefault" >
           <bool>false</bool>
@@ -264,41 +307,25 @@
         </widget>
        </item>
        <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
+        <widget class="QPushButton" name="exitPushButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeHint" >
-          <size>
-           <width>31</width>
-           <height>20</height>
-          </size>
+         <property name="text" >
+          <string/>
          </property>
-        </spacer>
+         <property name="icon" >
+          <iconset resource="qwit.qrc" >:/images/exit.png</iconset>
+         </property>
+         <property name="autoDefault" >
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="stateLabel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Ignored" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="frameShape" >
-        <enum>QFrame::Panel</enum>
-       </property>
-       <property name="frameShadow" >
-        <enum>QFrame::Sunken</enum>
-       </property>
-       <property name="text" >
-        <string>TextLabel</string>
-       </property>
-       <property name="indent" >
-        <number>-1</number>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

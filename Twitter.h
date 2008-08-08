@@ -7,6 +7,8 @@
 #include <QBuffer>
 
 #define HOME_XML_URL "http://twitter.com/statuses/friends_timeline.xml"
+#define PUBLIC_XML_URL "http://twitter.com/statuses/public_timeline.xml"
+#define REPLIES_XML_URL "http://twitter.com/statuses/replies.xml"
 
 #define STATUS_UPDATE_URL "http://twitter.com/statuses/update.xml"
 
@@ -24,6 +26,7 @@ class Twitter: public QObject {
 	int proxyPort;
 	QString proxyUsername;
 	QString proxyPassword;
+	int currentType;
 	
 public:
 
@@ -31,7 +34,7 @@ public:
 	void useProxy(const QString &address, int port, const QString &username, const QString &password);
 	void dontUseProxy();
 	void sendStatus(QString username, QString password, QString status);
-	void updateHome(QString username, QString password, int lastStatusId);
+	void update(QString username, QString password, int lastStatusId, int type);
 	void abort();
 
 public slots:
@@ -41,7 +44,7 @@ public slots:
 
 signals:
 	
-	void homeUpdated(const QByteArray &);
+	void updated(const QByteArray &, int);
 	void statusUpdated();
 	void stateChanged(const QString &);
 };

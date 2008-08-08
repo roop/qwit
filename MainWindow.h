@@ -32,6 +32,31 @@
 
 #include "ui_MainWindow.h"
 
+const int TWITTER_TABS = 3;
+const int HOME_TWITTER_TAB = 0;
+const int PUBLIC_TWITTER_TAB = 1;
+const int REPLIES_TWITTER_TAB = 2;
+
+class TwitterTab {
+public:
+	bool clear;
+	TwitterWidget *twitterWidget;
+	int lastId;
+	QScrollArea *scrollArea;
+	int lastUpdateTime;
+	
+	TwitterTab(bool clear, QScrollArea *scrollArea, TwitterWidget *twitterWidget, int lastId) {
+		this->clear = clear;
+		this->scrollArea = scrollArea;
+		this->twitterWidget = twitterWidget;
+		this->lastId = lastId;
+		this->lastUpdateTime = 0;
+	}
+	
+	TwitterTab() {
+	}
+};
+
 class MainWindow: public QDialog, public Ui::MainWindow {
 	Q_OBJECT
 
@@ -45,19 +70,17 @@ public:
 	QAction *showhideAction;
 	QMenu *trayIconMenu;
 	QSystemTrayIcon *trayIcon;
-	int lastId;
 	bool acceptClose;
 	bool useProxy;
 	QString proxyUsername;
 	QString proxyPassword;
 	QString proxyAddress;
 	int proxyPort;
-	TwitterWidget *twitterWidget;
-	QScrollArea *scrollArea;
 	UserpicsDownloader userpicsDownloader;
 	StatusTextEdit *statusTextEdit;
-	Twitter twitter;
 	OptionsDialog *optionsDialog;
+	TwitterTab twitterTabs[TWITTER_TABS];
+	Twitter twitter;
 	
 	MainWindow(QWidget *parent = 0);
 	void setupTrayIcon();
@@ -71,13 +94,14 @@ public slots:
 	void updateHome();
 	void saveSettings();
 	void resetSettings();
-	void homeUpdated(const QByteArray &buffer);
+	void updated(const QByteArray &buffer, int type);
 	void statusUpdated();
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 	void leftCharsNumberChanged(int length);
 	void showhide();
 	void quit();
 	void updateState(const QString &state);
+	void tabChanged(int index);
 
 protected:
 	

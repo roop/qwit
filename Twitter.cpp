@@ -50,8 +50,16 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	emit stateChanged("Sending status...");
 }
 
-void Twitter::updateHome(QString username, QString password, int lastStatusId) {
-	QUrl url(HOME_XML_URL);
+void Twitter::update(QString username, QString password, int lastStatusId, int type) {
+	currentType = type;
+	QString urlString = "";
+	switch (type) {
+		case 0: urlString = HOME_XML_URL; break;
+		case 1: urlString = PUBLIC_XML_URL; break;
+		case 2: urlString = REPLIES_XML_URL; break;
+	};
+	
+	QUrl url(urlString);
 	
 	if (proxyAddress != "") {
 		homeHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -65,7 +73,7 @@ void Twitter::updateHome(QString username, QString password, int lastStatusId) {
 	buffer.open(QIODevice::WriteOnly);
 	homeHttp.get(url.path() + (lastStatusId ? "?since_id=" + QString::number(lastStatusId) : ""), &buffer);
 	
-	emit stateChanged("Updating friends timeline...");
+	emit stateChanged("Updating timeline...");
 }
 
 void Twitter::statusHttpDone(bool error) {
@@ -79,12 +87,12 @@ void Twitter::statusHttpDone(bool error) {
 
 void Twitter::homeHttpDone(bool error) {
 	if (error) {
-		emit stateChanged("Error while updating friends timeline: " + homeHttp.errorString());
+		emit stateChanged("Error while updating timeline: " + homeHttp.errorString());
 		return;
 	}
 	buffer.close();
-	emit stateChanged("Friends timeline updated at " + QDateTime::currentDateTime().toString("hh:mm:ss"));
-	emit homeUpdated(buffer.data());
+	emit stateChanged("Timeline updated at " + QDateTime::currentDateTime().toString("hh:mm:ss"));
+	emit updated(buffer.data(), currentType);
 }
 
 void Twitter::abort() {

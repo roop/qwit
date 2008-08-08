@@ -3,20 +3,63 @@
 
 #include "MainWindow.h"
 
+#include <iostream>
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	setupUi(this);
 	
-	twitterWidget = new TwitterWidget();
-	twitterWidget->setObjectName(QString::fromUtf8("twitterWidget"));
+	TwitterWidget *twitterWidget = new TwitterWidget();
+	twitterWidget->setObjectName(QString::fromUtf8("homeTwitterWidget"));
+	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
 	
-	scrollArea = new QScrollArea();
+	QGridLayout *gridLayout = new QGridLayout(homeTab);
+	gridLayout->setObjectName(QString::fromUtf8("homeGridLayout"));
+	
+	QScrollArea *scrollArea = new QScrollArea(homeTab);
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	
-	vboxLayout->insertWidget(1, scrollArea);
+	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
+	
+	twitterTabs[HOME_TWITTER_TAB] = TwitterTab(false, scrollArea, twitterWidget, 0);
+	
+	
+	twitterWidget = new TwitterWidget();
+	twitterWidget->setObjectName(QString::fromUtf8("publicTwitterWidget"));
+	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
+	
+	gridLayout = new QGridLayout(publicTab);
+	gridLayout->setObjectName(QString::fromUtf8("publicGridLayout"));
+	
+	scrollArea = new QScrollArea(publicTab);
+	scrollArea->setBackgroundRole(QPalette::Light);
+	scrollArea->setWidget(twitterWidget);
+	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	
+	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
+	
+	twitterTabs[PUBLIC_TWITTER_TAB] = TwitterTab(true, scrollArea, twitterWidget, 0);
+	
+	
+	twitterWidget = new TwitterWidget();
+	twitterWidget->setObjectName(QString::fromUtf8("repliesTwitterWidget"));
+	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
+	
+	gridLayout = new QGridLayout(repliesTab);
+	gridLayout->setObjectName(QString::fromUtf8("repliesGridLayout"));
+	
+	scrollArea = new QScrollArea(repliesTab);
+	scrollArea->setBackgroundRole(QPalette::Light);
+	scrollArea->setWidget(twitterWidget);
+	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	
+	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
+	
+	twitterTabs[REPLIES_TWITTER_TAB] = TwitterTab(false, scrollArea, twitterWidget, 0);
+	
 	
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
@@ -32,7 +75,6 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	optionsDialog = new OptionsDialog(this);
 	optionsDialog->setModal(true);
 	
-	lastId = 0;
 	acceptClose = false;
 	
 	connect(statusTextEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
@@ -41,17 +83,25 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	connect(refreshPushButton, SIGNAL(pressed()), this, SLOT(updateHome()));
 	connect(optionsPushButton, SIGNAL(pressed()), optionsDialog, SLOT(showNormal()));
+	connect(exitPushButton, SIGNAL(pressed()), this, SLOT(quit()));
 	
-	connect(&twitter, SIGNAL(homeUpdated(const QByteArray&)), this, SLOT(homeUpdated(const QByteArray&)));
+	connect(&twitter, SIGNAL(updated(const QByteArray&, int)), this, SLOT(updated(const QByteArray&, int)));
 	connect(&twitter, SIGNAL(statusUpdated()), this, SLOT(statusUpdated()));
 	
-	connect(twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
+	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+	
+	for (int i = 0; i < TWITTER_TABS; ++i) {
+		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
+	}
 	
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
 	
 	connect(&twitter, SIGNAL(stateChanged(const QString&)), this, SLOT(updateState(const QString&)));
 	connect(&userpicsDownloader, SIGNAL(stateChanged(const QString&)), this, SLOT(updateState(const QString&)));
-	connect(&userpicsDownloader, SIGNAL(userpicDownloaded(const QString&)), twitterWidget, SLOT(reloadUserpic(const QString&)));
+	
+	for (int i = 0; i < TWITTER_TABS; ++i) {
+		connect(&userpicsDownloader, SIGNAL(userpicDownloaded(const QString&)), twitterTabs[i].twitterWidget, SLOT(reloadUserpic(const QString&)));
+	}
 	
 	setupTrayIcon();
 }
@@ -126,14 +176,14 @@ void MainWindow::sendStatus() {
 	statusTextEdit->setText("");
 	charsLeftLabel->setText(QString::number(statusTextEdit->getMaxStatusCharacter()));
 	charsLeftLabel->setForegroundRole(QPalette::Light);
-	twitterWidget->setFocus(Qt::OtherFocusReason);
+	twitterTabs[tabWidget->currentIndex()].twitterWidget->setFocus(Qt::OtherFocusReason);
 }
 	
 void MainWindow::updateHome() {
 	if (password == "") {
 		return;
 	}
-	twitter.updateHome(username, password, lastId);
+	twitter.update(username, password, twitterTabs[tabWidget->currentIndex()].lastId, tabWidget->currentIndex());
 }
 	
 void MainWindow::saveSettings() {
@@ -193,6 +243,10 @@ void MainWindow::saveSettings() {
 	} else {
 		statusTextEdit->setDisabled(false);
 	}
+	
+	timer->stop();
+	timer->start(interval * 1000);
+	
 	updateHome();
 }
 	
@@ -256,7 +310,7 @@ void MainWindow::showEvent(QShowEvent *event) {
 		updateHome();
 		timer = new QTimer(this);
 		connect(timer, SIGNAL(timeout()), this, SLOT(updateHome()));
-		timer->start(interval);
+		timer->start(interval * 1000);
 		firstTime = false;
 	}
 	
@@ -272,11 +326,17 @@ void MainWindow::showEvent(QShowEvent *event) {
 }
 	
 void MainWindow::resizeEvent(QResizeEvent *event) {
-	twitterWidget->resize(scrollArea->width() - scrollArea->verticalScrollBar()->width() - 5, 500);
+	for (int i = 0; i < TWITTER_TABS; ++i) {
+		twitterTabs[i].twitterWidget->resize(twitterTabs[i].scrollArea->width() - twitterTabs[i].scrollArea->verticalScrollBar()->width() - 5, 500);
+	}
 	event->accept();
 }
 
-void MainWindow::homeUpdated(const QByteArray &buffer) {
+void MainWindow::updated(const QByteArray &buffer, int type) {
+	if (twitterTabs[type].clear) {
+		twitterTabs[type].twitterWidget->clear();
+	}
+
 	QDomDocument document;
 	
 	document.setContent(buffer);
@@ -286,7 +346,7 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 	QDomNode node = root.firstChild();
 	QString html = "";
 	QString trayMessage = "";
-	int maxId = lastId;
+	int maxId = twitterTabs[type].lastId;
 	int j = 0;
 	while (!node.isNull()) {
 		QDomNode node2 = node.firstChild();
@@ -319,7 +379,7 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 		if (id > maxId) maxId = id;
 		QDateTime time = QDateTime::fromString(timeStr, "ddd MMM dd hh:mm:ss +0000 yyyy");
 		time = QDateTime(time.date(), time.time(), Qt::UTC);
-		if (id > lastId) {
+		if (id > twitterTabs[type].lastId) {
 			trayMessage += user + ": " + message + " " + formatDateTime(time.toLocalTime()) + "\n";
 		}
 		QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
@@ -348,10 +408,11 @@ void MainWindow::homeUpdated(const QByteArray &buffer) {
 		imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 		userpicsDownloader.download(image, imageFileName);
 		
-		twitterWidget->addItem(imageFileName, user, message.simplified(), formatDateTime(time.toLocalTime()), id, replyStatusId, j++);
+		twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), formatDateTime(time.toLocalTime()), id, replyStatusId, j++);
 		node = node.nextSibling();
 	}
-	lastId = maxId;
+	twitterTabs[type].lastId = maxId;
+	twitterTabs[type].lastUpdateTime = QDateTime::currentDateTime().toTime_t();
 	if (trayMessage != "") {
 		trayIcon->showMessage("Qwit updates", trayMessage);
 	}
@@ -372,13 +433,28 @@ void MainWindow::showhide() {
 		hide();
 	} else {
 		show();
-		twitterWidget->updateItems();
+		for (int i = 0; i < TWITTER_TABS; ++i) {
+			twitterTabs[i].twitterWidget->updateItems();
+		}
 	}
 }
 
 void MainWindow::updateState(const QString &state) {
 	stateLabel->setText(state);
 	stateLabel->setToolTip(state);
+}
+
+void MainWindow::tabChanged(int index) {
+	if (index < TWITTER_TABS) {
+		int height = twitterTabs[index].scrollArea->width() - twitterTabs[index].scrollArea->verticalScrollBar()->width() - 5;
+		if (twitterTabs[index].twitterWidget->height() != height) {
+			twitterTabs[index].twitterWidget->resize(height, 500);
+		}
+		int time = QDateTime::currentDateTime().toTime_t();
+		if (twitterTabs[index].lastUpdateTime + interval <= time) {
+			twitter.update(username, password, twitterTabs[index].lastId, index);
+		}
+	}
 }
 
 #endif

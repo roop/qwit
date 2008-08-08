@@ -20,6 +20,7 @@ public:
 
 const int ICON_SIZE = 48;
 const int MARGIN = 5;
+const int MAX_ITEMS_SIZE = 20;
 
 class TwitterWidget: public QWidget {
 	Q_OBJECT
