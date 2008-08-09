@@ -200,6 +200,9 @@
            <bold>true</bold>
           </font>
          </property>
+         <property name="toolTip" >
+          <string>Left characters count - please, do not exceed this number</string>
+         </property>
          <property name="frameShape" >
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -218,6 +221,9 @@
      </item>
      <item>
       <widget class="QTabWidget" name="tabWidget" >
+       <property name="toolTip" >
+        <string/>
+       </property>
        <property name="tabPosition" >
         <enum>QTabWidget::South</enum>
        </property>
@@ -228,15 +234,24 @@
         <attribute name="title" >
          <string>Home</string>
         </attribute>
+        <attribute name="toolTip" >
+         <string>Your and your friends' timeline</string>
+        </attribute>
        </widget>
        <widget class="QWidget" name="publicTab" >
         <attribute name="title" >
          <string>Public</string>
         </attribute>
+        <attribute name="toolTip" >
+         <string>Public timeline</string>
+        </attribute>
        </widget>
        <widget class="QWidget" name="repliesTab" >
         <attribute name="title" >
          <string>Replies</string>
+        </attribute>
+        <attribute name="toolTip" >
+         <string>Replies to you</string>
         </attribute>
        </widget>
       </widget>
@@ -276,13 +291,22 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip" >
+          <string>Refresh</string>
+         </property>
          <property name="text" >
           <string/>
          </property>
          <property name="icon" >
           <iconset resource="qwit.qrc" >:/images/reload.png</iconset>
          </property>
+         <property name="shortcut" >
+          <string>Ctrl+R</string>
+         </property>
          <property name="autoDefault" >
+          <bool>false</bool>
+         </property>
+         <property name="flat" >
           <bool>false</bool>
          </property>
         </widget>
@@ -294,6 +318,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip" >
+          <string>Options</string>
          </property>
          <property name="text" >
           <string/>
@@ -313,6 +340,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip" >
+          <string>Quit</string>
          </property>
          <property name="text" >
           <string/>

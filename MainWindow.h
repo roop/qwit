@@ -63,6 +63,7 @@ class MainWindow: public QDialog, public Ui::MainWindow {
 public:
 	
 	QTimer *timer;
+	QTimer *timer2;
 	QString username;
 	QString password;
 	int interval;
@@ -86,8 +87,6 @@ public:
 	void setupTrayIcon();
 	void loadSettings();
 	
-	QString formatDateTime(const QDateTime &time);
-
 public slots:
 	
 	void sendStatus();
@@ -102,6 +101,7 @@ public slots:
 	void quit();
 	void updateState(const QString &state);
 	void tabChanged(int index);
+	void updateItems();
 
 protected:
 	

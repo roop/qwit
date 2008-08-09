@@ -13,7 +13,7 @@ using namespace std;
 Twitter::Twitter() {
 	proxyAddress = "";
 	connect(&statusHttp, SIGNAL(done(bool)), this, SLOT(statusHttpDone(bool)));
-	connect(&homeHttp, SIGNAL(done(bool)), this, SLOT(homeHttpDone(bool)));
+	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));
 }
 
 void Twitter::useProxy(const QString &address, int port, const QString &username, const QString &password) {
@@ -51,6 +51,10 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 }
 
 void Twitter::update(QString username, QString password, int lastStatusId, int type) {
+	if (timelineHttp.state() != QHttp::Unconnected) {
+		timelineHttp.abort();
+	}
+	
 	currentType = type;
 	QString urlString = "";
 	switch (type) {
@@ -62,16 +66,16 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	QUrl url(urlString);
 	
 	if (proxyAddress != "") {
-		homeHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
+		timelineHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
-		homeHttp.setProxy("", 0);
+		timelineHttp.setProxy("", 0);
 	}
 	
-	homeHttp.setHost(url.host(), url.port(80));
-	homeHttp.setUser(username, password);
+	timelineHttp.setHost(url.host(), url.port(80));
+	timelineHttp.setUser(username, password);
 	
 	buffer.open(QIODevice::WriteOnly);
-	homeHttp.get(url.path() + (lastStatusId ? "?since_id=" + QString::number(lastStatusId) : ""), &buffer);
+	timelineHttp.get(url.path() + (lastStatusId ? "?since_id=" + QString::number(lastStatusId) : ""), &buffer);
 	
 	emit stateChanged("Updating timeline...");
 }
@@ -85,9 +89,9 @@ void Twitter::statusHttpDone(bool error) {
 	emit statusUpdated();
 }
 
-void Twitter::homeHttpDone(bool error) {
+void Twitter::timelineHttpDone(bool error) {
 	if (error) {
-		emit stateChanged("Error while updating timeline: " + homeHttp.errorString());
+		emit stateChanged("Error while updating timeline: " + timelineHttp.errorString());
 		return;
 	}
 	buffer.close();
@@ -96,7 +100,7 @@ void Twitter::homeHttpDone(bool error) {
 }
 
 void Twitter::abort() {
-	homeHttp.abort();
+	timelineHttp.abort();
 	statusHttp.abort();
 }
 

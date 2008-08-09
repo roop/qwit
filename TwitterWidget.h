@@ -6,6 +6,7 @@
 #include <QPaintEvent>
 #include <QTextBrowser>
 #include <QLabel>
+#include <QDateTime>
 
 class TwitterWidgetItem {
 public:
@@ -16,6 +17,9 @@ public:
 	int top;
 	int height;
 	QColor color;
+	QDateTime time;
+	QString username;
+	int messageId;
 };
 
 const int ICON_SIZE = 48;
@@ -35,8 +39,9 @@ public:
 
 	TwitterWidget();
 	void clear();
-	void addItem(const QString &userpic, const QString &username, const QString &status, const QString &time, int messageId, int replyStatusId, int i = -1);
+	void addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i = -1);
 	void updateItems();
+	static QString formatDateTime(const QDateTime &time);
 	
 protected:
 

@@ -20,7 +20,7 @@ class Twitter: public QObject {
 	Q_OBJECT
 
 	QHttp statusHttp;
-	QHttp homeHttp;
+	QHttp timelineHttp;
 	QBuffer buffer;
 	QString proxyAddress;
 	int proxyPort;
@@ -40,7 +40,7 @@ public:
 public slots:
 
 	void statusHttpDone(bool error);
-	void homeHttpDone(bool error);
+	void timelineHttpDone(bool error);
 
 signals:
 	

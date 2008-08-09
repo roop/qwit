@@ -104,6 +104,10 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	}
 	
 	setupTrayIcon();
+
+	timer2 = new QTimer(this);
+	connect(timer2, SIGNAL(timeout()), this, SLOT(updateItems()));
+	timer2->start(10000);
 }
 
 void MainWindow::setupTrayIcon() {
@@ -256,18 +260,6 @@ void MainWindow::resetSettings() {
 	optionsDialog->intervalLineEdit->setText(QString::number(interval));
 }
 	
-QString MainWindow::formatDateTime(const QDateTime &time) {
-	int seconds = time.secsTo(QDateTime::currentDateTime());
-	if (seconds < 15) return "Just now";
-	if (seconds < 45) return "about " + QString::number(seconds) + " second" + (seconds == 1 ? "" : "s") + " ago";
-	int minutes = seconds / 60 + (seconds % 60 >= 30);
-	if (minutes < 30) return "about " + QString::number(minutes) + " minute" + (minutes == 1 ? "" : "s") + " ago";
-	int hours = seconds / 3600 + (seconds % 3600 >= 1800);
-	if (hours < 24) return "about " + QString::number(hours) + " hour" + (hours == 1 ? "" : "s") + " ago";
-	int days = seconds / (24 * 3600) + (seconds % (24 * 3600) >= 12 * 3600);
-	return "about " + QString::number(days) + " day" + (days == 1 ? "" : "s") + " ago";
-}
-	
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) {
 	if (reason == QSystemTrayIcon::Trigger) {
 		showhide();
@@ -342,13 +334,18 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	document.setContent(buffer);
 	
 	QDomElement root = document.documentElement();
-	
+	if (root.tagName() != "statuses") {
+		return;
+	}
 	QDomNode node = root.firstChild();
 	QString html = "";
 	QString trayMessage = "";
 	int maxId = twitterTabs[type].lastId;
 	int j = 0;
 	while (!node.isNull()) {
+		if (node.toElement().tagName() != "status") {
+			return;
+		}
 		QDomNode node2 = node.firstChild();
 		QString message = "", timeStr = "", user = "", image = "";
 		int id = 0, replyUserID = 0, replyStatusId = 0;
@@ -376,39 +373,41 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			}
 			node2 = node2.nextSibling();
 		}
-		if (id > maxId) maxId = id;
-		QDateTime time = QDateTime::fromString(timeStr, "ddd MMM dd hh:mm:ss +0000 yyyy");
-		time = QDateTime(time.date(), time.time(), Qt::UTC);
-		if (id > twitterTabs[type].lastId) {
-			trayMessage += user + ": " + message + " " + formatDateTime(time.toLocalTime()) + "\n";
-		}
-		QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
-		QString imageFileName = "";
-		for (int i = 0; i < hash.size(); ++i) {
-			unsigned char c = hash[i];
-			c >>= 4;
-			if (c < 10) {
-				c += '0';
-			} else {
-				c += 'A' - 10;
+		if (id) {
+			if (id > maxId) maxId = id;
+			QDateTime time = QDateTime::fromString(timeStr, "ddd MMM dd hh:mm:ss +0000 yyyy");
+			time = QDateTime(time.date(), time.time(), Qt::UTC);
+			if (id > twitterTabs[type].lastId) {
+				trayMessage += user + ": " + message + " " + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n";
 			}
-			imageFileName += (char)c;
-			c = hash[i];
-			c &= 15;
-			if (c < 10) {
-				c += '0';
-			} else {
-				c += 'A' - 10;
+			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
+			QString imageFileName = "";
+			for (int i = 0; i < hash.size(); ++i) {
+				unsigned char c = hash[i];
+				c >>= 4;
+				if (c < 10) {
+					c += '0';
+				} else {
+					c += 'A' - 10;
+				}
+				imageFileName += (char)c;
+				c = hash[i];
+				c &= 15;
+				if (c < 10) {
+					c += '0';
+				} else {
+					c += 'A' - 10;
+				}
+				imageFileName += (char)c;
 			}
-			imageFileName += (char)c;
+			imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
+			QDir dir(QDir::homePath());
+			dir.mkdir(".qwit");
+			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
+			userpicsDownloader.download(image, imageFileName);
+			
+			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++);
 		}
-		imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
-		QDir dir(QDir::homePath());
-		dir.mkdir(".qwit");
-		imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
-		userpicsDownloader.download(image, imageFileName);
-		
-		twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), formatDateTime(time.toLocalTime()), id, replyStatusId, j++);
 		node = node.nextSibling();
 	}
 	twitterTabs[type].lastId = maxId;
@@ -454,6 +453,12 @@ void MainWindow::tabChanged(int index) {
 		if (twitterTabs[index].lastUpdateTime + interval <= time) {
 			twitter.update(username, password, twitterTabs[index].lastId, index);
 		}
+	}
+}
+
+void MainWindow::updateItems() {
+	for (int i = 0; i < TWITTER_TABS; ++i) {
+		twitterTabs[i].twitterWidget->updateItems();
 	}
 }
 

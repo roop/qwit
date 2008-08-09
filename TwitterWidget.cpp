@@ -49,8 +49,13 @@ void TwitterWidget::clear() {
 	items.clear();
 }
 	
-void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QString &time, int messageId, int replyStatusId, int i) {
+void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i) {
 	TwitterWidgetItem item = TwitterWidgetItem();
+	
+	item.time = time;
+	item.username = username;
+	item.messageId = messageId;
+	
 	item.status = new QTextBrowser(this);
 	item.status->setHtml(prepare(status, replyStatusId));
 	item.status->setReadOnly(true);
@@ -66,7 +71,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.icon->setPixmap(QPixmap(userpic));
 	item.iconFileName = userpic;
 	
-	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + time + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
+	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(time) + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
 	item.sign->setAlignment(Qt::AlignRight);
 	item.sign->setOpenExternalLinks(true);
 	if (i == -1) i = items.size();
@@ -77,6 +82,10 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.sign->show();
 	
 	while (items.size() > MAX_ITEMS_SIZE) {
+		TwitterWidgetItem &item = items[items.size() - 1];
+		delete item.status;
+		delete item.icon;
+		delete item.sign;
 		items.pop_back();
 	}
 	
@@ -98,6 +107,8 @@ void TwitterWidget::updateItems() {
 		statusItemHeight += item.status->verticalScrollBar()->maximum() - item.status->verticalScrollBar()->minimum();
 		item.status->resize(statusItemWidth, statusItemHeight);
 		item.icon->move(MARGIN, height + MARGIN);
+		
+		item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> <a href=\"reply://" + item.username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>");
 		
 		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
 		
@@ -148,6 +159,19 @@ void TwitterWidget::paintEvent(QPaintEvent *event) {
 		item.status->setPalette(p);
 	}
 	event->accept();
+}
+
+	
+QString TwitterWidget::formatDateTime(const QDateTime &time) {
+	int seconds = time.secsTo(QDateTime::currentDateTime());
+	if (seconds <= 15) return "Just now";
+	if (seconds <= 45) return "about " + QString::number(seconds) + " second" + (seconds == 1 ? "" : "s") + " ago";
+	int minutes = (seconds - 45 + 59) / 60;
+	if (minutes <= 45) return "about " + QString::number(minutes) + " minute" + (minutes == 1 ? "" : "s") + " ago";
+	int hours = (seconds - 45 * 60 + 3599) / 3600;
+	if (hours <= 18) return "about " + QString::number(hours) + " hour" + (hours == 1 ? "" : "s") + " ago";
+	int days = (seconds - 18 * 3600 + 24 * 3600 - 1) / (24 * 3600);
+	return "about " + QString::number(days) + " day" + (days == 1 ? "" : "s") + " ago";
 }
 
 #endif
