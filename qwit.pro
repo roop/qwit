@@ -14,3 +14,5 @@ SOURCES += qwit.cpp MainWindow.cpp UserpicsDownloader.cpp StatusTextEdit.cpp Twi
 QT += network
 QT += xml
 RESOURCES = qwit.qrc
+target.path = /usr/bin
+INSTALLS = target
