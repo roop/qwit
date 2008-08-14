@@ -154,7 +154,7 @@ void MainWindow::loadSettings() {
 	username = settings.value("username", "").toString();
 	bool savePassword = settings.value("savePassword", false).toBool();
 	password = settings.value("password", "").toString();
-	interval = settings.value("interval", "300000").toInt();
+	interval = settings.value("interval", "300").toInt();
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	useProxy = settings.value("useProxy", "").toBool();
