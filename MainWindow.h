@@ -29,13 +29,15 @@
 #include "TwitterWidget.h"
 #include "Twitter.h"
 #include "OptionsDialog.h"
+#include "LogsDialog.h"
 
 #include "ui_MainWindow.h"
 
-const int TWITTER_TABS = 3;
+const int TWITTER_TABS = 4;
 const int HOME_TWITTER_TAB = 0;
 const int PUBLIC_TWITTER_TAB = 1;
 const int REPLIES_TWITTER_TAB = 2;
+const int CUSTOM_TWITTER_TAB = 3;
 
 class TwitterTab {
 public:
@@ -80,6 +82,7 @@ public:
 	UserpicsDownloader userpicsDownloader;
 	StatusTextEdit *statusTextEdit;
 	OptionsDialog *optionsDialog;
+	LogsDialog *logsDialog;
 	TwitterTab twitterTabs[TWITTER_TABS];
 	Twitter twitter;
 	
@@ -90,7 +93,7 @@ public:
 public slots:
 	
 	void sendStatus();
-	void updateHome();
+	void updateTimeline();
 	void saveSettings();
 	void resetSettings();
 	void updated(const QByteArray &buffer, int type);
@@ -102,6 +105,7 @@ public slots:
 	void updateState(const QString &state);
 	void tabChanged(int index);
 	void updateItems();
+	void customUsernameChanged();
 
 protected:
 	

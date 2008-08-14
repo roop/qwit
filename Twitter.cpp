@@ -8,9 +8,15 @@
 
 #include "Twitter.h"
 
+#include <iostream>
+
 using namespace std;
 
 Twitter::Twitter() {
+	urls[0] = HOME_XML_URL;
+	urls[1] = PUBLIC_XML_URL;
+	urls[2] = REPLIES_XML_URL;
+	urls[3] = "";
 	proxyAddress = "";
 	connect(&statusHttp, SIGNAL(done(bool)), this, SLOT(statusHttpDone(bool)));
 	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));
@@ -45,25 +51,22 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(status);
+	data += "&source=qwit";
 	statusHttp.request(header, data);
 
 	emit stateChanged("Sending status...");
 }
 
 void Twitter::update(QString username, QString password, int lastStatusId, int type) {
+	if (urls[type] == "") return;
+	
 	if (timelineHttp.state() != QHttp::Unconnected) {
 		timelineHttp.abort();
 	}
 	
 	currentType = type;
-	QString urlString = "";
-	switch (type) {
-		case 0: urlString = HOME_XML_URL; break;
-		case 1: urlString = PUBLIC_XML_URL; break;
-		case 2: urlString = REPLIES_XML_URL; break;
-	};
 	
-	QUrl url(urlString);
+	QUrl url(urls[type]);
 	
 	if (proxyAddress != "") {
 		timelineHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -102,6 +105,10 @@ void Twitter::timelineHttpDone(bool error) {
 void Twitter::abort() {
 	timelineHttp.abort();
 	statusHttp.abort();
+}
+
+void Twitter::setUrl(int index, const QString &url) {
+	urls[index] = url;
 }
 
 #endif

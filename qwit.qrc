@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/images" >
         <file>exit.png</file>
+        <file>logs.png</file>
         <file>options.png</file>
         <file>qwit.png</file>
         <file>reload.png</file>

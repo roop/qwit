@@ -109,6 +109,7 @@ void TwitterWidget::updateItems() {
 		item.icon->move(MARGIN, height + MARGIN);
 		
 		item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> <a href=\"reply://" + item.username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>");
+		item.sign->adjustSize();
 		
 		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
 		

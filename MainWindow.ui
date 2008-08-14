@@ -254,6 +254,34 @@
          <string>Replies to you</string>
         </attribute>
        </widget>
+       <widget class="QWidget" name="customTab" >
+        <attribute name="title" >
+         <string>Custom</string>
+        </attribute>
+        <attribute name="toolTip" >
+         <string>Custom user timeline</string>
+        </attribute>
+        <layout class="QGridLayout" >
+         <item row="0" column="0" >
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label_2" >
+               <property name="text" >
+                <string>Username:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="customUsernameLineEdit" />
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
      <item>
@@ -327,6 +355,25 @@
          </property>
          <property name="icon" >
           <iconset resource="qwit.qrc" >:/images/options.png</iconset>
+         </property>
+         <property name="autoDefault" >
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="logsPushButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="icon" >
+          <iconset resource="qwit.qrc" >:/images/logs.png</iconset>
          </property>
          <property name="autoDefault" >
           <bool>false</bool>

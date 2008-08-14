@@ -61,6 +61,20 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	twitterTabs[REPLIES_TWITTER_TAB] = TwitterTab(false, scrollArea, twitterWidget, 0);
 	
 	
+	twitterWidget = new TwitterWidget();
+	twitterWidget->setObjectName(QString::fromUtf8("customTwitterWidget"));
+	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
+	
+	scrollArea = new QScrollArea(customTab);
+	scrollArea->setBackgroundRole(QPalette::Light);
+	scrollArea->setWidget(twitterWidget);
+	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	
+	vboxLayout1->addWidget(scrollArea);
+	
+	twitterTabs[CUSTOM_TWITTER_TAB] = TwitterTab(true, scrollArea, twitterWidget, 1);
+	
+	
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
 	QFont font = statusTextEdit->document()->defaultFont();
@@ -75,14 +89,18 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	optionsDialog = new OptionsDialog(this);
 	optionsDialog->setModal(true);
 	
+	logsDialog = new LogsDialog(this);
+
 	acceptClose = false;
 	
 	connect(statusTextEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
+	connect(customUsernameLineEdit, SIGNAL(returnPressed()), this, SLOT(customUsernameChanged()));
 	connect(optionsDialog->savePushButton, SIGNAL(pressed()), this, SLOT(saveSettings()));
 	connect(optionsDialog->resetPushButton, SIGNAL(pressed()), this, SLOT(resetSettings()));
 	
-	connect(refreshPushButton, SIGNAL(pressed()), this, SLOT(updateHome()));
+	connect(refreshPushButton, SIGNAL(pressed()), this, SLOT(updateTimeline()));
 	connect(optionsPushButton, SIGNAL(pressed()), optionsDialog, SLOT(showNormal()));
+	connect(logsPushButton, SIGNAL(pressed()), logsDialog, SLOT(showNormal()));
 	connect(exitPushButton, SIGNAL(pressed()), this, SLOT(quit()));
 	
 	connect(&twitter, SIGNAL(updated(const QByteArray&, int)), this, SLOT(updated(const QByteArray&, int)));
@@ -146,6 +164,11 @@ void MainWindow::loadSettings() {
 	bool proxySavePassword = settings.value("proxySavePassword", false).toBool();
 	proxyPassword = settings.value("proxyPassword", "").toString();
 	settings.endGroup();
+	settings.beginGroup("Other");
+	customUsernameLineEdit->setText(settings.value("customUsername").toString());
+	settings.endGroup();
+	
+	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
 	
 	optionsDialog->usernameLineEdit->setText(username);
 	optionsDialog->passwordLineEdit->setText(password);
@@ -183,7 +206,7 @@ void MainWindow::sendStatus() {
 	twitterTabs[tabWidget->currentIndex()].twitterWidget->setFocus(Qt::OtherFocusReason);
 }
 	
-void MainWindow::updateHome() {
+void MainWindow::updateTimeline() {
 	if (password == "") {
 		return;
 	}
@@ -251,7 +274,7 @@ void MainWindow::saveSettings() {
 	timer->stop();
 	timer->start(interval * 1000);
 	
-	updateHome();
+	updateTimeline();
 }
 	
 void MainWindow::resetSettings() {
@@ -274,6 +297,7 @@ void MainWindow::quit() {
 void MainWindow::closeEvent(QCloseEvent *event) {
 	QSettings settings("arti", "qwit");
 	if (acceptClose) {
+		logsDialog->close();
 		twitter.abort();
 		settings.beginGroup("MainWindow");
 		settings.setValue("size", size());
@@ -299,9 +323,9 @@ void MainWindow::showEvent(QShowEvent *event) {
 	static bool firstTime = true;
 	if (firstTime) {
 		loadSettings();
-		updateHome();
+		updateTimeline();
 		timer = new QTimer(this);
-		connect(timer, SIGNAL(timeout()), this, SLOT(updateHome()));
+		connect(timer, SIGNAL(timeout()), this, SLOT(updateTimeline()));
 		timer->start(interval * 1000);
 		firstTime = false;
 	}
@@ -328,7 +352,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	if (twitterTabs[type].clear) {
 		twitterTabs[type].twitterWidget->clear();
 	}
-
+	
 	QDomDocument document;
 	
 	document.setContent(buffer);
@@ -418,7 +442,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 }
 
 void MainWindow::statusUpdated() {
-	updateHome();
+	updateTimeline();
 }
 
 void MainWindow::leftCharsNumberChanged(int count) {
@@ -429,6 +453,7 @@ void MainWindow::leftCharsNumberChanged(int count) {
 
 void MainWindow::showhide() {
 	if (isVisible()) {
+		logsDialog->hide();
 		hide();
 	} else {
 		show();
@@ -441,6 +466,7 @@ void MainWindow::showhide() {
 void MainWindow::updateState(const QString &state) {
 	stateLabel->setText(state);
 	stateLabel->setToolTip(state);
+	logsDialog->logsTextEdit->setPlainText(logsDialog->logsTextEdit->toPlainText() + QDateTime::currentDateTime().toString("hh:mm:ss") + " - " + state + "\n");
 }
 
 void MainWindow::tabChanged(int index) {
@@ -460,6 +486,18 @@ void MainWindow::updateItems() {
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		twitterTabs[i].twitterWidget->updateItems();
 	}
+}
+
+void MainWindow::customUsernameChanged() {
+	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
+	
+	QSettings settings("arti", "qwit");
+	
+	settings.beginGroup("Other");
+	settings.setValue("customUsername", customUsernameLineEdit->text());
+	settings.endGroup();
+	
+	updateTimeline();
 }
 
 #endif
