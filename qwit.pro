@@ -16,3 +16,4 @@ QT += xml
 RESOURCES = qwit.qrc
 target.path = /usr/bin
 INSTALLS = target
+CONFIG += release

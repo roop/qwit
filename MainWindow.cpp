@@ -10,6 +10,19 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	setupUi(this);
 	
+	monthes["Jan"] = 1;
+	monthes["Feb"] = 2;
+	monthes["Mar"] = 3;
+	monthes["Apr"] = 4;
+	monthes["May"] = 5;
+	monthes["Jun"] = 6;
+	monthes["Jul"] = 7;
+	monthes["Aug"] = 8;
+	monthes["Sep"] = 9;
+	monthes["Oct"] = 10;
+	monthes["Nov"] = 11;
+	monthes["Dec"] = 12;
+	
 	TwitterWidget *twitterWidget = new TwitterWidget();
 	twitterWidget->setObjectName(QString::fromUtf8("homeTwitterWidget"));
 	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
@@ -348,6 +361,14 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 	event->accept();
 }
 
+QDateTime MainWindow::dateFromString(const QString &date) {
+	char s[10];
+	int year, day, hours, minutes, seconds;
+	sscanf(qPrintable(date), "%*s %s %d %d:%d:%d %*s %d", s, &day, &hours, &minutes, &seconds, &year);
+	int month = monthes[s];
+	return QDateTime(QDate(year, month, day), QTime(hours, minutes, seconds));
+}
+
 void MainWindow::updated(const QByteArray &buffer, int type) {
 	if (twitterTabs[type].clear) {
 		twitterTabs[type].twitterWidget->clear();
@@ -399,7 +420,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 		}
 		if (id) {
 			if (id > maxId) maxId = id;
-			QDateTime time = QDateTime::fromString(timeStr, "ddd MMM dd hh:mm:ss +0000 yyyy");
+			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
 			if (id > twitterTabs[type].lastId) {
 				trayMessage += user + ": " + message + " " + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n";

@@ -85,10 +85,12 @@ public:
 	LogsDialog *logsDialog;
 	TwitterTab twitterTabs[TWITTER_TABS];
 	Twitter twitter;
+	QMap<QString, int> monthes;
 	
 	MainWindow(QWidget *parent = 0);
 	void setupTrayIcon();
 	void loadSettings();
+	QDateTime dateFromString(const QString &date);
 	
 public slots:
 	
