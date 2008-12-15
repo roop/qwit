@@ -205,6 +205,30 @@ void MainWindow::loadSettings() {
 	if ((username == "") || (password == "")) {
 		statusTextEdit->setDisabled(true);
 	}
+	
+// Load cached twits
+
+	settings.beginGroup("Twits");
+	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
+		int size = settings.beginReadArray("Twits" + QString::number(tab));
+		for (int i = 0; i < size; ++i) {
+			settings.setArrayIndex(i);
+			if (i == 0) {
+				twitterTabs[tab].lastId = settings.value("messageId").toInt();
+			}
+			twitterTabs[tab].twitterWidget->addItem(
+				settings.value("userpic").toString(),
+				settings.value("username").toString(),
+				settings.value("status").toString(),
+				QDateTime::fromString(settings.value("time").toString(), "yyyy-MM-dd hh:mm:ss"),
+				settings.value("messageId").toInt(),
+				settings.value("replyStatusId").toInt(),
+				-1
+			);
+		}
+		settings.endArray();
+	}
+	settings.endGroup();
 }
 	
 void MainWindow::sendStatus() {
@@ -316,6 +340,26 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		settings.setValue("size", size());
 		settings.setValue("pos", pos());
 		settings.endGroup();
+		
+// Cache twits
+
+		settings.beginGroup("Twits");
+		for (int tab = 0; tab < TWITTER_TABS; ++tab) {
+			settings.beginWriteArray("Twits" + QString::number(tab));
+			for (int i = 0; i < twitterTabs[tab].twitterWidget->getItemsCount(); ++i) {
+				settings.setArrayIndex(i);
+				settings.setValue("userpic", twitterTabs[tab].twitterWidget->getItem(i).cacheUserpic);
+				settings.setValue("username", twitterTabs[tab].twitterWidget->getItem(i).cacheUsername);
+				settings.setValue("status", twitterTabs[tab].twitterWidget->getItem(i).cacheStatus);
+				settings.setValue("time", twitterTabs[tab].twitterWidget->getItem(i).cacheTime.toString("yyyy-MM-dd hh:mm:ss"));
+				settings.setValue("messageId", twitterTabs[tab].twitterWidget->getItem(i).cacheMessageId);
+				settings.setValue("replyStatusId", twitterTabs[tab].twitterWidget->getItem(i).cacheReplyStatusId);
+				settings.setValue("index", twitterTabs[tab].twitterWidget->getItem(i).cacheIndex);
+			}
+			settings.endArray();
+		}
+		settings.endGroup();
+		
 		event->accept();
 	} else {
 		hide();

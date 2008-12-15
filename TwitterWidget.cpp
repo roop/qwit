@@ -55,6 +55,16 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.time = time;
 	item.username = username;
 	item.messageId = messageId;
+
+// Save raw info for caching between sessions
+
+	item.cacheUserpic = userpic;
+	item.cacheUsername = username;
+	item.cacheStatus = status;
+	item.cacheTime = time;
+	item.cacheMessageId = messageId;
+	item.cacheReplyStatusId = replyStatusId;
+	item.cacheIndex = i;
 	
 	item.status = new QTextBrowser(this);
 	item.status->setHtml(prepare(status, replyStatusId));
@@ -173,6 +183,14 @@ QString TwitterWidget::formatDateTime(const QDateTime &time) {
 	if (hours <= 18) return "about " + QString::number(hours) + " hour" + (hours == 1 ? "" : "s") + " ago";
 	int days = (seconds - 18 * 3600 + 24 * 3600 - 1) / (24 * 3600);
 	return "about " + QString::number(days) + " day" + (days == 1 ? "" : "s") + " ago";
+}
+
+const TwitterWidgetItem TwitterWidget::getItem(int index) {
+	return items[index];
+}
+
+int TwitterWidget::getItemsCount() {
+	return items.size();
 }
 
 #endif

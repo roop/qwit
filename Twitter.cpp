@@ -61,7 +61,9 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	if (urls[type] == "") return;
 	
 	if (timelineHttp.state() != QHttp::Unconnected) {
+		cout << timelineHttp.state() <<endl;
 		timelineHttp.abort();
+		cout << timelineHttp.state() <<endl;
 	}
 	
 	currentType = type;

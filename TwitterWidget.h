@@ -20,6 +20,14 @@ public:
 	QDateTime time;
 	QString username;
 	int messageId;
+	
+	QString cacheUserpic;
+	QString cacheUsername;
+	QString cacheStatus;
+	QDateTime cacheTime;
+	int cacheMessageId;
+	int cacheReplyStatusId;
+	int cacheIndex;
 };
 
 const int ICON_SIZE = 48;
@@ -41,6 +49,8 @@ public:
 	void clear();
 	void addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i = -1);
 	void updateItems();
+	const TwitterWidgetItem getItem(int index);
+	int getItemsCount();
 	static QString formatDateTime(const QDateTime &time);
 	
 protected:
