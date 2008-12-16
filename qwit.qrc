@@ -1,10 +1,10 @@
 <RCC>
-    <qresource prefix="/images" >
-        <file>exit.png</file>
-        <file>logs.png</file>
-        <file>options.png</file>
-        <file>qwit.png</file>
-        <file>reload.png</file>
-        <file>reply.png</file>
+    <qresource>
+        <file>images/exit.png</file>
+        <file>images/logs.png</file>
+        <file>images/options.png</file>
+        <file>images/qwit.png</file>
+        <file>images/reload.png</file>
+        <file>images/reply.png</file>
     </qresource>
 </RCC>
