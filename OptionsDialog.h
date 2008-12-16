@@ -10,6 +10,11 @@ public:
 
 	OptionsDialog(QWidget *parent);
 	
+public slots:
+
+	void saveSettings();
+	void resetSettings();
+	
 };
 
 #endif

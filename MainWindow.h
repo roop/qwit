@@ -61,6 +61,10 @@ public:
 
 class MainWindow: public QDialog, public Ui::MainWindow {
 	Q_OBJECT
+	
+private:
+	static MainWindow* instance;
+	MainWindow(QWidget *parent = 0);
 
 public:
 	
@@ -87,16 +91,16 @@ public:
 	Twitter twitter;
 	QMap<QString, int> monthes;
 	
-	MainWindow(QWidget *parent = 0);
 	void setupTrayIcon();
-	void loadSettings();
+	void loadState();
 	QDateTime dateFromString(const QString &date);
+	static MainWindow* getInstance();
 	
 public slots:
 	
 	void sendStatus();
 	void updateTimeline();
-	void saveSettings();
+	void saveState();
 	void resetSettings();
 	void updated(const QByteArray &buffer, int type);
 	void statusUpdated();

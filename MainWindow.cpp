@@ -7,6 +7,13 @@
 
 using namespace std;
 
+MainWindow* MainWindow::instance;
+
+MainWindow* MainWindow::getInstance() {
+	if (!instance) instance = new MainWindow();
+	return instance;
+}
+
 MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	setupUi(this);
 	
@@ -108,8 +115,6 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	connect(statusTextEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
 	connect(customUsernameLineEdit, SIGNAL(returnPressed()), this, SLOT(customUsernameChanged()));
-	connect(optionsDialog->savePushButton, SIGNAL(pressed()), this, SLOT(saveSettings()));
-	connect(optionsDialog->resetPushButton, SIGNAL(pressed()), this, SLOT(resetSettings()));
 	
 	connect(refreshPushButton, SIGNAL(pressed()), this, SLOT(updateTimeline()));
 	connect(optionsPushButton, SIGNAL(pressed()), optionsDialog, SLOT(showNormal()));
@@ -156,7 +161,7 @@ void MainWindow::setupTrayIcon() {
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
 	
-void MainWindow::loadSettings() {
+void MainWindow::loadState() {
 	QSettings settings("arti", "qwit");
 	
 	settings.beginGroup("MainWindow");
@@ -206,8 +211,6 @@ void MainWindow::loadSettings() {
 		statusTextEdit->setDisabled(true);
 	}
 	
-// Load cached twits
-
 	settings.beginGroup("Twits");
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		int size = settings.beginReadArray("Twits" + QString::number(tab));
@@ -250,9 +253,7 @@ void MainWindow::updateTimeline() {
 	twitter.update(username, password, twitterTabs[tabWidget->currentIndex()].lastId, tabWidget->currentIndex());
 }
 	
-void MainWindow::saveSettings() {
-	optionsDialog->hide();
-	
+void MainWindow::saveState() {
 	QSettings settings("arti", "qwit");
 	
 	username = optionsDialog->usernameLineEdit->text();
@@ -294,6 +295,32 @@ void MainWindow::saveSettings() {
 	}
 	settings.endGroup();
 	
+	settings.beginGroup("MainWindow");
+	settings.setValue("size", size());
+	settings.setValue("pos", pos());
+	settings.endGroup();
+	
+	settings.beginGroup("Twits");
+	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
+		settings.beginWriteArray("Twits" + QString::number(tab));
+		for (int i = 0; i < twitterTabs[tab].twitterWidget->getItemsCount(); ++i) {
+			settings.setArrayIndex(i);
+			settings.setValue("userpic", twitterTabs[tab].twitterWidget->getItem(i).cacheUserpic);
+			settings.setValue("username", twitterTabs[tab].twitterWidget->getItem(i).cacheUsername);
+			settings.setValue("status", twitterTabs[tab].twitterWidget->getItem(i).cacheStatus);
+			settings.setValue("time", twitterTabs[tab].twitterWidget->getItem(i).cacheTime.toString("yyyy-MM-dd hh:mm:ss"));
+			settings.setValue("messageId", twitterTabs[tab].twitterWidget->getItem(i).cacheMessageId);
+			settings.setValue("replyStatusId", twitterTabs[tab].twitterWidget->getItem(i).cacheReplyStatusId);
+			settings.setValue("index", twitterTabs[tab].twitterWidget->getItem(i).cacheIndex);
+		}
+		settings.endArray();
+	}
+	settings.endGroup();
+
+	settings.beginGroup("Other");
+	settings.setValue("customUsername", customUsernameLineEdit->text());
+	settings.endGroup();
+	
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 		userpicsDownloader.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -307,19 +334,14 @@ void MainWindow::saveSettings() {
 	} else {
 		statusTextEdit->setDisabled(false);
 	}
-	
-	timer->stop();
-	timer->start(interval * 1000);
-	
-	updateTimeline();
 }
-	
+
 void MainWindow::resetSettings() {
 	optionsDialog->usernameLineEdit->setText(username);
 	optionsDialog->passwordLineEdit->setText(password);
 	optionsDialog->intervalLineEdit->setText(QString::number(interval));
 }
-	
+
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) {
 	if (reason == QSystemTrayIcon::Trigger) {
 		showhide();
@@ -332,34 +354,10 @@ void MainWindow::quit() {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-	QSettings settings("arti", "qwit");
 	if (acceptClose) {
 		logsDialog->close();
 		twitter.abort();
-		settings.beginGroup("MainWindow");
-		settings.setValue("size", size());
-		settings.setValue("pos", pos());
-		settings.endGroup();
-		
-// Cache twits
-
-		settings.beginGroup("Twits");
-		for (int tab = 0; tab < TWITTER_TABS; ++tab) {
-			settings.beginWriteArray("Twits" + QString::number(tab));
-			for (int i = 0; i < twitterTabs[tab].twitterWidget->getItemsCount(); ++i) {
-				settings.setArrayIndex(i);
-				settings.setValue("userpic", twitterTabs[tab].twitterWidget->getItem(i).cacheUserpic);
-				settings.setValue("username", twitterTabs[tab].twitterWidget->getItem(i).cacheUsername);
-				settings.setValue("status", twitterTabs[tab].twitterWidget->getItem(i).cacheStatus);
-				settings.setValue("time", twitterTabs[tab].twitterWidget->getItem(i).cacheTime.toString("yyyy-MM-dd hh:mm:ss"));
-				settings.setValue("messageId", twitterTabs[tab].twitterWidget->getItem(i).cacheMessageId);
-				settings.setValue("replyStatusId", twitterTabs[tab].twitterWidget->getItem(i).cacheReplyStatusId);
-				settings.setValue("index", twitterTabs[tab].twitterWidget->getItem(i).cacheIndex);
-			}
-			settings.endArray();
-		}
-		settings.endGroup();
-		
+		saveState();
 		event->accept();
 	} else {
 		hide();
@@ -368,18 +366,14 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 }
 
 void MainWindow::hideEvent(QHideEvent *event) {
-	QSettings settings("arti", "qwit");
-	settings.beginGroup("MainWindow");
-	settings.setValue("size", size());
-	settings.setValue("pos", pos());
-	settings.endGroup();
+	saveState();
 	event->accept();
 }
 
 void MainWindow::showEvent(QShowEvent *event) {
 	static bool firstTime = true;
 	if (firstTime) {
-		loadSettings();
+		loadState();
 		updateTimeline();
 		timer = new QTimer(this);
 		connect(timer, SIGNAL(timeout()), this, SLOT(updateTimeline()));
@@ -504,6 +498,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	if (trayMessage != "") {
 		trayIcon->showMessage("Qwit updates", trayMessage);
 	}
+	saveState();
 }
 
 void MainWindow::statusUpdated() {
@@ -556,11 +551,7 @@ void MainWindow::updateItems() {
 void MainWindow::customUsernameChanged() {
 	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
 	
-	QSettings settings("arti", "qwit");
-	
-	settings.beginGroup("Other");
-	settings.setValue("customUsername", customUsernameLineEdit->text());
-	settings.endGroup();
+	saveState();
 	
 	updateTimeline();
 }
