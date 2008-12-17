@@ -248,6 +248,7 @@ void MainWindow::sendStatus() {
 	
 void MainWindow::updateTimeline() {
 	if (password == "") {
+		optionsDialog->showNormal();
 		return;
 	}
 	twitter.update(username, password, twitterTabs[tabWidget->currentIndex()].lastId, tabWidget->currentIndex());
