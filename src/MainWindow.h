@@ -39,6 +39,13 @@ const int PUBLIC_TWITTER_TAB = 1;
 const int REPLIES_TWITTER_TAB = 2;
 const int CUSTOM_TWITTER_TAB = 3;
 
+const int DEFAULT_WINDOW_WIDTH = 200;
+const int DEFAULT_WINDOW_HEIGHT = 600;
+const int DEFAULT_WINDOW_X = 200;
+const int DEFAULT_WINDOW_Y = 200;
+const int DEFAULT_UPDATE_INTERVAL = 300;
+const int DEFAULT_MESSAGES_PER_PAGE = 20;
+
 class TwitterTab {
 public:
 	bool clear;
@@ -83,6 +90,7 @@ public:
 	QString proxyPassword;
 	QString proxyAddress;
 	int proxyPort;
+	int messagesPerPage;
 	UserpicsDownloader userpicsDownloader;
 	StatusTextEdit *statusTextEdit;
 	OptionsDialog *optionsDialog;

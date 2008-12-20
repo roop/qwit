@@ -91,7 +91,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.icon->show();
 	item.sign->show();
 	
-	while (items.size() > MAX_ITEMS_SIZE) {
+	while (items.size() > messagesPerPage) {
 		TwitterWidgetItem &item = items[items.size() - 1];
 		delete item.status;
 		delete item.icon;
@@ -191,6 +191,10 @@ const TwitterWidgetItem TwitterWidget::getItem(int index) {
 
 int TwitterWidget::getItemsCount() {
 	return items.size();
+}
+
+void TwitterWidget::setMessagesPerPage(int value) {
+	messagesPerPage = value;
 }
 
 #endif

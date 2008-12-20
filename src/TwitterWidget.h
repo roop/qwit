@@ -32,15 +32,13 @@ public:
 
 const int ICON_SIZE = 48;
 const int MARGIN = 5;
-const int MAX_ITEMS_SIZE = 20;
 
 class TwitterWidget: public QWidget {
 	Q_OBJECT
 
 private:
-
+	int messagesPerPage;
 	QVector<TwitterWidgetItem> items;
-	
 	QString prepare(const QString &text, const int &replyStatusId);
 	
 public:
@@ -51,6 +49,8 @@ public:
 	void updateItems();
 	const TwitterWidgetItem getItem(int index);
 	int getItemsCount();
+	void setMessagesPerPage(int value);
+	
 	static QString formatDateTime(const QDateTime &time);
 	
 protected:

@@ -165,14 +165,15 @@ void MainWindow::loadState() {
 	QSettings settings("arti", "qwit");
 	
 	settings.beginGroup("MainWindow");
-	resize(settings.value("size", QSize(200, 600)).toSize());
-	move(settings.value("pos", QPoint(200, 200)).toPoint());
+	resize(settings.value("size", QSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)).toSize());
+	move(settings.value("pos", QPoint(DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y)).toPoint());
 	settings.endGroup();
 	settings.beginGroup("Twitter");
 	username = settings.value("username", "").toString();
 	bool savePassword = settings.value("savePassword", false).toBool();
 	password = settings.value("password", "").toString();
-	interval = settings.value("interval", "300").toInt();
+	interval = settings.value("interval", DEFAULT_UPDATE_INTERVAL).toInt();
+	messagesPerPage = settings.value("messagesPerPage", DEFAULT_MESSAGES_PER_PAGE).toInt();
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	useProxy = settings.value("useProxy", "").toBool();
@@ -188,6 +189,7 @@ void MainWindow::loadState() {
 	
 	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
 	
+	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
 	optionsDialog->usernameLineEdit->setText(username);
 	optionsDialog->passwordLineEdit->setText(password);
 	optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
@@ -257,6 +259,10 @@ void MainWindow::updateTimeline() {
 void MainWindow::saveState() {
 	QSettings settings("arti", "qwit");
 	
+	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
+		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
+	}
+	
 	username = optionsDialog->usernameLineEdit->text();
 	password = optionsDialog->passwordLineEdit->text();
 	bool savePassword = optionsDialog->savePasswordCheckBox->checkState() == Qt::Checked;
@@ -267,6 +273,7 @@ void MainWindow::saveState() {
 	proxyPort = optionsDialog->proxyPortLineEdit->text().toInt();
 	proxyUsername = optionsDialog->proxyUsernameLineEdit->text();
 	proxyPassword = optionsDialog->proxyPasswordLineEdit->text();
+	messagesPerPage = optionsDialog->messagesPerPageLineEdit->text().toInt();
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
 	
 	settings.beginGroup("MainWindow");
@@ -282,6 +289,7 @@ void MainWindow::saveState() {
 		settings.setValue("password", "");
 	}
 	settings.setValue("interval", interval);
+	settings.setValue("messagesPerPage", messagesPerPage);
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	settings.setValue("useProxy", useProxy);
