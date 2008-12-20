@@ -253,7 +253,7 @@ void MainWindow::updateTimeline() {
 		optionsDialog->showNormal();
 		return;
 	}
-	twitter.update(username, password, twitterTabs[tabWidget->currentIndex()].lastId, tabWidget->currentIndex());
+	twitter.update(username, password, twitterTabs[tabWidget->currentIndex()].lastId, tabWidget->currentIndex(), messagesPerPage);
 }
 	
 void MainWindow::saveState() {
@@ -546,7 +546,7 @@ void MainWindow::tabChanged(int index) {
 		}
 		int time = QDateTime::currentDateTime().toTime_t();
 		if (twitterTabs[index].lastUpdateTime + interval <= time) {
-			twitter.update(username, password, twitterTabs[index].lastId, index);
+			twitter.update(username, password, twitterTabs[index].lastId, index, messagesPerPage);
 		}
 	}
 }

@@ -57,13 +57,11 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	emit stateChanged("Sending status...");
 }
 
-void Twitter::update(QString username, QString password, int lastStatusId, int type) {
+void Twitter::update(QString username, QString password, int lastStatusId, int type, int count) {
 	if (urls[type] == "") return;
 	
 	if (timelineHttp.state() != QHttp::Unconnected) {
-		cout << timelineHttp.state() <<endl;
 		timelineHttp.abort();
-		cout << timelineHttp.state() <<endl;
 	}
 	
 	currentType = type;
@@ -80,7 +78,7 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	timelineHttp.setUser(username, password);
 	
 	buffer.open(QIODevice::WriteOnly);
-	timelineHttp.get(url.path() + (lastStatusId ? "?since_id=" + QString::number(lastStatusId) : ""), &buffer);
+	timelineHttp.get(url.path() + "?count=" + QString::number(count) + (lastStatusId ? "&since_id=" + QString::number(lastStatusId) : ""), &buffer);
 	
 	emit stateChanged("Updating timeline...");
 }
