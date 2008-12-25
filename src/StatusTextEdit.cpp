@@ -17,6 +17,7 @@ StatusTextEdit::StatusTextEdit(QWidget *parent): QTextEdit(parent) {
 	setFixedHeight(STANDARD_HEIGHT);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	emit leftCharsNumberChanged(MAX_STATUS_CHARACTERS);
+	connect(this, SIGNAL(textChanged()), this, SLOT(textChangedToCharsNumberChanged()));
 }
 	
 int StatusTextEdit::getMaxStatusCharacter() {
@@ -40,13 +41,7 @@ void StatusTextEdit::keyPressEvent(QKeyEvent *e) {
 		e->accept();
 		return;
 	}
-	int a = toPlainText().length();
 	QTextEdit::keyPressEvent(e);
-	int b = toPlainText().length();
-	if (a != b) emit leftCharsNumberChanged(MAX_STATUS_CHARACTERS - b);
-	if (verticalScrollBar()->maximum() - verticalScrollBar()->minimum()) {
-		setFixedHeight(height() + verticalScrollBar()->maximum() - verticalScrollBar()->minimum());
-	}
 }
 
 void StatusTextEdit::reply(const QString &username) {
@@ -61,6 +56,17 @@ void StatusTextEdit::reply(const QString &username) {
 	setText("@" + username + " " + text);
 	setFocus(Qt::OtherFocusReason);
 	moveCursor(QTextCursor::NextWord);
+}
+
+void StatusTextEdit::textChangedToCharsNumberChanged() {
+	emit leftCharsNumberChanged(MAX_STATUS_CHARACTERS - toPlainText().length());
+	updateSize();
+}
+
+void StatusTextEdit::updateSize() {
+	if (verticalScrollBar()->maximum() - verticalScrollBar()->minimum()) {
+		setFixedHeight(height() + verticalScrollBar()->maximum() - verticalScrollBar()->minimum());
+	}
 }
 
 #endif

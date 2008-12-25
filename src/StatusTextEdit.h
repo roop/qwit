@@ -28,6 +28,8 @@ signals:
 public slots:
 	
 	void reply(const QString &username);
+	void textChangedToCharsNumberChanged();
+	void updateSize();
 };
 
 #endif

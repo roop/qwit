@@ -320,7 +320,6 @@ void MainWindow::saveState() {
 			settings.setValue("time", twitterTabs[tab].twitterWidget->getItem(i).cacheTime.toString("yyyy-MM-dd hh:mm:ss"));
 			settings.setValue("messageId", twitterTabs[tab].twitterWidget->getItem(i).cacheMessageId);
 			settings.setValue("replyStatusId", twitterTabs[tab].twitterWidget->getItem(i).cacheReplyStatusId);
-			settings.setValue("index", twitterTabs[tab].twitterWidget->getItem(i).cacheIndex);
 		}
 		settings.endArray();
 	}
