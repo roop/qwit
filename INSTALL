@@ -1,0 +1,4 @@
+Installing Qwit:
+
+1. run `make` - this will compile Qwit sources
+2. run `make install` - this will install Qwit into /usr/bin
