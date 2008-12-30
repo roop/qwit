@@ -1,4 +1,11 @@
-Installing Qwit:
+Prerequisites
 
-1. run `make` - this will compile Qwit sources
-2. run `make install` - this will install Qwit into /usr/bin
+You should have development version of Qt.
+
+Compiling & Installing Qwit
+
+1. If you want to change default installation prefix (/usr/bin), put it to qwit.pro (target.path variable)
+2. run `qmake` - this will create Makefile
+3. run `make` - this will compile Qwit sources
+4. run `make install` - this will install Qwit into chosen directory
+5. to start Qwit run `qwit` from directory you have chosen for installation
