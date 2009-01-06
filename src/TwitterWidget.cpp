@@ -19,6 +19,7 @@
 #include <QScrollBar>
 #include <QDesktopServices>
 #include <QPalette>
+#include <QChar>
 
 #include "TwitterWidget.h"
 
@@ -28,6 +29,10 @@ using namespace std;
 
 TwitterWidget::TwitterWidget(): QWidget() {
 	QDesktopServices::setUrlHandler("reply", this, "replyClicked");
+}
+
+bool TwitterWidget::isUsernameChar(const QChar &c) const {
+	return ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) || ((c >= '0') && (c <= '9')) || (c == '_');
 }
 
 QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
@@ -50,7 +55,23 @@ QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
 		int i = 1;
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
-		t = "@<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none\">" + username + "</a>" + s.mid(i);
+		t = "@<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none;font-weight:bold;\">" + username + "</a>" + s.mid(i);
+	}
+	s = t;
+	t = "";
+	for (int i = 0; i < s.length(); ++i) {
+		t += s[i];
+		if ((s[i] == '@') && (!i || (s[i - 1] == ' '))) {
+			int j = i + 1;
+			while ((j < s.length()) && isUsernameChar(s[j])) {
+				++j;
+			}
+			if (j - i - 1 > 0) {
+				QString username = s.mid(i + 1, j - i - 1);
+				t += "<a href=\"http://twitter.com/" + username + "\" style=\"text-decoration:none;font-weight:bold;\">" + username + "</a>";
+				i = j - 1;
+			}
+		}
 	}
 	return t;
 }

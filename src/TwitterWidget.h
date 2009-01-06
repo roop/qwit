@@ -55,6 +55,7 @@ private:
 	int messagesPerPage;
 	QVector<TwitterWidgetItem> items;
 	QString prepare(const QString &text, const int &replyStatusId);
+	bool isUsernameChar(const QChar &c) const;
 	
 public:
 
