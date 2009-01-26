@@ -18,6 +18,8 @@
 
 #include "MainWindow.h"
 
+#include "QwitException.h"
+
 #include <iostream>
 
 using namespace std;
@@ -328,13 +330,18 @@ void MainWindow::saveState() {
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		settings.beginWriteArray("Twits" + QString::number(tab));
 		for (int i = 0; i < twitterTabs[tab].twitterWidget->getItemsCount(); ++i) {
-			settings.setArrayIndex(i);
-			settings.setValue("userpic", twitterTabs[tab].twitterWidget->getItem(i).cacheUserpic);
-			settings.setValue("username", twitterTabs[tab].twitterWidget->getItem(i).cacheUsername);
-			settings.setValue("status", twitterTabs[tab].twitterWidget->getItem(i).cacheStatus);
-			settings.setValue("time", twitterTabs[tab].twitterWidget->getItem(i).cacheTime.toString("yyyy-MM-dd hh:mm:ss"));
-			settings.setValue("messageId", twitterTabs[tab].twitterWidget->getItem(i).cacheMessageId);
-			settings.setValue("replyStatusId", twitterTabs[tab].twitterWidget->getItem(i).cacheReplyStatusId);
+			try {
+				const TwitterWidgetItem &item = twitterTabs[tab].twitterWidget->getItem(i);
+				settings.setArrayIndex(i);
+				settings.setValue("userpic", item.cacheUserpic);
+				settings.setValue("username", item.cacheUsername);
+				settings.setValue("status", item.cacheStatus);
+				settings.setValue("time", item.cacheTime.toString("yyyy-MM-dd hh:mm:ss"));
+				settings.setValue("messageId", item.cacheMessageId);
+				settings.setValue("replyStatusId", item.cacheReplyStatusId);
+			} catch (const QwitException &exception) {
+				cerr << "Exception catched: " << qPrintable(exception.message) << endl;
+			}
 		}
 		settings.endArray();
 	}

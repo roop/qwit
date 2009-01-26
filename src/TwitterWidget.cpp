@@ -22,6 +22,7 @@
 #include <QChar>
 
 #include "TwitterWidget.h"
+#include "QwitException.h"
 
 #include <iostream>
 
@@ -222,6 +223,10 @@ QString TwitterWidget::formatDateTime(const QDateTime &time) {
 }
 
 const TwitterWidgetItem TwitterWidget::getItem(int index) {
+// Possible fix for issue 10
+	if (index >= items.size()) {
+		throw QwitException("Trying to get a nonexisting item from TwitterWidget::items");
+	}
 	return items[index];
 }
 
