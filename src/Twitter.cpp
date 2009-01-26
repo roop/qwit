@@ -100,20 +100,20 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 
 void Twitter::statusHttpDone(bool error) {
 	if (error) {
-		emit stateChanged(tr("Error sending status") + ": " + statusHttp.errorString());
+		emit stateChanged(tr("Error sending status: %1").arg(statusHttp.errorString()));
 		return;
 	}
-	emit stateChanged(tr("Status sent at") + " " + QDateTime::currentDateTime().toString("hh:mm:ss"));
+	emit stateChanged(tr("Status sent: %1").arg(QDateTime::currentDateTime().toString("hh:mm:ss")));
 	emit statusUpdated();
 }
 
 void Twitter::timelineHttpDone(bool error) {
 	if (error) {
-		emit stateChanged(tr("Error while updating timeline") + ": " + timelineHttp.errorString());
+		emit stateChanged(tr("Error while updating timeline: %1").arg(timelineHttp.errorString()));
 		return;
 	}
 	buffer.close();
-	emit stateChanged(tr("Timeline updated at") + " " + QDateTime::currentDateTime().toString("hh:mm:ss"));
+	emit stateChanged(tr("Timeline updated: %1").arg(QDateTime::currentDateTime().toString("hh:mm:ss")));
 	emit updated(buffer.data(), currentType);
 }
 

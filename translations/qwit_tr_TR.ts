@@ -213,22 +213,22 @@
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="103"/>
-        <source>Error sending status</source>
+        <source>Error sending status: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="106"/>
-        <source>Status sent at</source>
+        <source>Status sent: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="112"/>
-        <source>Error while updating timeline</source>
+        <source>Error while updating timeline: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="116"/>
-        <source>Timeline updated at</source>
+        <source>Timeline updated: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -276,17 +276,17 @@
     <name>UserpicsDownloader</name>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="43"/>
-        <source>Downloading</source>
+        <source>Downloading: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="57"/>
-        <source>Error while downloading userpic</source>
+        <source>Error while downloading userpic: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="62"/>
-        <source>Downloaded</source>
+        <source>Downloaded: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

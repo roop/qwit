@@ -40,7 +40,7 @@ void UserpicsDownloader::startDownload() {
 	}
 	http.setHost(url.host(), url.port(80));
 	http.get(QUrl::toPercentEncoding(url.path(), "/"), &file);
-	emit stateChanged(tr("Downloading") + " " + item.first);
+	emit stateChanged(tr("Downloading: %1").arg(item.first));
 }
 	
 void UserpicsDownloader::download(const QString &url, const QString &filename) {
@@ -54,12 +54,12 @@ void UserpicsDownloader::download(const QString &url, const QString &filename) {
 
 void UserpicsDownloader::httpDone(bool error) {
 	if (error) {
-		emit stateChanged(tr("Error while downloading userpic") + ": " + http.errorString());
+		emit stateChanged(tr("Error while downloading userpic: %1").arg(http.errorString()));
 	}
 	QPair<QString, QString> item = queue.dequeue();
 	file.close();
 	emit userpicDownloaded(item.second);
-	emit stateChanged(tr("Downloaded") + " " + item.first);
+	emit stateChanged(tr("Downloaded: %1").arg(item.first));
 	if (queue.size()) {
 		startDownload();
 	}

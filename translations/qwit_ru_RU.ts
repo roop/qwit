@@ -213,23 +213,23 @@
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="103"/>
-        <source>Error sending status</source>
-        <translation>Ошибка при отправлении статуса</translation>
+        <source>Error sending status: %1</source>
+        <translation>Ошибка при отправлении статуса: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="106"/>
-        <source>Status sent at</source>
-        <translation>Статус отправлен </translation>
+        <source>Status sent: %1</source>
+        <translation>Статус отправлен: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="112"/>
-        <source>Error while updating timeline</source>
-        <translation>Ошибка обновления</translation>
+        <source>Error while updating timeline: %1</source>
+        <translation>Ошибка обновления: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="116"/>
-        <source>Timeline updated at</source>
-        <translation>Сообщения обновлены</translation>
+        <source>Timeline updated: %1</source>
+        <translation>Сообщения обновлены: %1</translation>
     </message>
 </context>
 <context>
@@ -280,18 +280,18 @@
     <name>UserpicsDownloader</name>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="43"/>
-        <source>Downloading</source>
-        <translation>Загрузка</translation>
+        <source>Downloading: %1</source>
+        <translation>Загрузка: %1</translation>
     </message>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="57"/>
-        <source>Error while downloading userpic</source>
-        <translation>Ошибка при загрузке изображения пользователя</translation>
+        <source>Error while downloading userpic: %1</source>
+        <translation>Ошибка при загрузке изображения пользователя: %1</translation>
     </message>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="62"/>
-        <source>Downloaded</source>
-        <translation>Загружено</translation>
+        <source>Downloaded: %1</source>
+        <translation>Загружено: %1</translation>
     </message>
 </context>
 </TS>
