@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="tr">
-<defaultcodec></defaultcodec>
 <context>
     <name>LogsDialog</name>
     <message>
@@ -106,6 +105,11 @@
         <source>Quit</source>
         <translation>Çıkış</translation>
     </message>
+    <message>
+        <location filename="../src/MainWindow.cpp" line="522"/>
+        <source>Qwit updates</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
@@ -193,6 +197,57 @@
         <location filename="../src/OptionsDialog.ui" line="259"/>
         <source>Reset options</source>
         <translation>Seçenekleri sıfırla</translation>
+    </message>
+</context>
+<context>
+    <name>Twitter</name>
+    <message>
+        <location filename="../src/Twitter.cpp" line="72"/>
+        <source>Sending status...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="98"/>
+        <source>Updating timeline...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="103"/>
+        <source>Error sending status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="106"/>
+        <source>Status sent at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="112"/>
+        <source>Error while updating timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="116"/>
+        <source>Timeline updated at</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserpicsDownloader</name>
+    <message>
+        <location filename="../src/UserpicsDownloader.cpp" line="43"/>
+        <source>Downloading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UserpicsDownloader.cpp" line="57"/>
+        <source>Error while downloading userpic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UserpicsDownloader.cpp" line="62"/>
+        <source>Downloaded</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -519,7 +519,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	twitterTabs[type].lastId = maxId;
 	twitterTabs[type].lastUpdateTime = QDateTime::currentDateTime().toTime_t();
 	if (trayMessage != "") {
-		trayIcon->showMessage("Qwit updates", trayMessage);
+		trayIcon->showMessage(tr("Qwit updates"), trayMessage);
 	}
 	saveState();
 }
