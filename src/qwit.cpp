@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	translator.load(QString(":/var/qwit_") + locale);
+	translator.load(QString(":/translations/qwit_") + locale);
 	app.installTranslator(&translator);
 
 	MainWindow::getInstance()->show();
