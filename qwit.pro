@@ -31,7 +31,8 @@ SOURCES += src/LogsDialog.cpp \
            src/UserpicsDownloader.cpp
 TRANSLATIONS += \
            translations/qwit_tr_TR.ts \
-           translations/qwit_ru_RU.ts
+           translations/qwit_ru_RU.ts \
+           translations/qwit_en_US.ts
 QT += network xml
 RESOURCES = qwit.qrc
 target.path = /usr/bin

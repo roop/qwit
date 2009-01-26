@@ -212,14 +212,14 @@ void TwitterWidget::paintEvent(QPaintEvent *event) {
 	
 QString TwitterWidget::formatDateTime(const QDateTime &time) {
 	int seconds = time.secsTo(QDateTime::currentDateTime());
-	if (seconds <= 15) return "Just now";
-	if (seconds <= 45) return "about " + QString::number(seconds) + " second" + (seconds == 1 ? "" : "s") + " ago";
+	if (seconds <= 15) return tr("Just now");
+	if (seconds <= 45) return tr("about %n second(s) ago", "", seconds);
 	int minutes = (seconds - 45 + 59) / 60;
-	if (minutes <= 45) return "about " + QString::number(minutes) + " minute" + (minutes == 1 ? "" : "s") + " ago";
+	if (minutes <= 45) return tr("about %n minute(s) ago", "", minutes);
 	int hours = (seconds - 45 * 60 + 3599) / 3600;
-	if (hours <= 18) return "about " + QString::number(hours) + " hour" + (hours == 1 ? "" : "s") + " ago";
+	if (hours <= 18) return tr("about %n hour(s) ago", "", hours);
 	int days = (seconds - 18 * 3600 + 24 * 3600 - 1) / (24 * 3600);
-	return "about " + QString::number(days) + " day" + (days == 1 ? "" : "s") + " ago";
+	return tr("about %n day(s) ago", "", days);
 }
 
 const TwitterWidgetItem TwitterWidget::getItem(int index) {
