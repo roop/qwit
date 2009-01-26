@@ -29,6 +29,8 @@ SOURCES += src/LogsDialog.cpp \
            src/Twitter.cpp \
            src/TwitterWidget.cpp \
            src/UserpicsDownloader.cpp
+TRANSLATIONS += \
+           var/qwit_tr_TR.ts
 QT += network xml
 RESOURCES = qwit.qrc
 target.path = /usr/bin

@@ -14,11 +14,19 @@
     along with Qwit.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <QApplication>
+#include <QLocale>
+#include <QTranslator>
 
 #include "MainWindow.h"
 
 int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
+
+	QString locale = QLocale::system().name();
+	QTranslator translator;
+	translator.load(QString(":/var/qwit_") + locale);
+	app.installTranslator(&translator);
+
 	MainWindow::getInstance()->show();
 	return app.exec();
 }

@@ -6,5 +6,6 @@
         <file>images/qwit.png</file>
         <file>images/reload.png</file>
         <file>images/reply.png</file>
+        <file>var/qwit_tr_TR.qm</file>
     </qresource>
 </RCC>
