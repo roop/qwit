@@ -191,6 +191,7 @@ void MainWindow::loadState() {
 	password = settings.value("password", "").toString();
 	interval = settings.value("interval", DEFAULT_UPDATE_INTERVAL).toInt();
 	messagesPerPage = settings.value("messagesPerPage", DEFAULT_MESSAGES_PER_PAGE).toInt();
+	updatesNotification = settings.value("updatesNotification", true).toBool();
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	useProxy = settings.value("useProxy", "").toBool();
@@ -207,6 +208,7 @@ void MainWindow::loadState() {
 	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
 	
 	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
+	optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->usernameLineEdit->setText(username);
 	optionsDialog->passwordLineEdit->setText(password);
 	optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
@@ -292,6 +294,7 @@ void MainWindow::saveState() {
 	proxyPassword = optionsDialog->proxyPasswordLineEdit->text();
 	messagesPerPage = optionsDialog->messagesPerPageLineEdit->text().toInt();
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
+	updatesNotification = optionsDialog->updatesNotificationCheckBox->checkState() == Qt::Checked;
 	
 	settings.beginGroup("MainWindow");
 	settings.setValue("size", size());
@@ -307,6 +310,7 @@ void MainWindow::saveState() {
 	}
 	settings.setValue("interval", interval);
 	settings.setValue("messagesPerPage", messagesPerPage);
+	settings.setValue("updatesNotification", updatesNotification);
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	settings.setValue("useProxy", useProxy);
@@ -525,7 +529,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	}
 	twitterTabs[type].lastId = maxId;
 	twitterTabs[type].lastUpdateTime = QDateTime::currentDateTime().toTime_t();
-	if (trayMessage != "") {
+	if ((trayMessage != "") && updatesNotification) {
 		trayIcon->showMessage(tr("Qwit updates"), trayMessage);
 	}
 	saveState();
