@@ -43,6 +43,8 @@ public:
 	int cacheMessageId;
 	int cacheReplyStatusId;
 	int cacheIndex;
+	
+	void loadIcon();
 };
 
 const int ICON_SIZE = 48;
@@ -54,14 +56,15 @@ class TwitterWidget: public QWidget {
 private:
 	int messagesPerPage;
 	QVector<TwitterWidgetItem> items;
-	QString prepare(const QString &text, const int &replyStatusId);
+	QString prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL);
 	bool isUsernameChar(const QChar &c) const;
+	QString serviceBaseURL;
 	
 public:
 
 	TwitterWidget();
 	void clear();
-	void addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i = -1);
+	void addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i, const QString &serviceBaseURL);
 	void updateItems();
 	const TwitterWidgetItem getItem(int index);
 	int getItemsCount();

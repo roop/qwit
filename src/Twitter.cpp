@@ -37,6 +37,22 @@ Twitter::Twitter() {
 	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));
 }
 
+void Twitter::setServiceBaseURL(const QString &url) {
+	serviceBaseURL = url;
+}
+
+void Twitter::setServiceAPIURL(const QString &url) {
+	serviceAPIURL = url;
+}
+
+QString Twitter::getServiceBaseURL() {
+	return serviceBaseURL;
+}
+
+QString Twitter::getServiceAPIURL() {
+	return serviceAPIURL;
+}
+
 void Twitter::useProxy(const QString &address, int port, const QString &username, const QString &password) {
 	proxyAddress = address;
 	proxyPort = port;
@@ -49,7 +65,7 @@ void Twitter::dontUseProxy() {
 }
 
 void Twitter::sendStatus(QString username, QString password, QString status) {
-	QUrl url(STATUS_UPDATE_URL);
+	QUrl url(serviceAPIURL + STATUS_UPDATE_URL);
 
 	QHttpRequestHeader header;
 	header.setRequest("POST", url.path());
@@ -69,11 +85,14 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	data += "&source=qwit";
 	statusHttp.request(header, data);
 
-	emit stateChanged(tr("Sending status..."));
+	emit stateChanged(tr("Sending status: %1").arg(serviceAPIURL + STATUS_UPDATE_URL));
 }
 
 void Twitter::update(QString username, QString password, int lastStatusId, int type, int count) {
-	if (urls[type] == "") return;
+	if (urls[type] == "") {
+		cerr << "No url defined" << endl;
+		return;
+	}
 	
 	if (timelineHttp.state() != QHttp::Unconnected) {
 		timelineHttp.abort();
@@ -81,7 +100,7 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	
 	currentType = type;
 	
-	QUrl url(urls[type]);
+	QUrl url(serviceAPIURL + urls[type]);
 	
 	if (proxyAddress != "") {
 		timelineHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -95,7 +114,7 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	buffer.open(QIODevice::WriteOnly);
 	timelineHttp.get(url.path() + "?count=" + QString::number(count) + (lastStatusId ? "&since_id=" + QString::number(lastStatusId) : ""), &buffer);
 	
-	emit stateChanged(tr("Updating timeline..."));
+	emit stateChanged(tr("Updating timeline: %1").arg(serviceAPIURL + urls[type]));
 }
 
 void Twitter::statusHttpDone(bool error) {
@@ -123,6 +142,7 @@ void Twitter::abort() {
 }
 
 void Twitter::setUrl(int index, const QString &url) {
+	cout << qPrintable(url) << endl;
 	urls[index] = url;
 }
 

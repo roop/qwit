@@ -192,6 +192,8 @@ void MainWindow::loadState() {
 	interval = settings.value("interval", DEFAULT_UPDATE_INTERVAL).toInt();
 	messagesPerPage = settings.value("messagesPerPage", DEFAULT_MESSAGES_PER_PAGE).toInt();
 	updatesNotification = settings.value("updatesNotification", true).toBool();
+	twitter.setServiceAPIURL(settings.value("serviceAPIURL", "http://twitter.com").toString());
+	twitter.setServiceBaseURL(settings.value("serviceBaseURL", "http://twitter.com").toString());
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	useProxy = settings.value("useProxy", "").toBool();
@@ -209,6 +211,8 @@ void MainWindow::loadState() {
 	
 	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
 	optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->serviceBaseURLLineEdit->setText(twitter.getServiceBaseURL());
+	optionsDialog->serviceAPIURLLineEdit->setText(twitter.getServiceAPIURL());
 	optionsDialog->usernameLineEdit->setText(username);
 	optionsDialog->passwordLineEdit->setText(password);
 	optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
@@ -247,7 +251,8 @@ void MainWindow::loadState() {
 				QDateTime::fromString(settings.value("time").toString(), "yyyy-MM-dd hh:mm:ss"),
 				settings.value("messageId").toInt(),
 				settings.value("replyStatusId").toInt(),
-				-1
+				-1,
+				twitter.getServiceBaseURL()
 			);
 		}
 		settings.endArray();
@@ -286,6 +291,8 @@ void MainWindow::saveState() {
 	password = optionsDialog->passwordLineEdit->text();
 	bool savePassword = optionsDialog->savePasswordCheckBox->checkState() == Qt::Checked;
 	interval = optionsDialog->intervalLineEdit->text().toInt();
+	twitter.setServiceBaseURL(optionsDialog->serviceBaseURLLineEdit->text());
+	twitter.setServiceAPIURL(optionsDialog->serviceAPIURLLineEdit->text());
 	
 	useProxy = optionsDialog->useProxyCheckBox->checkState() == Qt::Checked;
 	proxyAddress = optionsDialog->proxyAddressLineEdit->text();
@@ -311,6 +318,8 @@ void MainWindow::saveState() {
 	settings.setValue("interval", interval);
 	settings.setValue("messagesPerPage", messagesPerPage);
 	settings.setValue("updatesNotification", updatesNotification);
+	settings.setValue("serviceBaseURL", twitter.getServiceBaseURL());
+	settings.setValue("serviceAPIURL", twitter.getServiceAPIURL());
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	settings.setValue("useProxy", useProxy);
@@ -523,7 +532,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 			userpicsDownloader.download(image, imageFileName);
 			
-			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++);
+			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++, twitter.getServiceBaseURL());
 		}
 		node = node.nextSibling();
 	}

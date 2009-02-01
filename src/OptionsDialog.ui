@@ -28,6 +28,26 @@
          <item row="0" column="0" >
           <layout class="QVBoxLayout" >
            <item>
+            <widget class="QLabel" name="label_5" >
+             <property name="text" >
+              <string>Service base URL:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="serviceBaseURLLineEdit" />
+           </item>
+           <item>
+            <widget class="QLabel" name="label_10" >
+             <property name="text" >
+              <string>Service API URL:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="serviceAPIURLLineEdit" />
+           </item>
+           <item>
             <widget class="QLabel" name="label_3" >
              <property name="text" >
               <string>Update interval:</string>

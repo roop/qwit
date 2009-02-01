@@ -21,16 +21,19 @@
 #include <QString>
 #include <QBuffer>
 
-#define HOME_XML_URL "http://twitter.com/statuses/friends_timeline.xml"
-#define PUBLIC_XML_URL "http://twitter.com/statuses/public_timeline.xml"
-#define REPLIES_XML_URL "http://twitter.com/statuses/replies.xml"
-#define CUSTOM_XML_URL "http://twitter.com/statuses/user_timeline/"
+#define HOME_XML_URL "/statuses/friends_timeline.xml"
+#define PUBLIC_XML_URL "/statuses/public_timeline.xml"
+#define REPLIES_XML_URL "/statuses/replies.xml"
+#define CUSTOM_XML_URL "/statuses/user_timeline/"
 
-#define STATUS_UPDATE_URL "http://twitter.com/statuses/update.xml"
+#define STATUS_UPDATE_URL "/statuses/update.xml"
 
-//#define HOME_XML_URL "http://twitter.com/statuses/user_timeline/freetonik.xml"
-//#define HOME_XML_URL "http://twitter.lo/друзья.php"
-//#define STATUS_UPDATE_URL "http://twitter.lo/update.php"
+// #define HOME_XML_URL "http://twitter.com/statuses/friends_timeline.xml"
+// #define PUBLIC_XML_URL "http://twitter.com/statuses/public_timeline.xml"
+// #define REPLIES_XML_URL "http://twitter.com/statuses/replies.xml"
+// #define CUSTOM_XML_URL "http://twitter.com/statuses/user_timeline/"
+// 
+// #define STATUS_UPDATE_URL "http://twitter.com/statuses/update.xml"
 
 class Twitter: public QObject {
 	Q_OBJECT
@@ -44,6 +47,8 @@ class Twitter: public QObject {
 	QString proxyPassword;
 	int currentType;
 	QString urls[4];
+	QString serviceBaseURL;
+	QString serviceAPIURL;
 	
 public:
 
@@ -54,6 +59,10 @@ public:
 	void update(QString username, QString password, int lastStatusId, int type, int count);
 	void setUrl(int index, const QString &url);
 	void abort();
+	QString getServiceBaseURL();
+	QString getServiceAPIURL();
+	void setServiceBaseURL(const QString &url);
+	void setServiceAPIURL(const QString &url);
 
 public slots:
 

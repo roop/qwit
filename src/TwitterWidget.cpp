@@ -28,6 +28,15 @@
 
 using namespace std;
 
+void TwitterWidgetItem::loadIcon() {
+	QPixmap pixmap(iconFileName);
+// Fix for stupid formats
+	if (pixmap.isNull()) {
+		pixmap.load(iconFileName, "JPG");
+	}
+	icon->setPixmap(pixmap);
+}
+
 TwitterWidget::TwitterWidget(): QWidget() {
 	QDesktopServices::setUrlHandler("reply", this, "replyClicked");
 }
@@ -36,7 +45,7 @@ bool TwitterWidget::isUsernameChar(const QChar &c) const {
 	return ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) || ((c >= '0') && (c <= '9')) || (c == '_');
 }
 
-QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
+QString TwitterWidget::prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL) {
 	QString s = text;
 	s.replace(" www.", " http://www.");
 	if (s.startsWith("www.")) s = "http://" + s;
@@ -56,7 +65,7 @@ QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
 		int i = 1;
 		while ((i < s.length()) && (QChar(s[i]).isLetterOrNumber() || (s[i] == '_'))) ++i;
 		QString username = s.mid(1, i - 1);
-		t = "@<a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none;font-weight:bold;\">" + username + "</a>" + s.mid(i);
+		t = "@<a href=\"" + serviceBaseURL + "/" + username + "/statuses/" + QString::number(replyStatusId) + "\" style=\"text-decoration:none;font-weight:bold;\">" + username + "</a>" + s.mid(i);
 	}
 	s = t;
 	t = "";
@@ -69,7 +78,7 @@ QString TwitterWidget::prepare(const QString &text, const int &replyStatusId) {
 			}
 			if (j - i - 1 > 0) {
 				QString username = s.mid(i + 1, j - i - 1);
-				t += "<a href=\"http://twitter.com/" + username + "\" style=\"text-decoration:none;font-weight:bold;\">" + username + "</a>";
+				t += "<a href=\"" + serviceBaseURL + "/" + username + "\" style=\"text-decoration:none;font-weight:bold;\">" + username + "</a>";
 				i = j - 1;
 			}
 		}
@@ -86,7 +95,7 @@ void TwitterWidget::clear() {
 	items.clear();
 }
 	
-void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i) {
+void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i, const QString &serviceBaseURL) {
 	TwitterWidgetItem item = TwitterWidgetItem();
 	
 	item.time = time;
@@ -104,7 +113,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.cacheIndex = i;
 	
 	item.status = new QTextBrowser(this);
-	item.status->setHtml(prepare(status, replyStatusId));
+	item.status->setHtml(prepare(status, replyStatusId, serviceBaseURL));
 	item.status->setReadOnly(true);
 	item.status->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	item.status->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -115,9 +124,8 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.status->document()->setDefaultFont(font);
 	
 	item.icon = new QLabel(this);
-	item.icon->setPixmap(QPixmap(userpic));
 	item.iconFileName = userpic;
-	
+	item.loadIcon();
 	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(time) + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
 	item.sign->setAlignment(Qt::AlignRight);
 	item.sign->setOpenExternalLinks(true);
@@ -191,7 +199,7 @@ void TwitterWidget::replyClicked(const QUrl &url) {
 void TwitterWidget::reloadUserpic(const QString &userpic) {
 	for (int i = 0; i < items.size(); ++i) if (items[i].iconFileName == userpic) {
 		TwitterWidgetItem &item = items[i];
-		item.icon->setPixmap(QPixmap(item.iconFileName));
+		item.loadIcon();
 		item.icon->resize(ICON_SIZE, ICON_SIZE);
 	}
 }

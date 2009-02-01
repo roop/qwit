@@ -5,7 +5,7 @@
     <message>
         <location filename="../src/LogsDialog.ui" line="13"/>
         <source>Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Kayıtlar</translation>
     </message>
 </context>
 <context>
@@ -13,101 +13,101 @@
     <message>
         <location filename="../src/MainWindow.cpp" line="167"/>
         <source>&amp;Show / Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Göster / Gizle</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.cpp" line="169"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow.cpp" line="529"/>
-        <source>Qwit updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Çı&amp;kış</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="13"/>
         <source>Qwit</source>
-        <translation type="unfinished"></translation>
+        <translation>Qwit</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="38"/>
         <source>What are you doing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne yapıyorsun?</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="204"/>
         <source>Left characters count - please, do not exceed this number</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalan karakter sayısı - lütfen bu sayıyı geçmeyin</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="213"/>
         <source>140</source>
-        <translation type="unfinished"></translation>
+        <translation>140</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="235"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Ev</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="238"/>
         <source>Your and your friends&apos; timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Sizin ve arkadaşlarınızın yazdıkları</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="243"/>
         <source>Public</source>
-        <translation type="unfinished"></translation>
+        <translation>Herkes</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="246"/>
         <source>Public timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Herkesin yazdıkarı</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="251"/>
         <source>Replies</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıtlar</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="254"/>
         <source>Replies to you</source>
-        <translation type="unfinished"></translation>
+        <translation>Size verilen yanıtlar</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="259"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="262"/>
         <source>Custom user timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel bir kullanıcının yazdıkları</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="272"/>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı adı:</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="323"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Yenile</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="332"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="351"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="392"/>
         <source>Quit</source>
+        <translation>Çıkış</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.cpp" line="542"/>
+        <source>Qwit updates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -116,126 +116,146 @@
     <message>
         <location filename="../src/OptionsDialog.ui" line="13"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="25"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="33"/>
+        <location filename="../src/OptionsDialog.ui" line="53"/>
         <source>Update interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncelleme sıklığı:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="46"/>
+        <location filename="../src/OptionsDialog.ui" line="66"/>
         <source>Number of messages per page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa başına düşen ileti sayısı:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="75"/>
+        <location filename="../src/OptionsDialog.ui" line="105"/>
         <source>Connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlantı</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="83"/>
+        <location filename="../src/OptionsDialog.ui" line="113"/>
         <source>use proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>proxy kullan</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="90"/>
+        <location filename="../src/OptionsDialog.ui" line="120"/>
         <source>Proxy address:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy adresi:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="103"/>
+        <location filename="../src/OptionsDialog.ui" line="133"/>
         <source>Proxy port:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/OptionsDialog.ui" line="116"/>
-        <source>Proxy username:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/OptionsDialog.ui" line="129"/>
-        <source>Proxy password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy portu:</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="146"/>
+        <source>Proxy username:</source>
+        <translation>Proxy kullanıcı adı:</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="159"/>
+        <source>Proxy password:</source>
+        <translation>Proxy parolası:</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="176"/>
         <source>save proxy password</source>
-        <translation type="unfinished"></translation>
+        <translation>proxy parolasını kaydet</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="169"/>
+        <location filename="../src/OptionsDialog.ui" line="199"/>
         <source>Authentication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/OptionsDialog.ui" line="177"/>
-        <source>Username or email:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/OptionsDialog.ui" line="190"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="207"/>
+        <source>Username or email:</source>
+        <translation>Kullanıcı adı veya e-posta:</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="220"/>
+        <source>Password:</source>
+        <translation>Parola:</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="237"/>
         <source>save password</source>
-        <translation type="unfinished"></translation>
+        <translation>parolayı kaydet</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="252"/>
+        <location filename="../src/OptionsDialog.ui" line="282"/>
         <source>Save options</source>
+        <translation>Seçenekleri kaydet</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="289"/>
+        <source>Reset options</source>
+        <translation>Seçenekleri sıfırla</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="33"/>
+        <source>Service base URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="259"/>
-        <source>Reset options</source>
+        <location filename="../src/OptionsDialog.ui" line="43"/>
+        <source>Service API URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="79"/>
+        <source>Notify about updates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="72"/>
+        <location filename="../src/Twitter.cpp" line="92"/>
         <source>Sending status...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="98"/>
-        <source>Updating timeline...</source>
+        <location filename="../src/Twitter.cpp" line="118"/>
+        <source>Updating timeline: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="103"/>
+        <location filename="../src/Twitter.cpp" line="123"/>
         <source>Error sending status: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="106"/>
+        <location filename="../src/Twitter.cpp" line="126"/>
         <source>Status sent: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="112"/>
+        <location filename="../src/Twitter.cpp" line="132"/>
         <source>Error while updating timeline: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="116"/>
+        <location filename="../src/Twitter.cpp" line="136"/>
         <source>Timeline updated: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TwitterWidget</name>
+    <message>
+        <location filename="../src/TwitterWidget.cpp" line="223"/>
+        <source>Just now</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="216"/>
+        <location filename="../src/TwitterWidget.cpp" line="224"/>
         <source>about %n second(s) ago</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -243,7 +263,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="218"/>
+        <location filename="../src/TwitterWidget.cpp" line="226"/>
         <source>about %n minute(s) ago</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -251,7 +271,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="220"/>
+        <location filename="../src/TwitterWidget.cpp" line="228"/>
         <source>about %n hour(s) ago</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -259,17 +279,12 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="222"/>
+        <location filename="../src/TwitterWidget.cpp" line="230"/>
         <source>about %n day(s) ago</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
-    </message>
-    <message>
-        <location filename="../src/TwitterWidget.cpp" line="215"/>
-        <source>Just now</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

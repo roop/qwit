@@ -21,7 +21,7 @@
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="529"/>
+        <location filename="../src/MainWindow.cpp" line="542"/>
         <source>Qwit updates</source>
         <translation>Обновления Qwit</translation>
     </message>
@@ -124,118 +124,138 @@
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="33"/>
+        <location filename="../src/OptionsDialog.ui" line="53"/>
         <source>Update interval:</source>
         <translation>Интервал обновлений:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="46"/>
+        <location filename="../src/OptionsDialog.ui" line="66"/>
         <source>Number of messages per page:</source>
         <translation>Количество сообщений на странице:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="75"/>
+        <location filename="../src/OptionsDialog.ui" line="105"/>
         <source>Connection</source>
         <translation>Соединение</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="83"/>
+        <location filename="../src/OptionsDialog.ui" line="113"/>
         <source>use proxy</source>
         <translation>использовать прокси</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="90"/>
+        <location filename="../src/OptionsDialog.ui" line="120"/>
         <source>Proxy address:</source>
         <translation>Адрес прокси-сервера:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="103"/>
+        <location filename="../src/OptionsDialog.ui" line="133"/>
         <source>Proxy port:</source>
         <translation>Порт прокси-сервера:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="116"/>
+        <location filename="../src/OptionsDialog.ui" line="146"/>
         <source>Proxy username:</source>
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="129"/>
+        <location filename="../src/OptionsDialog.ui" line="159"/>
         <source>Proxy password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="146"/>
+        <location filename="../src/OptionsDialog.ui" line="176"/>
         <source>save proxy password</source>
         <translation>сохранять пароль для прокси</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="169"/>
+        <location filename="../src/OptionsDialog.ui" line="199"/>
         <source>Authentication</source>
         <translation>Аутентификация</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="177"/>
+        <location filename="../src/OptionsDialog.ui" line="207"/>
         <source>Username or email:</source>
         <translation>Имя пользователя или email:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="190"/>
+        <location filename="../src/OptionsDialog.ui" line="220"/>
         <source>Password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="207"/>
+        <location filename="../src/OptionsDialog.ui" line="237"/>
         <source>save password</source>
         <translation>сохранять пароль</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="252"/>
+        <location filename="../src/OptionsDialog.ui" line="282"/>
         <source>Save options</source>
         <translation>Сохранить настройки</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="259"/>
+        <location filename="../src/OptionsDialog.ui" line="289"/>
         <source>Reset options</source>
         <translation>Сбросить настройки</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="33"/>
+        <source>Service base URL:</source>
+        <translation>Базовый адрес сервиса</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="43"/>
+        <source>Service API URL:</source>
+        <translation>Адрес API сервиса</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="79"/>
+        <source>Notify about updates</source>
+        <translation>Информировать об обновлениях</translation>
     </message>
 </context>
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="72"/>
+        <location filename="../src/Twitter.cpp" line="92"/>
         <source>Sending status...</source>
         <translation>Отправление статуса...</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="98"/>
         <source>Updating timeline...</source>
-        <translation>Обновление...</translation>
+        <translation type="obsolete">Обновление...</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="103"/>
+        <location filename="../src/Twitter.cpp" line="123"/>
         <source>Error sending status: %1</source>
         <translation>Ошибка при отправлении статуса: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="106"/>
+        <location filename="../src/Twitter.cpp" line="126"/>
         <source>Status sent: %1</source>
         <translation>Статус отправлен: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="112"/>
+        <location filename="../src/Twitter.cpp" line="132"/>
         <source>Error while updating timeline: %1</source>
         <translation>Ошибка обновления: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="116"/>
+        <location filename="../src/Twitter.cpp" line="136"/>
         <source>Timeline updated: %1</source>
         <translation>Сообщения обновлены: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="118"/>
+        <source>Updating timeline: %1</source>
+        <translation>Обновляю сообщения: %1</translation>
     </message>
 </context>
 <context>
     <name>TwitterWidget</name>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="216"/>
+        <location filename="../src/TwitterWidget.cpp" line="224"/>
         <source>about %n second(s) ago</source>
         <translation>
             <numerusform>примерно %n секунду назад</numerusform>
@@ -244,7 +264,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="218"/>
+        <location filename="../src/TwitterWidget.cpp" line="226"/>
         <source>about %n minute(s) ago</source>
         <translation>
             <numerusform>примерно %n минуту назад</numerusform>
@@ -253,7 +273,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="220"/>
+        <location filename="../src/TwitterWidget.cpp" line="228"/>
         <source>about %n hour(s) ago</source>
         <translation>
             <numerusform>примерно %n час назад</numerusform>
@@ -262,7 +282,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="222"/>
+        <location filename="../src/TwitterWidget.cpp" line="230"/>
         <source>about %n day(s) ago</source>
         <translation>
             <numerusform>примерно %n день назад</numerusform>
@@ -271,7 +291,7 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/TwitterWidget.cpp" line="215"/>
+        <location filename="../src/TwitterWidget.cpp" line="223"/>
         <source>Just now</source>
         <translation>Только что</translation>
     </message>
