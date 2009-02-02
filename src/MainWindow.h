@@ -63,14 +63,12 @@ const int DEFAULT_MESSAGES_PER_PAGE = 20;
 
 class TwitterTab {
 public:
-	bool clear;
 	TwitterWidget *twitterWidget;
 	int lastId;
 	QScrollArea *scrollArea;
 	int lastUpdateTime;
 	
-	TwitterTab(bool clear, QScrollArea *scrollArea, TwitterWidget *twitterWidget, int lastId) {
-		this->clear = clear;
+	TwitterTab(QScrollArea *scrollArea, TwitterWidget *twitterWidget, int lastId) {
 		this->scrollArea = scrollArea;
 		this->twitterWidget = twitterWidget;
 		this->lastId = lastId;

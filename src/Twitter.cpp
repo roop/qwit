@@ -142,7 +142,6 @@ void Twitter::abort() {
 }
 
 void Twitter::setUrl(int index, const QString &url) {
-	cout << qPrintable(url) << endl;
 	urls[index] = url;
 }
 

@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 	
-	twitterTabs[HOME_TWITTER_TAB] = TwitterTab(false, scrollArea, twitterWidget, 0);
+	twitterTabs[HOME_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 	
 	
 	twitterWidget = new TwitterWidget();
@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 	
-	twitterTabs[PUBLIC_TWITTER_TAB] = TwitterTab(true, scrollArea, twitterWidget, 0);
+	twitterTabs[PUBLIC_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 	
 	
 	twitterWidget = new TwitterWidget();
@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 	
-	twitterTabs[REPLIES_TWITTER_TAB] = TwitterTab(false, scrollArea, twitterWidget, 0);
+	twitterTabs[REPLIES_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 	
 	
 	twitterWidget = new TwitterWidget();
@@ -109,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	vboxLayout1->addWidget(scrollArea);
 	
-	twitterTabs[CUSTOM_TWITTER_TAB] = TwitterTab(true, scrollArea, twitterWidget, 1);
+	twitterTabs[CUSTOM_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 	
 	
 	statusTextEdit = new StatusTextEdit(this);
@@ -234,6 +234,10 @@ void MainWindow::loadState() {
 	
 	if ((username == "") || (password == "")) {
 		statusTextEdit->setDisabled(true);
+	}
+
+	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
+		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
 	}
 	
 	settings.beginGroup("Twits");
@@ -451,10 +455,6 @@ QDateTime MainWindow::dateFromString(const QString &date) {
 }
 
 void MainWindow::updated(const QByteArray &buffer, int type) {
-	if (twitterTabs[type].clear) {
-		twitterTabs[type].twitterWidget->clear();
-	}
-	
 	QDomDocument document;
 	
 	document.setContent(buffer);
@@ -531,7 +531,6 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			dir.mkdir(".qwit");
 			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 			userpicsDownloader.download(image, imageFileName);
-			
 			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++, twitter.getServiceBaseURL());
 		}
 		node = node.nextSibling();
@@ -593,6 +592,9 @@ void MainWindow::updateItems() {
 
 void MainWindow::customUsernameChanged() {
 	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
+	
+	twitterTabs[CUSTOM_TWITTER_TAB].twitterWidget->clear();
+	twitterTabs[CUSTOM_TWITTER_TAB].lastId = 0;
 	
 	saveState();
 	

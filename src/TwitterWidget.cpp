@@ -129,8 +129,11 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(time) + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
 	item.sign->setAlignment(Qt::AlignRight);
 	item.sign->setOpenExternalLinks(true);
-	if (i == -1) i = items.size();
-	items.insert(i, item);
+	if (i == -1) {
+		items.push_back(item);
+	} else {
+		items.insert(i, item);
+	}
 	
 	item.status->show();
 	item.icon->show();
