@@ -13,7 +13,8 @@
    <string>Qwit</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="qwit.qrc" >:/images/qwit.png</iconset>
+   <iconset resource="../qwit.qrc" >
+    <normaloff>:/images/qwit.png</normaloff>:/images/qwit.png</iconset>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
@@ -21,7 +22,7 @@
      <item>
       <layout class="QHBoxLayout" >
        <item>
-        <widget class="QLabel" name="label" >
+        <widget class="QLabel" name="greetingMessageLabel" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
            <horstretch>0</horstretch>
@@ -304,7 +305,7 @@
           <enum>QFrame::Sunken</enum>
          </property>
          <property name="text" >
-          <string></string>
+          <string/>
          </property>
          <property name="indent" >
           <number>-1</number>
@@ -326,7 +327,8 @@
           <string/>
          </property>
          <property name="icon" >
-          <iconset resource="qwit.qrc" >:/images/reload.png</iconset>
+          <iconset resource="../qwit.qrc" >
+           <normaloff>:/images/reload.png</normaloff>:/images/reload.png</iconset>
          </property>
          <property name="shortcut" >
           <string>Ctrl+R</string>
@@ -354,7 +356,8 @@
           <string/>
          </property>
          <property name="icon" >
-          <iconset resource="qwit.qrc" >:/images/options.png</iconset>
+          <iconset resource="../qwit.qrc" >
+           <normaloff>:/images/options.png</normaloff>:/images/options.png</iconset>
          </property>
          <property name="autoDefault" >
           <bool>false</bool>
@@ -373,7 +376,8 @@
           <string/>
          </property>
          <property name="icon" >
-          <iconset resource="qwit.qrc" >:/images/logs.png</iconset>
+          <iconset resource="../qwit.qrc" >
+           <normaloff>:/images/logs.png</normaloff>:/images/logs.png</iconset>
          </property>
          <property name="autoDefault" >
           <bool>false</bool>
@@ -395,7 +399,8 @@
           <string/>
          </property>
          <property name="icon" >
-          <iconset resource="qwit.qrc" >:/images/exit.png</iconset>
+          <iconset resource="../qwit.qrc" >
+           <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
          </property>
          <property name="autoDefault" >
           <bool>false</bool>
@@ -409,6 +414,7 @@
   </layout>
  </widget>
  <resources>
+  <include location="../qwit.qrc" />
   <include location="qwit.qrc" />
  </resources>
  <connections/>

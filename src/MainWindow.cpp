@@ -194,6 +194,7 @@ void MainWindow::loadState() {
 	updatesNotification = settings.value("updatesNotification", true).toBool();
 	twitter.setServiceAPIURL(settings.value("serviceAPIURL", "http://twitter.com").toString());
 	twitter.setServiceBaseURL(settings.value("serviceBaseURL", "http://twitter.com").toString());
+	greetingMessageLabel->setText(settings.value("greetingMessage", "What are you doing?").toString());
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	useProxy = settings.value("useProxy", "").toBool();
@@ -217,6 +218,7 @@ void MainWindow::loadState() {
 	optionsDialog->passwordLineEdit->setText(password);
 	optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->intervalLineEdit->setText(QString::number(interval));
+	optionsDialog->greetingMessageLineEdit->setText(greetingMessageLabel->text());
 	optionsDialog->useProxyCheckBox->setCheckState(useProxy ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->proxyAddressLineEdit->setText(proxyAddress);
 	optionsDialog->proxyPortLineEdit->setText(QString::number(proxyPort));
@@ -306,6 +308,7 @@ void MainWindow::saveState() {
 	messagesPerPage = optionsDialog->messagesPerPageLineEdit->text().toInt();
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
 	updatesNotification = optionsDialog->updatesNotificationCheckBox->checkState() == Qt::Checked;
+	greetingMessageLabel->setText(optionsDialog->greetingMessageLineEdit->text());
 	
 	settings.beginGroup("MainWindow");
 	settings.setValue("size", size());
@@ -324,6 +327,7 @@ void MainWindow::saveState() {
 	settings.setValue("updatesNotification", updatesNotification);
 	settings.setValue("serviceBaseURL", twitter.getServiceBaseURL());
 	settings.setValue("serviceAPIURL", twitter.getServiceAPIURL());
+	settings.setValue("greetingMessage", greetingMessageLabel->text());
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	settings.setValue("useProxy", useProxy);

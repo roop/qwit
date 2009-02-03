@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>251</width>
-    <height>371</height>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -27,6 +27,16 @@
         <layout class="QGridLayout" >
          <item row="0" column="0" >
           <layout class="QVBoxLayout" >
+           <item>
+            <widget class="QLabel" name="label_11" >
+             <property name="text" >
+              <string>Greeting message:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="greetingMessageLineEdit" />
+           </item>
            <item>
             <widget class="QLabel" name="label_5" >
              <property name="text" >
