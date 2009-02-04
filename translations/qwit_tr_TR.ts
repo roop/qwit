@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="tr">
+<!DOCTYPE TS><TS version="1.1" language="tr_TR">
 <context>
     <name>LogsDialog</name>
     <message>
@@ -108,7 +108,7 @@
     <message>
         <location filename="../src/MainWindow.cpp" line="545"/>
         <source>Qwit updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Qwit güncellemeleri</translation>
     </message>
 </context>
 <context>
@@ -199,57 +199,57 @@
         <translation>Seçenekleri sıfırla</translation>
     </message>
     <message>
+        <location filename="../src/OptionsDialog.ui" line="33"/>
+        <source>Greeting message:</source>
+        <translation>Karşılama iletisi:</translation>
+    </message>
+    <message>
         <location filename="../src/OptionsDialog.ui" line="43"/>
         <source>Service base URL:</source>
-        <translation type="unfinished"></translation>
+        <translation>Servisin taban URL&apos;si:</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="53"/>
         <source>Service API URL:</source>
-        <translation type="unfinished"></translation>
+        <translation>Servisin API URL&apos;si:</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="89"/>
         <source>Notify about updates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/OptionsDialog.ui" line="33"/>
-        <source>Greeting message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncellemeleri bildir</translation>
     </message>
 </context>
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="117"/>
-        <source>Updating timeline: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/Twitter.cpp" line="122"/>
         <source>Error sending status: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum gönderilemedi: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="125"/>
         <source>Status sent: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum gönderildi: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="131"/>
         <source>Error while updating timeline: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazılar güncellenemedi: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="135"/>
         <source>Timeline updated: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazılar güncellendi: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="88"/>
         <source>Sending status: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Durum gönderiliyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Twitter.cpp" line="117"/>
+        <source>Updating timeline: %1</source>
+        <translation type="unfinished">Yazılar güncelleniyor: %1</translation>
     </message>
 </context>
 <context>
@@ -257,37 +257,37 @@
     <message>
         <location filename="../src/TwitterWidget.cpp" line="226"/>
         <source>Just now</source>
-        <translation type="unfinished"></translation>
+        <translation>Şimdi</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/TwitterWidget.cpp" line="227"/>
         <source>about %n second(s) ago</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>yaklaşık %n saniye önce</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/TwitterWidget.cpp" line="229"/>
         <source>about %n minute(s) ago</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>yaklaşık %n dakika önce</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/TwitterWidget.cpp" line="231"/>
         <source>about %n hour(s) ago</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>yaklaşık %n saat önce</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/TwitterWidget.cpp" line="233"/>
         <source>about %n day(s) ago</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>yaklaşık %n gün önce</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -297,17 +297,17 @@
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="43"/>
         <source>Downloading: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>İndirilen: %1</translation>
     </message>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="57"/>
         <source>Error while downloading userpic: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı resmi indirilemedi: %1</translation>
     </message>
     <message>
         <location filename="../src/UserpicsDownloader.cpp" line="62"/>
         <source>Downloaded: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>İndirildi: %1</translation>
     </message>
 </context>
 </TS>
