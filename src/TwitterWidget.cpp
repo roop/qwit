@@ -35,6 +35,7 @@ void TwitterWidgetItem::loadIcon() {
 		pixmap.load(iconFileName, "JPG");
 	}
 	icon->setPixmap(pixmap);
+	icon->resize(ICON_SIZE, ICON_SIZE);
 }
 
 TwitterWidget::TwitterWidget(): QWidget() {
