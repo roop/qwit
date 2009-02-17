@@ -69,6 +69,7 @@ public:
 	const TwitterWidgetItem getItem(int index);
 	int getItemsCount();
 	void setMessagesPerPage(int value);
+        int replyStatusID;
 	
 	static QString formatDateTime(const QDateTime &time);
 	
@@ -85,6 +86,7 @@ public slots:
 signals:
 	
 	void reply(const QString &);
+        void replyID(const QString &);
 };
 
 #endif

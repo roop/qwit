@@ -112,6 +112,9 @@ public:
 	Twitter twitter;
 	QMap<QString, int> monthes;
 	bool updatesNotification;
+
+        QString replyStatusID;
+        bool isReply;
 	
 	void setupTrayIcon();
 	void loadState();
@@ -134,6 +137,7 @@ public slots:
 	void tabChanged(int index);
 	void updateItems();
 	void customUsernameChanged();
+        void setReplyID(const QString &replyID);
 
 protected:
 	

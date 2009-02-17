@@ -64,7 +64,7 @@ void Twitter::dontUseProxy() {
 	proxyAddress = "";
 }
 
-void Twitter::sendStatus(QString username, QString password, QString status) {
+void Twitter::sendStatus(QString username, QString password, QString status, QString replyID) {
 	QUrl url(serviceAPIURL + STATUS_UPDATE_URL);
 
 	QHttpRequestHeader header;
@@ -82,6 +82,10 @@ void Twitter::sendStatus(QString username, QString password, QString status) {
 	
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(status);
+        if (replyID != "") {
+                data += "&in_reply_to_status_id=";
+                data += replyID;
+        }
 	data += "&source=qwit";
 	statusHttp.request(header, data);
 

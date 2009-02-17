@@ -127,7 +127,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.icon = new QLabel(this);
 	item.iconFileName = userpic;
 	item.loadIcon();
-	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(time) + "</a> <a href=\"reply://" + username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
+	item.sign = new QLabel("<a href=\"http://twitter.com/" + username + "\" style=\"font-weight:bold;text-decoration:none\">" + username + "</a> - <a href=\"http://twitter.com/" + username + "/statuses/" + QString::number(messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(time) + "</a> <a href=\"reply://" + username + ":" + QString::number(messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>", this);
 	item.sign->setAlignment(Qt::AlignRight);
 	item.sign->setOpenExternalLinks(true);
 	if (i == -1) {
@@ -167,7 +167,7 @@ void TwitterWidget::updateItems() {
 		item.status->resize(statusItemWidth, statusItemHeight);
 		item.icon->move(MARGIN, height + MARGIN);
 		
-		item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> <a href=\"reply://" + item.username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>");
+		item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> <a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>");
 		item.sign->adjustSize();
 		
 		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
@@ -198,6 +198,7 @@ void TwitterWidget::resizeEvent(QResizeEvent *event) {
 
 void TwitterWidget::replyClicked(const QUrl &url) {
 	emit reply(url.host());
+        emit replyID(QString::number(url.port()));
 }
 
 void TwitterWidget::reloadUserpic(const QString &userpic) {

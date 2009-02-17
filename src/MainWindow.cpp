@@ -145,6 +145,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
+                connect(twitterTabs[i].twitterWidget, SIGNAL(replyID(const QString &)), this, SLOT(setReplyID(const QString &)));
 	}
 	
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
@@ -265,13 +266,23 @@ void MainWindow::loadState() {
 	}
 	settings.endGroup();
 }
+
+void MainWindow::setReplyID(const QString &replyID) {
+        replyStatusID = replyID;
+        isReply = true;
+}
 	
 void MainWindow::sendStatus() {
 	QString status = statusTextEdit->toPlainText().simplified();
 	if (status == "") {
 		return;
 	}
-	twitter.sendStatus(username, password, status);
+        if (isReply) {
+                twitter.sendStatus(username, password, status, replyStatusID);
+                isReply = false;
+                replyStatusID = "";
+        }
+        else twitter.sendStatus(username, password, status, "");
 	statusTextEdit->setText("");
 	charsLeftLabel->setText(QString::number(statusTextEdit->getMaxStatusCharacter()));
 	charsLeftLabel->setForegroundRole(QPalette::Light);
