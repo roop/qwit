@@ -34,8 +34,9 @@ void TwitterWidgetItem::loadIcon() {
 	if (pixmap.isNull()) {
 		pixmap.load(iconFileName, "JPG");
 	}
-	icon->setPixmap(pixmap);
-	icon->resize(ICON_SIZE, ICON_SIZE);
+	if (!pixmap.isNull()) {
+		icon->setPixmap(pixmap.scaled(ICON_SIZE, ICON_SIZE));
+	}
 }
 
 TwitterWidget::TwitterWidget(): QWidget() {
@@ -86,7 +87,7 @@ QString TwitterWidget::prepare(const QString &text, const int &replyStatusId, co
 	}
 	return t;
 }
-	
+
 void TwitterWidget::clear() {
 	for (int i = 0; i < items.size(); ++i) {
 		delete items[i].status;
@@ -95,10 +96,10 @@ void TwitterWidget::clear() {
 	}
 	items.clear();
 }
-	
+
 void TwitterWidget::addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i, const QString &serviceBaseURL) {
 	TwitterWidgetItem item = TwitterWidgetItem();
-	
+
 	item.time = time;
 	item.username = username;
 	item.messageId = messageId;
@@ -112,7 +113,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	item.cacheMessageId = messageId;
 	item.cacheReplyStatusId = replyStatusId;
 	item.cacheIndex = i;
-	
+
 	item.status = new QTextBrowser(this);
 	item.status->setHtml(prepare(status, replyStatusId, serviceBaseURL));
 	item.status->setReadOnly(true);
@@ -123,7 +124,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	QFont font = item.status->document()->defaultFont();
 	font.setFamily("Verdana");
 	item.status->document()->setDefaultFont(font);
-	
+
 	item.icon = new QLabel(this);
 	item.iconFileName = userpic;
 	item.loadIcon();
@@ -135,11 +136,11 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	} else {
 		items.insert(i, item);
 	}
-	
+
 	item.status->show();
 	item.icon->show();
 	item.sign->show();
-	
+
 	while (items.size() > messagesPerPage) {
 		TwitterWidgetItem &item = items[items.size() - 1];
 		delete item.status;
@@ -147,10 +148,10 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 		delete item.sign;
 		items.pop_back();
 	}
-	
+
 	updateItems();
 }
-	
+
 void TwitterWidget::updateItems() {
 	int height = 0;
 	int statusItemWidth = width() - (ICON_SIZE + 3 * MARGIN);
@@ -166,18 +167,18 @@ void TwitterWidget::updateItems() {
 		statusItemHeight += item.status->verticalScrollBar()->maximum() - item.status->verticalScrollBar()->minimum();
 		item.status->resize(statusItemWidth, statusItemHeight);
 		item.icon->move(MARGIN, height + MARGIN);
-		
+
 		item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> <a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>");
 		item.sign->adjustSize();
-		
+
 		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
-		
+
 		if (i & 1) {
 			item.color = QColor(230, 230, 230);
 		} else {
 			item.color = QColor("white");
 		}
-		
+
 		int itemHeight = statusItemHeight + item.sign->height() + MARGIN;
 		itemHeight = max(ICON_SIZE, item.sign->y() + item.sign->height()) + MARGIN - height;
 		item.top = height;
@@ -186,7 +187,7 @@ void TwitterWidget::updateItems() {
 	}
 	resize(width(), height);
 }
-	
+
 void TwitterWidget::resizeEvent(QResizeEvent *event) {
 	if (event->oldSize() == event->size()) {
 		event->ignore();
@@ -205,7 +206,7 @@ void TwitterWidget::reloadUserpic(const QString &userpic) {
 	for (int i = 0; i < items.size(); ++i) if (items[i].iconFileName == userpic) {
 		TwitterWidgetItem &item = items[i];
 		item.loadIcon();
-		item.icon->resize(ICON_SIZE, ICON_SIZE);
+//		item.icon->resize(ICON_SIZE, ICON_SIZE);
 	}
 }
 
@@ -222,7 +223,7 @@ void TwitterWidget::paintEvent(QPaintEvent *event) {
 	event->accept();
 }
 
-	
+
 QString TwitterWidget::formatDateTime(const QDateTime &time) {
 	int seconds = time.secsTo(QDateTime::currentDateTime());
 	if (seconds <= 15) return tr("Just now");
