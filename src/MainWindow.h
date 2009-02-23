@@ -60,6 +60,7 @@ const int DEFAULT_WINDOW_X = 200;
 const int DEFAULT_WINDOW_Y = 200;
 const int DEFAULT_UPDATE_INTERVAL = 300;
 const int DEFAULT_MESSAGES_PER_PAGE = 20;
+const int DEFAULT_MESSAGES_PER_TRAY = 10;
 
 class TwitterTab {
 public:
@@ -67,27 +68,27 @@ public:
 	int lastId;
 	QScrollArea *scrollArea;
 	int lastUpdateTime;
-	
+
 	TwitterTab(QScrollArea *scrollArea, TwitterWidget *twitterWidget, int lastId) {
 		this->scrollArea = scrollArea;
 		this->twitterWidget = twitterWidget;
 		this->lastId = lastId;
 		this->lastUpdateTime = 0;
 	}
-	
+
 	TwitterTab() {
 	}
 };
 
 class MainWindow: public QDialog, public Ui::MainWindow {
 	Q_OBJECT
-	
+
 private:
 	static MainWindow* instance;
 	MainWindow(QWidget *parent = 0);
 
 public:
-	
+
 	QTimer *timer;
 	QTimer *timer2;
 	QString username;
@@ -104,6 +105,7 @@ public:
 	QString proxyAddress;
 	int proxyPort;
 	int messagesPerPage;
+	int messagesPerTray;
 	UserpicsDownloader userpicsDownloader;
 	StatusTextEdit *statusTextEdit;
 	OptionsDialog *optionsDialog;
@@ -115,14 +117,14 @@ public:
 
         QString replyStatusID;
         bool isReply;
-	
+
 	void setupTrayIcon();
 	void loadState();
 	QDateTime dateFromString(const QString &date);
 	static MainWindow* getInstance();
-	
+
 public slots:
-	
+
 	void sendStatus();
 	void updateTimeline();
 	void saveState();
@@ -140,7 +142,7 @@ public slots:
         void setReplyID(const QString &replyID);
 
 protected:
-	
+
 	void closeEvent(QCloseEvent *event);
 	void hideEvent(QHideEvent *event);
 	void showEvent(QShowEvent *event);

@@ -33,7 +33,7 @@ MainWindow* MainWindow::getInstance() {
 
 MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	setupUi(this);
-	
+
 	monthes["Jan"] = 1;
 	monthes["Feb"] = 2;
 	monthes["Mar"] = 3;
@@ -46,117 +46,117 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	monthes["Oct"] = 10;
 	monthes["Nov"] = 11;
 	monthes["Dec"] = 12;
-	
+
 	TwitterWidget *twitterWidget = new TwitterWidget();
 	twitterWidget->setObjectName(QString::fromUtf8("homeTwitterWidget"));
 	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
-	
+
 	QGridLayout *gridLayout = new QGridLayout(homeTab);
 	gridLayout->setObjectName(QString::fromUtf8("homeGridLayout"));
-	
+
 	QScrollArea *scrollArea = new QScrollArea(homeTab);
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	
+
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
-	
+
 	twitterTabs[HOME_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
-	
-	
+
+
 	twitterWidget = new TwitterWidget();
 	twitterWidget->setObjectName(QString::fromUtf8("publicTwitterWidget"));
 	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
-	
+
 	gridLayout = new QGridLayout(publicTab);
 	gridLayout->setObjectName(QString::fromUtf8("publicGridLayout"));
-	
+
 	scrollArea = new QScrollArea(publicTab);
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	
+
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
-	
+
 	twitterTabs[PUBLIC_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
-	
-	
+
+
 	twitterWidget = new TwitterWidget();
 	twitterWidget->setObjectName(QString::fromUtf8("repliesTwitterWidget"));
 	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
-	
+
 	gridLayout = new QGridLayout(repliesTab);
 	gridLayout->setObjectName(QString::fromUtf8("repliesGridLayout"));
-	
+
 	scrollArea = new QScrollArea(repliesTab);
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	
+
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
-	
+
 	twitterTabs[REPLIES_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
-	
-	
+
+
 	twitterWidget = new TwitterWidget();
 	twitterWidget->setObjectName(QString::fromUtf8("customTwitterWidget"));
 	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
-	
+
 	scrollArea = new QScrollArea(customTab);
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	
+
 	vboxLayout1->addWidget(scrollArea);
-	
+
 	twitterTabs[CUSTOM_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
-	
-	
+
+
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
 	QFont font = statusTextEdit->document()->defaultFont();
 	font.setFamily("Verdana");
 	statusTextEdit->document()->setDefaultFont(font);
-	
+
 	charsLeftLabel->setText(QString::number(statusTextEdit->getMaxStatusCharacter()));
 	charsLeftLabel->setForegroundRole(QPalette::Light);
 
 	vboxLayout->insertWidget(1, statusTextEdit);
-	
+
 	optionsDialog = new OptionsDialog(this);
 	optionsDialog->setModal(true);
-	
+
 	logsDialog = new LogsDialog(this);
 
 	acceptClose = false;
-	
+
 	connect(statusTextEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
 	connect(customUsernameLineEdit, SIGNAL(returnPressed()), this, SLOT(customUsernameChanged()));
-	
+
 	connect(refreshPushButton, SIGNAL(pressed()), this, SLOT(updateTimeline()));
 	connect(optionsPushButton, SIGNAL(pressed()), optionsDialog, SLOT(showNormal()));
 	connect(logsPushButton, SIGNAL(pressed()), logsDialog, SLOT(showNormal()));
 	connect(exitPushButton, SIGNAL(pressed()), this, SLOT(quit()));
-	
+
 	connect(&twitter, SIGNAL(updated(const QByteArray&, int)), this, SLOT(updated(const QByteArray&, int)));
 	connect(&twitter, SIGNAL(statusUpdated()), this, SLOT(statusUpdated()));
-	
+
 	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
-	
+
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
                 connect(twitterTabs[i].twitterWidget, SIGNAL(replyID(const QString &)), this, SLOT(setReplyID(const QString &)));
 	}
-	
+
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
-	
+
 	connect(&twitter, SIGNAL(stateChanged(const QString&)), this, SLOT(updateState(const QString&)));
 	connect(&userpicsDownloader, SIGNAL(stateChanged(const QString&)), this, SLOT(updateState(const QString&)));
-	
+
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		connect(&userpicsDownloader, SIGNAL(userpicDownloaded(const QString&)), twitterTabs[i].twitterWidget, SLOT(reloadUserpic(const QString&)));
 	}
-	
+
 	setupTrayIcon();
 
 	timer2 = new QTimer(this);
@@ -178,10 +178,10 @@ void MainWindow::setupTrayIcon() {
 	trayIcon->show();
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
-	
+
 void MainWindow::loadState() {
 	QSettings settings("arti", "qwit");
-	
+
 	settings.beginGroup("MainWindow");
 	resize(settings.value("size", QSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)).toSize());
 	move(settings.value("pos", QPoint(DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y)).toPoint());
@@ -192,6 +192,7 @@ void MainWindow::loadState() {
 	password = settings.value("password", "").toString();
 	interval = settings.value("interval", DEFAULT_UPDATE_INTERVAL).toInt();
 	messagesPerPage = settings.value("messagesPerPage", DEFAULT_MESSAGES_PER_PAGE).toInt();
+	messagesPerTray = settings.value("messagesPerTray", DEFAULT_MESSAGES_PER_TRAY).toInt();
 	updatesNotification = settings.value("updatesNotification", true).toBool();
 	twitter.setServiceAPIURL(settings.value("serviceAPIURL", "http://twitter.com").toString());
 	twitter.setServiceBaseURL(settings.value("serviceBaseURL", "http://twitter.com").toString());
@@ -208,10 +209,11 @@ void MainWindow::loadState() {
 	settings.beginGroup("Other");
 	customUsernameLineEdit->setText(settings.value("customUsername").toString());
 	settings.endGroup();
-	
+
 	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
-	
+
 	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
+	optionsDialog->messagesPerTrayLineEdit->setText(QString::number(messagesPerTray));
 	optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->serviceBaseURLLineEdit->setText(twitter.getServiceBaseURL());
 	optionsDialog->serviceAPIURLLineEdit->setText(twitter.getServiceAPIURL());
@@ -226,7 +228,7 @@ void MainWindow::loadState() {
 	optionsDialog->proxyUsernameLineEdit->setText(proxyUsername);
 	optionsDialog->proxyPasswordLineEdit->setText(proxyPassword);
 	optionsDialog->proxySavePasswordCheckBox->setCheckState(proxySavePassword ? Qt::Checked : Qt::Unchecked);
-	
+
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 		userpicsDownloader.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -234,7 +236,7 @@ void MainWindow::loadState() {
 		twitter.dontUseProxy();
 		userpicsDownloader.dontUseProxy();
 	}
-	
+
 	if ((username == "") || (password == "")) {
 		statusTextEdit->setDisabled(true);
 	}
@@ -242,7 +244,7 @@ void MainWindow::loadState() {
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
 	}
-	
+
 	settings.beginGroup("Twits");
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		int size = settings.beginReadArray("Twits" + QString::number(tab));
@@ -271,7 +273,7 @@ void MainWindow::setReplyID(const QString &replyID) {
         replyStatusID = replyID;
         isReply = true;
 }
-	
+
 void MainWindow::sendStatus() {
 	QString status = statusTextEdit->toPlainText().simplified();
 	if (status == "") {
@@ -288,7 +290,7 @@ void MainWindow::sendStatus() {
 	charsLeftLabel->setForegroundRole(QPalette::Light);
 	twitterTabs[tabWidget->currentIndex()].twitterWidget->setFocus(Qt::OtherFocusReason);
 }
-	
+
 void MainWindow::updateTimeline() {
 	if (password == "") {
 		optionsDialog->showNormal();
@@ -296,31 +298,32 @@ void MainWindow::updateTimeline() {
 	}
 	twitter.update(username, password, twitterTabs[tabWidget->currentIndex()].lastId, tabWidget->currentIndex(), messagesPerPage);
 }
-	
+
 void MainWindow::saveState() {
 	QSettings settings("arti", "qwit");
-	
+
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
 	}
-	
+
 	username = optionsDialog->usernameLineEdit->text();
 	password = optionsDialog->passwordLineEdit->text();
 	bool savePassword = optionsDialog->savePasswordCheckBox->checkState() == Qt::Checked;
 	interval = optionsDialog->intervalLineEdit->text().toInt();
 	twitter.setServiceBaseURL(optionsDialog->serviceBaseURLLineEdit->text());
 	twitter.setServiceAPIURL(optionsDialog->serviceAPIURLLineEdit->text());
-	
+
 	useProxy = optionsDialog->useProxyCheckBox->checkState() == Qt::Checked;
 	proxyAddress = optionsDialog->proxyAddressLineEdit->text();
 	proxyPort = optionsDialog->proxyPortLineEdit->text().toInt();
 	proxyUsername = optionsDialog->proxyUsernameLineEdit->text();
 	proxyPassword = optionsDialog->proxyPasswordLineEdit->text();
 	messagesPerPage = optionsDialog->messagesPerPageLineEdit->text().toInt();
+	messagesPerTray = optionsDialog->messagesPerTrayLineEdit->text().toInt();
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
 	updatesNotification = optionsDialog->updatesNotificationCheckBox->checkState() == Qt::Checked;
 	greetingMessageLabel->setText(optionsDialog->greetingMessageLineEdit->text());
-	
+
 	settings.beginGroup("MainWindow");
 	settings.setValue("size", size());
 	settings.setValue("pos", pos());
@@ -335,6 +338,7 @@ void MainWindow::saveState() {
 	}
 	settings.setValue("interval", interval);
 	settings.setValue("messagesPerPage", messagesPerPage);
+	settings.setValue("messagesPerTray", messagesPerTray);
 	settings.setValue("updatesNotification", updatesNotification);
 	settings.setValue("serviceBaseURL", twitter.getServiceBaseURL());
 	settings.setValue("serviceAPIURL", twitter.getServiceAPIURL());
@@ -352,12 +356,12 @@ void MainWindow::saveState() {
 		settings.setValue("proxyPassword", "");
 	}
 	settings.endGroup();
-	
+
 	settings.beginGroup("MainWindow");
 	settings.setValue("size", size());
 	settings.setValue("pos", pos());
 	settings.endGroup();
-	
+
 	settings.beginGroup("Twits");
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		settings.beginWriteArray("Twits" + QString::number(tab));
@@ -382,7 +386,7 @@ void MainWindow::saveState() {
 	settings.beginGroup("Other");
 	settings.setValue("customUsername", customUsernameLineEdit->text());
 	settings.endGroup();
-	
+
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 		userpicsDownloader.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -390,7 +394,7 @@ void MainWindow::saveState() {
 		twitter.dontUseProxy();
 		userpicsDownloader.dontUseProxy();
 	}
-	
+
 	if ((username == "") || (password == "")) {
 		statusTextEdit->setDisabled(true);
 	} else {
@@ -409,7 +413,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) {
 		showhide();
 	}
 }
-	
+
 void MainWindow::quit() {
 	acceptClose = true;
 	close();
@@ -442,18 +446,18 @@ void MainWindow::showEvent(QShowEvent *event) {
 		timer->start(interval * 1000);
 		firstTime = false;
 	}
-	
+
 	QSettings settings("arti", "qwit");
 	settings.beginGroup("MainWindow");
 	resize(settings.value("size", QSize(200, 600)).toSize());
 	move(settings.value("pos", QPoint(200, 200)).toPoint());
 	settings.endGroup();
-	
+
 	statusTextEdit->setFocus(Qt::OtherFocusReason);
-	
+
 	event->accept();
 }
-	
+
 void MainWindow::resizeEvent(QResizeEvent *event) {
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		twitterTabs[i].twitterWidget->resize(twitterTabs[i].scrollArea->width() - twitterTabs[i].scrollArea->verticalScrollBar()->width() - 5, 500);
@@ -471,9 +475,9 @@ QDateTime MainWindow::dateFromString(const QString &date) {
 
 void MainWindow::updated(const QByteArray &buffer, int type) {
 	QDomDocument document;
-	
+
 	document.setContent(buffer);
-	
+
 	QDomElement root = document.documentElement();
 	if (root.tagName() != "statuses") {
 		return;
@@ -518,8 +522,8 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			if (id > maxId) maxId = id;
 			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
-			if (id > twitterTabs[type].lastId) {
-				trayMessage += user + ": " + message + " " + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n";
+			if ((id > twitterTabs[type].lastId)  && j < messagesPerTray) {
+				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n----------------------------\n";
 			}
 			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
 			QString imageFileName = "";
@@ -607,12 +611,12 @@ void MainWindow::updateItems() {
 
 void MainWindow::customUsernameChanged() {
 	twitter.setUrl(CUSTOM_TWITTER_TAB, QString(CUSTOM_XML_URL) + customUsernameLineEdit->text() + ".xml");
-	
+
 	twitterTabs[CUSTOM_TWITTER_TAB].twitterWidget->clear();
 	twitterTabs[CUSTOM_TWITTER_TAB].lastId = 0;
-	
+
 	saveState();
-	
+
 	updateTimeline();
 }
 

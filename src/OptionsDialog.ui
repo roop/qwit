@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>251</width>
-    <height>417</height>
+    <height>456</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -82,6 +82,19 @@
            </item>
            <item>
             <widget class="QLineEdit" name="messagesPerPageLineEdit" />
+           </item>
+           <item>
+            <widget class="QLabel" name="label_12" >
+             <property name="text" >
+              <string>Number of messages per tray:</string>
+             </property>
+             <property name="buddy" >
+              <cstring>intervalLineEdit</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="messagesPerTrayLineEdit" />
            </item>
            <item>
             <widget class="QCheckBox" name="updatesNotificationCheckBox" >
