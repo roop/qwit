@@ -169,10 +169,10 @@ void TwitterWidget::updateItems() {
 		item.status->resize(statusItemWidth, statusItemHeight);
 		item.icon->move(MARGIN, height + MARGIN);
 
-		item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> <a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a>");
-		item.sign->adjustSize();
+		item.sign->setText("<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0><TR VALIGN=TOP><TD WIDTH=50%><P><a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a></P></TD><TD WIDTH=50%><P ALIGN=RIGHT><a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a></P></TD><TD><P ALIGN=RIGHT><a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a></P></TD></TR></TABLE>");
+		item.sign->resize(width()-3 * MARGIN, 16);
 
-		item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
+		item.sign->move(MARGIN, height + statusItemHeight + MARGIN);
 
 		if (i & 1) {
 			item.color = QColor(230, 230, 230);
