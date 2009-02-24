@@ -34,7 +34,7 @@ StatusTextEdit::StatusTextEdit(QWidget *parent): QTextEdit(parent) {
 	emit leftCharsNumberChanged(MAX_STATUS_CHARACTERS);
 	connect(this, SIGNAL(textChanged()), this, SLOT(textChangedToCharsNumberChanged()));
 }
-	
+
 int StatusTextEdit::getMaxStatusCharacter() {
 	return MAX_STATUS_CHARACTERS;
 }
@@ -42,7 +42,7 @@ int StatusTextEdit::getMaxStatusCharacter() {
 void StatusTextEdit::focusInEvent(QFocusEvent *event) {
 	QTextEdit::focusInEvent(event);
 }
-	
+
 void StatusTextEdit::focusOutEvent(QFocusEvent *event) {
 	QTextEdit::focusOutEvent(event);
 }
@@ -69,6 +69,20 @@ void StatusTextEdit::reply(const QString &username) {
 		text = text.mid(i + 1).simplified();
 	}
 	setText("@" + username + " " + text);
+	setFocus(Qt::OtherFocusReason);
+	moveCursor(QTextCursor::NextWord);
+}
+
+void StatusTextEdit::directMessages(const QString &username) {
+	QString text = toPlainText().simplified();
+	if (text[0] == 'd') {
+		int i = text.indexOf(" ");
+		if (i == -1) {
+			i = text.length();
+		}
+		text = text.mid(i + 1).simplified();
+	}
+	setText("d " + username + " " + text);
 	setFocus(Qt::OtherFocusReason);
 	moveCursor(QTextCursor::NextWord);
 }

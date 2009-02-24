@@ -84,12 +84,15 @@ protected:
 public slots:
 
 	void replyClicked(const QUrl &url);
+	void directMessagesClicked(const QUrl &url);
 	void reloadUserpic(const QString &userpic);
 
 signals:
 
 	void reply(const QString &);
+	void directMessages(const QString &);
         void replyID(const QString &);
+        void directMessagesID(const QString &);
 };
 
 #endif

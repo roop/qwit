@@ -141,6 +141,7 @@ public slots:
 	void updateItems();
 	void customUsernameChanged();
         void setReplyID(const QString &replyID);
+        void setDirectMessagesID(const QString &directMessagesID);
 
 protected:
 

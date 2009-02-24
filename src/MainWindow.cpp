@@ -146,6 +146,10 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
                 connect(twitterTabs[i].twitterWidget, SIGNAL(replyID(const QString &)), this, SLOT(setReplyID(const QString &)));
+//-----
+        connect(twitterTabs[i].twitterWidget, SIGNAL(directMessages(const QString &)), statusTextEdit, SLOT(directMessages(const QString &)));
+//   		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
+                connect(twitterTabs[i].twitterWidget, SIGNAL(directMessagesID(const QString &)), this, SLOT(setDirectMessagesID(const QString &)));
 	}
 
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
@@ -272,6 +276,11 @@ void MainWindow::loadState() {
 }
 
 void MainWindow::setReplyID(const QString &replyID) {
+        replyStatusID = replyID;
+        isReply = true;
+}
+
+void MainWindow::setDirectMessagesID(const QString &replyID) {
         replyStatusID = replyID;
         isReply = true;
 }
