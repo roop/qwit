@@ -11,17 +11,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="172"/>
+        <location filename="../src/MainWindow.cpp" line="187"/>
         <source>&amp;Show / Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="174"/>
+        <location filename="../src/MainWindow.cpp" line="189"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="574"/>
+        <location filename="../src/MainWindow.cpp" line="669"/>
         <source>Qwit updates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -91,23 +91,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="324"/>
+        <location filename="../src/MainWindow.ui" line="332"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="334"/>
+        <location filename="../src/MainWindow.ui" line="342"/>
         <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="353"/>
+        <location filename="../src/MainWindow.ui" line="361"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="396"/>
+        <location filename="../src/MainWindow.ui" line="404"/>
         <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="288"/>
+        <source>Inbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="291"/>
+        <source>Direct messages inbox</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -232,32 +242,32 @@
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="126"/>
+        <location filename="../src/Twitter.cpp" line="127"/>
         <source>Error sending status: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="129"/>
+        <location filename="../src/Twitter.cpp" line="130"/>
         <source>Status sent: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="135"/>
+        <location filename="../src/Twitter.cpp" line="136"/>
         <source>Error while updating timeline: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="139"/>
+        <location filename="../src/Twitter.cpp" line="140"/>
         <source>Timeline updated: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="121"/>
+        <location filename="../src/Twitter.cpp" line="122"/>
         <source>Updating timeline: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="92"/>
+        <location filename="../src/Twitter.cpp" line="93"/>
         <source>Sending status: %1</source>
         <translation type="unfinished"></translation>
     </message>

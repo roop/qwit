@@ -53,7 +53,7 @@ const int HOME_TWITTER_TAB = 0;
 const int PUBLIC_TWITTER_TAB = 1;
 const int REPLIES_TWITTER_TAB = 2;
 const int CUSTOM_TWITTER_TAB = 3;
-const int INPUT_TWITTER_TAB = 4;
+const int INBOX_TWITTER_TAB = 4;
 
 const int DEFAULT_WINDOW_WIDTH = 200;
 const int DEFAULT_WINDOW_HEIGHT = 600;

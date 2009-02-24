@@ -12,17 +12,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="172"/>
+        <location filename="../src/MainWindow.cpp" line="187"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Показать / Скрыть</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="174"/>
+        <location filename="../src/MainWindow.cpp" line="189"/>
         <source>&amp;Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="574"/>
+        <location filename="../src/MainWindow.cpp" line="669"/>
         <source>Qwit updates</source>
         <translation>Обновления Qwit</translation>
     </message>
@@ -92,24 +92,34 @@
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="324"/>
+        <location filename="../src/MainWindow.ui" line="332"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="334"/>
+        <location filename="../src/MainWindow.ui" line="342"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="353"/>
+        <location filename="../src/MainWindow.ui" line="361"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="396"/>
+        <location filename="../src/MainWindow.ui" line="404"/>
         <source>Quit</source>
         <translation>Выход</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="288"/>
+        <source>Inbox</source>
+        <translation>Входящие</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="291"/>
+        <source>Direct messages inbox</source>
+        <translation>Входящие сообщения</translation>
     </message>
 </context>
 <context>
@@ -233,32 +243,32 @@
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="126"/>
+        <location filename="../src/Twitter.cpp" line="127"/>
         <source>Error sending status: %1</source>
         <translation>Ошибка при отправлении статуса: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="129"/>
+        <location filename="../src/Twitter.cpp" line="130"/>
         <source>Status sent: %1</source>
         <translation>Статус отправлен: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="135"/>
+        <location filename="../src/Twitter.cpp" line="136"/>
         <source>Error while updating timeline: %1</source>
         <translation>Ошибка обновления: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="139"/>
+        <location filename="../src/Twitter.cpp" line="140"/>
         <source>Timeline updated: %1</source>
         <translation>Сообщения обновлены: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="121"/>
+        <location filename="../src/Twitter.cpp" line="122"/>
         <source>Updating timeline: %1</source>
         <translation>Обновление сообщения: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="92"/>
+        <location filename="../src/Twitter.cpp" line="93"/>
         <source>Sending status: %1</source>
         <translation>Отправка статуса: %1</translation>
     </message>

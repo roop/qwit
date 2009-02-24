@@ -283,12 +283,12 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="inputTab" >
+       <widget class="QWidget" name="inboxTab" >
         <attribute name="title" >
-         <string>Input</string>
+         <string>Inbox</string>
         </attribute>
         <attribute name="toolTip" >
-         <string>Input to you</string>
+         <string>Direct messages inbox</string>
         </attribute>
        </widget>
       </widget>

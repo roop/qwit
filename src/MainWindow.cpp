@@ -112,20 +112,20 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	twitterTabs[CUSTOM_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 
 	twitterWidget = new TwitterWidget();
-	twitterWidget->setObjectName(QString::fromUtf8("inputTwitterWidget"));
+	twitterWidget->setObjectName(QString::fromUtf8("inboxTwitterWidget"));
 	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
 
-	gridLayout = new QGridLayout(inputTab);
-	gridLayout->setObjectName(QString::fromUtf8("inputGridLayout"));
+	gridLayout = new QGridLayout(inboxTab);
+	gridLayout->setObjectName(QString::fromUtf8("inboxGridLayout"));
 
-	scrollArea = new QScrollArea(inputTab);
+	scrollArea = new QScrollArea(inboxTab);
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 
-	twitterTabs[INPUT_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
+	twitterTabs[INBOX_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
@@ -590,7 +590,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	return;
 	}
 
-//input DirectMessages
+//inbox DirectMessages
 	if (root.tagName() == "direct-messages") {
 	QDomNode node = root.firstChild();
 	QString html = "";
