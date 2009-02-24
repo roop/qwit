@@ -12,17 +12,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="187"/>
+        <location filename="../src/MainWindow.cpp" line="203"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Показать / Скрыть</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="189"/>
+        <location filename="../src/MainWindow.cpp" line="205"/>
         <source>&amp;Quit</source>
-        <translation>Выход</translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="669"/>
+        <location filename="../src/MainWindow.cpp" line="697"/>
         <source>Qwit updates</source>
         <translation>Обновления Qwit</translation>
     </message>
@@ -92,22 +92,22 @@
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="332"/>
+        <location filename="../src/MainWindow.ui" line="340"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="342"/>
+        <location filename="../src/MainWindow.ui" line="350"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="361"/>
+        <location filename="../src/MainWindow.ui" line="369"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="404"/>
+        <location filename="../src/MainWindow.ui" line="412"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
@@ -120,6 +120,16 @@
         <location filename="../src/MainWindow.ui" line="291"/>
         <source>Direct messages inbox</source>
         <translation>Входящие сообщения</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="296"/>
+        <source>Outbox</source>
+        <translation>Исходящие</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="299"/>
+        <source>Direct messages outbox</source>
+        <translation>Исходящие сообщения</translation>
     </message>
 </context>
 <context>
@@ -243,32 +253,32 @@
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="127"/>
+        <location filename="../src/Twitter.cpp" line="128"/>
         <source>Error sending status: %1</source>
         <translation>Ошибка при отправлении статуса: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="130"/>
+        <location filename="../src/Twitter.cpp" line="131"/>
         <source>Status sent: %1</source>
         <translation>Статус отправлен: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="136"/>
+        <location filename="../src/Twitter.cpp" line="137"/>
         <source>Error while updating timeline: %1</source>
         <translation>Ошибка обновления: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="140"/>
+        <location filename="../src/Twitter.cpp" line="141"/>
         <source>Timeline updated: %1</source>
         <translation>Сообщения обновлены: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="122"/>
+        <location filename="../src/Twitter.cpp" line="123"/>
         <source>Updating timeline: %1</source>
         <translation>Обновление сообщения: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="93"/>
+        <location filename="../src/Twitter.cpp" line="94"/>
         <source>Sending status: %1</source>
         <translation>Отправка статуса: %1</translation>
     </message>

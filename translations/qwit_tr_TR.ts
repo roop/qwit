@@ -11,12 +11,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="187"/>
+        <location filename="../src/MainWindow.cpp" line="203"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Göster / Gizle</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="189"/>
+        <location filename="../src/MainWindow.cpp" line="205"/>
         <source>&amp;Quit</source>
         <translation>Çı&amp;kış</translation>
     </message>
@@ -86,27 +86,27 @@
         <translation>Kullanıcı adı:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="332"/>
+        <location filename="../src/MainWindow.ui" line="340"/>
         <source>Refresh</source>
         <translation>Yenile</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="342"/>
+        <location filename="../src/MainWindow.ui" line="350"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="361"/>
+        <location filename="../src/MainWindow.ui" line="369"/>
         <source>Options</source>
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="404"/>
+        <location filename="../src/MainWindow.ui" line="412"/>
         <source>Quit</source>
         <translation>Çıkış</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="669"/>
+        <location filename="../src/MainWindow.cpp" line="697"/>
         <source>Qwit updates</source>
         <translation>Qwit güncellemeleri</translation>
     </message>
@@ -118,6 +118,16 @@
     <message>
         <location filename="../src/MainWindow.ui" line="291"/>
         <source>Direct messages inbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="296"/>
+        <source>Outbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="299"/>
+        <source>Direct messages outbox</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -242,32 +252,32 @@
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="127"/>
+        <location filename="../src/Twitter.cpp" line="128"/>
         <source>Error sending status: %1</source>
         <translation>Durum gönderilemedi: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="130"/>
+        <location filename="../src/Twitter.cpp" line="131"/>
         <source>Status sent: %1</source>
         <translation>Durum gönderildi: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="136"/>
+        <location filename="../src/Twitter.cpp" line="137"/>
         <source>Error while updating timeline: %1</source>
         <translation>Yazılar güncellenemedi: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="140"/>
+        <location filename="../src/Twitter.cpp" line="141"/>
         <source>Timeline updated: %1</source>
         <translation>Yazılar güncellendi: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="93"/>
+        <location filename="../src/Twitter.cpp" line="94"/>
         <source>Sending status: %1</source>
         <translation type="unfinished">Durum gönderiliyor: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="122"/>
+        <location filename="../src/Twitter.cpp" line="123"/>
         <source>Updating timeline: %1</source>
         <translation type="unfinished">Yazılar güncelleniyor: %1</translation>
     </message>
