@@ -35,7 +35,7 @@ public:
 	QDateTime time;
 	QString username;
 	int messageId;
-	
+
 	QString cacheUserpic;
 	QString cacheUsername;
 	QString cacheStatus;
@@ -43,7 +43,7 @@ public:
 	int cacheMessageId;
 	int cacheReplyStatusId;
 	int cacheIndex;
-	
+
 	void loadIcon();
 };
 
@@ -55,11 +55,13 @@ class TwitterWidget: public QWidget {
 
 private:
 	int messagesPerPage;
+	bool usernameUnderAvatar;
+
 	QVector<TwitterWidgetItem> items;
 	QString prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL);
 	bool isUsernameChar(const QChar &c) const;
 	QString serviceBaseURL;
-	
+
 public:
 
 	TwitterWidget();
@@ -69,22 +71,23 @@ public:
 	const TwitterWidgetItem getItem(int index);
 	int getItemsCount();
 	void setMessagesPerPage(int value);
+	void setUsernameUnderAvatar(bool value);
         int replyStatusID;
-	
+
 	static QString formatDateTime(const QDateTime &time);
-	
+
 protected:
 
 	void resizeEvent(QResizeEvent *event);
 	void paintEvent(QPaintEvent *event);
-	
+
 public slots:
 
 	void replyClicked(const QUrl &url);
 	void reloadUserpic(const QString &userpic);
-	
+
 signals:
-	
+
 	void reply(const QString &);
         void replyID(const QString &);
 };

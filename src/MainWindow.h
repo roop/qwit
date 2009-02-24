@@ -114,6 +114,7 @@ public:
 	Twitter twitter;
 	QMap<QString, int> monthes;
 	bool updatesNotification;
+	bool usernameUnderAvatar;
 
         QString replyStatusID;
         bool isReply;

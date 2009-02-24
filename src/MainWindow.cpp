@@ -194,6 +194,7 @@ void MainWindow::loadState() {
 	messagesPerPage = settings.value("messagesPerPage", DEFAULT_MESSAGES_PER_PAGE).toInt();
 	messagesPerTray = settings.value("messagesPerTray", DEFAULT_MESSAGES_PER_TRAY).toInt();
 	updatesNotification = settings.value("updatesNotification", true).toBool();
+	usernameUnderAvatar = settings.value("usernameUnderAvatar", true).toBool();
 	twitter.setServiceAPIURL(settings.value("serviceAPIURL", "http://twitter.com").toString());
 	twitter.setServiceBaseURL(settings.value("serviceBaseURL", "http://twitter.com").toString());
 	greetingMessageLabel->setText(settings.value("greetingMessage", "What are you doing?").toString());
@@ -215,6 +216,7 @@ void MainWindow::loadState() {
 	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
 	optionsDialog->messagesPerTrayLineEdit->setText(QString::number(messagesPerTray));
 	optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->usernameUnderAvatarCheckBox->setCheckState(usernameUnderAvatar ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->serviceBaseURLLineEdit->setText(twitter.getServiceBaseURL());
 	optionsDialog->serviceAPIURLLineEdit->setText(twitter.getServiceAPIURL());
 	optionsDialog->usernameLineEdit->setText(username);
@@ -243,8 +245,8 @@ void MainWindow::loadState() {
 
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
+		twitterTabs[tab].twitterWidget->setUsernameUnderAvatar(usernameUnderAvatar);
 	}
-
 	settings.beginGroup("Twits");
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		int size = settings.beginReadArray("Twits" + QString::number(tab));
@@ -304,6 +306,7 @@ void MainWindow::saveState() {
 
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
+		twitterTabs[tab].twitterWidget->setUsernameUnderAvatar(usernameUnderAvatar);
 	}
 
 	username = optionsDialog->usernameLineEdit->text();
@@ -322,6 +325,7 @@ void MainWindow::saveState() {
 	messagesPerTray = optionsDialog->messagesPerTrayLineEdit->text().toInt();
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
 	updatesNotification = optionsDialog->updatesNotificationCheckBox->checkState() == Qt::Checked;
+	usernameUnderAvatar = optionsDialog->usernameUnderAvatarCheckBox->checkState() == Qt::Checked;
 	greetingMessageLabel->setText(optionsDialog->greetingMessageLineEdit->text());
 
 	settings.beginGroup("MainWindow");
@@ -340,6 +344,7 @@ void MainWindow::saveState() {
 	settings.setValue("messagesPerPage", messagesPerPage);
 	settings.setValue("messagesPerTray", messagesPerTray);
 	settings.setValue("updatesNotification", updatesNotification);
+	settings.setValue("usernameUnderAvatar", usernameUnderAvatar);
 	settings.setValue("serviceBaseURL", twitter.getServiceBaseURL());
 	settings.setValue("serviceAPIURL", twitter.getServiceAPIURL());
 	settings.setValue("greetingMessage", greetingMessageLabel->text());

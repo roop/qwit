@@ -107,6 +107,16 @@
             </widget>
            </item>
            <item>
+            <widget class="QCheckBox" name="usernameUnderAvatarCheckBox" >
+             <property name="text" >
+              <string>Username under avatar</string>
+             </property>
+             <property name="checked" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer>
              <property name="orientation" >
               <enum>Qt::Vertical</enum>
