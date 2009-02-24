@@ -291,6 +291,14 @@
          <string>Direct messages inbox</string>
         </attribute>
        </widget>
+       <widget class="QWidget" name="outboxTab" >
+        <attribute name="title" >
+         <string>Outbox</string>
+        </attribute>
+        <attribute name="toolTip" >
+         <string>Direct messages outbox</string>
+        </attribute>
+       </widget>
       </widget>
      </item>
      <item>

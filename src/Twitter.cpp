@@ -33,6 +33,7 @@ Twitter::Twitter() {
 	urls[2] = REPLIES_XML_URL;
 	urls[3] = "";
 	urls[4] = INPUT_DIRECT_XML_URL;
+	urls[5] = OUTPUT_DIRECT_XML_URL;
 	proxyAddress = "";
 	connect(&statusHttp, SIGNAL(done(bool)), this, SLOT(statusHttpDone(bool)));
 	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));

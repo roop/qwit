@@ -127,6 +127,22 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 
 	twitterTabs[INBOX_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 
+	twitterWidget = new TwitterWidget();
+	twitterWidget->setObjectName(QString::fromUtf8("outboxTwitterWidget"));
+	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
+
+	gridLayout = new QGridLayout(outboxTab);
+	gridLayout->setObjectName(QString::fromUtf8("outboxGridLayout"));
+
+	scrollArea = new QScrollArea(outboxTab);
+	scrollArea->setBackgroundRole(QPalette::Light);
+	scrollArea->setWidget(twitterWidget);
+	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
+
+	twitterTabs[OUTBOX_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
+
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
 	QFont font = statusTextEdit->document()->defaultFont();
@@ -602,7 +618,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			return;
 		}
 		QDomNode node2 = node.firstChild();
-		QString message = "", timeStr = "", user = "", image = "", recipientUser = "";
+		QString message = "", timeStr = "", user = "", image = "", imageRecipient = "",recipientUser = "";
 		int id = 0, replyUserID = 0, replyStatusId = 0;
 		while (!node2.isNull()) {
 			if (node2.toElement().tagName() == "created_at") {
@@ -623,11 +639,23 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 					}
 					node3 = node3.nextSibling();
 				}
+			} else if (node2.toElement().tagName() == "recipient") {
+				QDomNode node3 = node2.firstChild();
+				while (!node3.isNull()) {
+					if (node3.toElement().tagName() == "profile_image_url") {
+						imageRecipient = node3.toElement().text();
+					}
+					node3 = node3.nextSibling();
+				}
 			}
 			node2 = node2.nextSibling();
 		}
 		if (id) {
 			if (id > maxId) maxId = id;
+			if (type==5) {
+				user=recipientUser;
+				image=imageRecipient;
+			}
 			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
 			if ((id > twitterTabs[type].lastId)  && j < messagesPerTray) {

@@ -49,7 +49,7 @@ class Twitter: public QObject {
 	QString proxyUsername;
 	QString proxyPassword;
 	int currentType;
-	QString urls[5];
+	QString urls[6];
 	QString serviceBaseURL;
 	QString serviceAPIURL;
 
