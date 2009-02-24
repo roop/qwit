@@ -85,6 +85,7 @@ void StatusTextEdit::directMessages(const QString &username) {
 	setText("d " + username + " " + text);
 	setFocus(Qt::OtherFocusReason);
 	moveCursor(QTextCursor::NextWord);
+	moveCursor(QTextCursor::NextWord);
 }
 
 void StatusTextEdit::textChangedToCharsNumberChanged() {
