@@ -111,6 +111,21 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 
 	twitterTabs[CUSTOM_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 
+	twitterWidget = new TwitterWidget();
+	twitterWidget->setObjectName(QString::fromUtf8("inputTwitterWidget"));
+	twitterWidget->sizePolicy().setHorizontalPolicy(QSizePolicy::Maximum);
+
+	gridLayout = new QGridLayout(inputTab);
+	gridLayout->setObjectName(QString::fromUtf8("inputGridLayout"));
+
+	scrollArea = new QScrollArea(inputTab);
+	scrollArea->setBackgroundRole(QPalette::Light);
+	scrollArea->setWidget(twitterWidget);
+	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
+
+	twitterTabs[INPUT_TWITTER_TAB] = TwitterTab(scrollArea, twitterWidget, 0);
 
 	statusTextEdit = new StatusTextEdit(this);
 	statusTextEdit->setObjectName(QString::fromUtf8("statusTextEdit"));
@@ -493,9 +508,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 	document.setContent(buffer);
 
 	QDomElement root = document.documentElement();
-	if (root.tagName() != "statuses") {
-		return;
-	}
+	if (root.tagName() == "statuses") {
 	QDomNode node = root.firstChild();
 	QString html = "";
 	QString trayMessage = "";
@@ -574,6 +587,91 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 		trayIcon->showMessage(tr("Qwit updates"), trayMessage);
 	}
 	saveState();
+	return;
+	}
+
+//input DirectMessages
+	if (root.tagName() == "direct-messages") {
+	QDomNode node = root.firstChild();
+	QString html = "";
+	QString trayMessage = "";
+	int maxId = twitterTabs[type].lastId;
+	int j = 0;
+	while (!node.isNull()) {
+		if (node.toElement().tagName() != "direct_message") {
+			return;
+		}
+		QDomNode node2 = node.firstChild();
+		QString message = "", timeStr = "", user = "", image = "", recipientUser = "";
+		int id = 0, replyUserID = 0, replyStatusId = 0;
+		while (!node2.isNull()) {
+			if (node2.toElement().tagName() == "created_at") {
+				timeStr = node2.toElement().text();
+			} else if (node2.toElement().tagName() == "text") {
+				message = node2.toElement().text();
+			} else if (node2.toElement().tagName() == "id") {
+				id = node2.toElement().text().toInt();
+			} else if (node2.toElement().tagName() == "sender_screen_name") {
+				user = node2.toElement().text();
+			} else if (node2.toElement().tagName() == "recipient_screen_name") {
+				recipientUser = node2.toElement().text();
+			} else if (node2.toElement().tagName() == "sender") {
+				QDomNode node3 = node2.firstChild();
+				while (!node3.isNull()) {
+					if (node3.toElement().tagName() == "profile_image_url") {
+						image = node3.toElement().text();
+					}
+					node3 = node3.nextSibling();
+				}
+			}
+			node2 = node2.nextSibling();
+		}
+		if (id) {
+			if (id > maxId) maxId = id;
+			QDateTime time = dateFromString(timeStr);
+			time = QDateTime(time.date(), time.time(), Qt::UTC);
+			if ((id > twitterTabs[type].lastId)  && j < messagesPerTray) {
+				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n----------------------------\n";
+			}
+			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
+			QString imageFileName = "";
+			for (int i = 0; i < hash.size(); ++i) {
+				unsigned char c = hash[i];
+				c >>= 4;
+				if (c < 10) {
+					c += '0';
+				} else {
+					c += 'A' - 10;
+				}
+				imageFileName += (char)c;
+				c = hash[i];
+				c &= 15;
+				if (c < 10) {
+					c += '0';
+				} else {
+					c += 'A' - 10;
+				}
+				imageFileName += (char)c;
+			}
+			imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
+			QDir dir(QDir::homePath());
+			dir.mkdir(".qwit");
+			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
+			userpicsDownloader.download(image, imageFileName);
+//			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++, twitter.getServiceBaseURL());
+			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, id, j++, twitter.getServiceBaseURL());
+		}
+		node = node.nextSibling();
+	}
+	twitterTabs[type].lastId = maxId;
+	twitterTabs[type].lastUpdateTime = QDateTime::currentDateTime().toTime_t();
+	if ((trayMessage != "") && updatesNotification) {
+		trayIcon->showMessage(tr("Qwit updates"), trayMessage);
+	}
+	saveState();
+//	return;
+	}
+
 }
 
 void MainWindow::statusUpdated() {

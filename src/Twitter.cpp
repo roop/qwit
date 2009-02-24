@@ -32,6 +32,7 @@ Twitter::Twitter() {
 	urls[1] = PUBLIC_XML_URL;
 	urls[2] = REPLIES_XML_URL;
 	urls[3] = "";
+	urls[4] = INPUT_DIRECT_XML_URL;
 	proxyAddress = "";
 	connect(&statusHttp, SIGNAL(done(bool)), this, SLOT(statusHttpDone(bool)));
 	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));
@@ -71,7 +72,7 @@ void Twitter::sendStatus(QString username, QString password, QString status, QSt
 	header.setRequest("POST", url.path());
 	header.setValue("Host", url.host());
 	header.setContentType("application/x-www-form-urlencoded");
-	
+
 	if (proxyAddress != "") {
 		statusHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
@@ -79,7 +80,7 @@ void Twitter::sendStatus(QString username, QString password, QString status, QSt
 	}
 	statusHttp.setHost(url.host(), url.port(80));
 	statusHttp.setUser(username, password);
-	
+
 	QByteArray data = "status=";
 	data += QUrl::toPercentEncoding(status);
         if (replyID != "") {
@@ -97,27 +98,27 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 		cerr << "No url defined" << endl;
 		return;
 	}
-	
+
 	if (timelineHttp.state() != QHttp::Unconnected) {
 		timelineHttp.abort();
 	}
-	
+
 	currentType = type;
-	
+
 	QUrl url(serviceAPIURL + urls[type]);
-	
+
 	if (proxyAddress != "") {
 		timelineHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
 		timelineHttp.setProxy("", 0);
 	}
-	
+
 	timelineHttp.setHost(url.host(), url.port(80));
 	timelineHttp.setUser(username, password);
-	
+
 	buffer.open(QIODevice::WriteOnly);
 	timelineHttp.get(url.path() + "?count=" + QString::number(count) + (lastStatusId ? "&since_id=" + QString::number(lastStatusId) : ""), &buffer);
-	
+
 	emit stateChanged(tr("Updating timeline: %1").arg(serviceAPIURL + urls[type]));
 }
 

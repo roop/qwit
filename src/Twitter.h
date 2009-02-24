@@ -25,6 +25,9 @@
 #define PUBLIC_XML_URL "/statuses/public_timeline.xml"
 #define REPLIES_XML_URL "/statuses/replies.xml"
 #define CUSTOM_XML_URL "/statuses/user_timeline/"
+#define INPUT_DIRECT_XML_URL "/direct_messages.xml"
+#define OUTPUT_DIRECT_XML_URL "/direct_messages/sent.xml"
+
 
 #define STATUS_UPDATE_URL "/statuses/update.xml"
 
@@ -32,7 +35,7 @@
 // #define PUBLIC_XML_URL "http://twitter.com/statuses/public_timeline.xml"
 // #define REPLIES_XML_URL "http://twitter.com/statuses/replies.xml"
 // #define CUSTOM_XML_URL "http://twitter.com/statuses/user_timeline/"
-// 
+//
 // #define STATUS_UPDATE_URL "http://twitter.com/statuses/update.xml"
 
 class Twitter: public QObject {
@@ -46,10 +49,10 @@ class Twitter: public QObject {
 	QString proxyUsername;
 	QString proxyPassword;
 	int currentType;
-	QString urls[4];
+	QString urls[5];
 	QString serviceBaseURL;
 	QString serviceAPIURL;
-	
+
 public:
 
 	Twitter();
@@ -70,7 +73,7 @@ public slots:
 	void timelineHttpDone(bool error);
 
 signals:
-	
+
 	void updated(const QByteArray &, int);
 	void statusUpdated();
 	void stateChanged(const QString &);

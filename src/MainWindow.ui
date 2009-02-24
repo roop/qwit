@@ -283,6 +283,14 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="inputTab" >
+        <attribute name="title" >
+         <string>Input</string>
+        </attribute>
+        <attribute name="toolTip" >
+         <string>Input to you</string>
+        </attribute>
+       </widget>
       </widget>
      </item>
      <item>
@@ -415,7 +423,7 @@
  </widget>
  <resources>
   <include location="../qwit.qrc" />
-  <include location="qwit.qrc" />
+  <include location="../qwit.qrc" />
  </resources>
  <connections/>
 </ui>
