@@ -139,6 +139,8 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 	if (i == -1) {
 		items.push_back(item);
 	} else {
+		if (i < 0) i = 0;
+		else if (i > items.size()) i = items.size();
 		items.insert(i, item);
 	}
 
