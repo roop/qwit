@@ -304,7 +304,7 @@
          <string>Search</string>
         </attribute>
         <attribute name="toolTip" >
-         <string>Search user timeline</string>
+         <string>Search for messages</string>
         </attribute>
         <layout class="QGridLayout" >
          <item row="0" column="0" >

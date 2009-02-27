@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ru">
-<defaultcodec></defaultcodec>
 <context>
     <name>LogsDialog</name>
     <message>
@@ -12,17 +11,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="203"/>
+        <location filename="../src/MainWindow.cpp" line="220"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Показать / Скрыть</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="205"/>
+        <location filename="../src/MainWindow.cpp" line="222"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="697"/>
+        <location filename="../src/MainWindow.cpp" line="734"/>
         <source>Qwit updates</source>
         <translation>Обновления Qwit</translation>
     </message>
@@ -92,22 +91,22 @@
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="340"/>
+        <location filename="../src/MainWindow.ui" line="369"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="350"/>
+        <location filename="../src/MainWindow.ui" line="379"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="369"/>
+        <location filename="../src/MainWindow.ui" line="398"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.ui" line="412"/>
+        <location filename="../src/MainWindow.ui" line="441"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
@@ -131,6 +130,21 @@
         <source>Direct messages outbox</source>
         <translation>Исходящие сообщения</translation>
     </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="304"/>
+        <source>Search</source>
+        <translation>Поиск</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="317"/>
+        <source>Search:</source>
+        <translation>Искать:</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow.ui" line="307"/>
+        <source>Search for messages</source>
+        <translation>Поиск сообщений</translation>
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
@@ -145,140 +159,150 @@
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="63"/>
+        <location filename="../src/OptionsDialog.ui" line="66"/>
         <source>Update interval:</source>
         <translation>Интервал обновлений:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="76"/>
+        <location filename="../src/OptionsDialog.ui" line="79"/>
         <source>Number of messages per page:</source>
         <translation>Количество сообщений на странице:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="138"/>
+        <location filename="../src/OptionsDialog.ui" line="174"/>
         <source>Connection</source>
         <translation>Соединение</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="146"/>
+        <location filename="../src/OptionsDialog.ui" line="182"/>
         <source>use proxy</source>
         <translation>использовать прокси</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="153"/>
+        <location filename="../src/OptionsDialog.ui" line="189"/>
         <source>Proxy address:</source>
         <translation>Адрес прокси-сервера:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="166"/>
+        <location filename="../src/OptionsDialog.ui" line="202"/>
         <source>Proxy port:</source>
         <translation>Порт прокси-сервера:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="179"/>
+        <location filename="../src/OptionsDialog.ui" line="215"/>
         <source>Proxy username:</source>
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="192"/>
+        <location filename="../src/OptionsDialog.ui" line="228"/>
         <source>Proxy password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="209"/>
+        <location filename="../src/OptionsDialog.ui" line="245"/>
         <source>save proxy password</source>
         <translation>сохранять пароль для прокси</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="232"/>
+        <location filename="../src/OptionsDialog.ui" line="268"/>
         <source>Authentication</source>
         <translation>Аутентификация</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="240"/>
+        <location filename="../src/OptionsDialog.ui" line="276"/>
         <source>Username or email:</source>
         <translation>Имя пользователя или email:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="253"/>
+        <location filename="../src/OptionsDialog.ui" line="289"/>
         <source>Password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="270"/>
+        <location filename="../src/OptionsDialog.ui" line="306"/>
         <source>save password</source>
         <translation>сохранять пароль</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="315"/>
+        <location filename="../src/OptionsDialog.ui" line="351"/>
         <source>Save options</source>
         <translation>Сохранить настройки</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="322"/>
+        <location filename="../src/OptionsDialog.ui" line="358"/>
         <source>Reset options</source>
         <translation>Сбросить настройки</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="43"/>
+        <location filename="../src/OptionsDialog.ui" line="46"/>
         <source>Service base URL:</source>
         <translation>Базовый адрес сервиса:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="53"/>
+        <location filename="../src/OptionsDialog.ui" line="56"/>
         <source>Service API URL:</source>
         <translation>Адрес API сервиса:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="102"/>
+        <location filename="../src/OptionsDialog.ui" line="148"/>
         <source>Notify about updates</source>
         <translation>Информировать об обновлениях</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="33"/>
+        <location filename="../src/OptionsDialog.ui" line="36"/>
         <source>Greeting message:</source>
         <translation>Приветствие:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="89"/>
+        <location filename="../src/OptionsDialog.ui" line="92"/>
         <source>Number of messages per tray:</source>
         <translation>Количество сообщений в уведомлении:</translation>
     </message>
     <message>
-        <location filename="../src/OptionsDialog.ui" line="112"/>
+        <location filename="../src/OptionsDialog.ui" line="138"/>
         <source>Username under avatar</source>
         <translation>Имя пользователя под аватар</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="115"/>
+        <source>Display retweet tag after text instead of in front</source>
+        <translation>Отображать тег ретвита после текста а не перед ним</translation>
+    </message>
+    <message>
+        <location filename="../src/OptionsDialog.ui" line="105"/>
+        <source>Retweeting tag:</source>
+        <translation>Тэг ретвита:</translation>
     </message>
 </context>
 <context>
     <name>Twitter</name>
     <message>
-        <location filename="../src/Twitter.cpp" line="128"/>
+        <location filename="../src/Twitter.cpp" line="140"/>
         <source>Error sending status: %1</source>
         <translation>Ошибка при отправлении статуса: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="131"/>
+        <location filename="../src/Twitter.cpp" line="143"/>
         <source>Status sent: %1</source>
         <translation>Статус отправлен: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="137"/>
+        <location filename="../src/Twitter.cpp" line="149"/>
         <source>Error while updating timeline: %1</source>
         <translation>Ошибка обновления: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="141"/>
+        <location filename="../src/Twitter.cpp" line="153"/>
         <source>Timeline updated: %1</source>
         <translation>Сообщения обновлены: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="123"/>
+        <location filename="../src/Twitter.cpp" line="134"/>
         <source>Updating timeline: %1</source>
         <translation>Обновление сообщения: %1</translation>
     </message>
     <message>
-        <location filename="../src/Twitter.cpp" line="94"/>
+        <location filename="../src/Twitter.cpp" line="95"/>
         <source>Sending status: %1</source>
         <translation>Отправка статуса: %1</translation>
     </message>
@@ -286,7 +310,7 @@
 <context>
     <name>TwitterWidget</name>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="242"/>
+        <location filename="../src/TwitterWidget.cpp" line="253"/>
         <source>about %n second(s) ago</source>
         <translation>
             <numerusform>примерно %n секунду назад</numerusform>
@@ -295,7 +319,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="244"/>
+        <location filename="../src/TwitterWidget.cpp" line="255"/>
         <source>about %n minute(s) ago</source>
         <translation>
             <numerusform>примерно %n минуту назад</numerusform>
@@ -304,7 +328,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="246"/>
+        <location filename="../src/TwitterWidget.cpp" line="257"/>
         <source>about %n hour(s) ago</source>
         <translation>
             <numerusform>примерно %n час назад</numerusform>
@@ -313,7 +337,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/TwitterWidget.cpp" line="248"/>
+        <location filename="../src/TwitterWidget.cpp" line="259"/>
         <source>about %n day(s) ago</source>
         <translation>
             <numerusform>примерно %n день назад</numerusform>
@@ -322,7 +346,7 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/TwitterWidget.cpp" line="241"/>
+        <location filename="../src/TwitterWidget.cpp" line="252"/>
         <source>Just now</source>
         <translation>Только что</translation>
     </message>

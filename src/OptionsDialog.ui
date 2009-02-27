@@ -102,7 +102,7 @@
            <item>
             <widget class="QLabel" name="label_13" >
              <property name="text" >
-              <string>Retweeting tag</string>
+              <string>Retweeting tag:</string>
              </property>
             </widget>
            </item>
