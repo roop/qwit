@@ -108,6 +108,8 @@ public:
 	int proxyPort;
 	int messagesPerPage;
 	int messagesPerTray;
+    QString retweetTag;
+    bool retweetTagPlace; //false is front, true is end
 	UserpicsDownloader userpicsDownloader;
 	StatusTextEdit *statusTextEdit;
 	OptionsDialog *optionsDialog;
@@ -125,6 +127,9 @@ public:
 	void loadState();
 	QDateTime dateFromString(const QString &date);
 	static MainWindow* getInstance();
+
+signals:
+    void sendRetweetTag(const QString &, const bool &);
 
 public slots:
 
@@ -144,6 +149,7 @@ public slots:
 	void customUsernameChanged();
         void setReplyID(const QString &replyID);
         void setDirectMessagesID(const QString &directMessagesID);
+        void setRetweetTag();
 
 protected:
 

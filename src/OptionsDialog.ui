@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>251</width>
-    <height>456</height>
+    <width>293</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -27,6 +27,9 @@
         <layout class="QGridLayout" >
          <item row="0" column="0" >
           <layout class="QVBoxLayout" >
+           <property name="spacing" >
+            <number>-1</number>
+           </property>
            <item>
             <widget class="QLabel" name="label_11" >
              <property name="text" >
@@ -97,14 +100,37 @@
             <widget class="QLineEdit" name="messagesPerTrayLineEdit" />
            </item>
            <item>
-            <widget class="QCheckBox" name="updatesNotificationCheckBox" >
+            <widget class="QLabel" name="label_13" >
              <property name="text" >
-              <string>Notify about updates</string>
-             </property>
-             <property name="checked" >
-              <bool>true</bool>
+              <string>Retweeting tag</string>
              </property>
             </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="retweetTagEdit" />
+           </item>
+           <item>
+            <widget class="QCheckBox" name="retweetAtEnd" >
+             <property name="text" >
+              <string>Display retweet tag after text instead of in front</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer" >
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType" >
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>20</width>
+               <height>1</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
             <widget class="QCheckBox" name="usernameUnderAvatarCheckBox" >
@@ -117,19 +143,29 @@
             </widget>
            </item>
            <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Vertical</enum>
+            <widget class="QCheckBox" name="updatesNotificationCheckBox" >
+             <property name="text" >
+              <string>Notify about updates</string>
              </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
+             <property name="checked" >
+              <bool>true</bool>
              </property>
-            </spacer>
+            </widget>
            </item>
           </layout>
+         </item>
+         <item row="1" column="0" >
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>

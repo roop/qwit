@@ -36,6 +36,7 @@ public:
 	QString username;
 	int messageId;
 
+        QString cleanStatus;
 	QString cacheUserpic;
 	QString cacheUsername;
 	QString cacheStatus;
@@ -72,7 +73,7 @@ public:
 	int getItemsCount();
 	void setMessagesPerPage(int value);
 	void setUsernameUnderAvatar(bool value);
-        int replyStatusID;
+//        int replyStatusID;
 
 	static QString formatDateTime(const QDateTime &time);
 
@@ -84,12 +85,14 @@ protected:
 public slots:
 
 	void replyClicked(const QUrl &url);
+        void rtClicked(const QUrl &url);
 	void directMessagesClicked(const QUrl &url);
 	void reloadUserpic(const QString &userpic);
 
 signals:
 
-	void reply(const QString &);
+        void reply(const QString &);
+        void retweet(const QString &, const QString &);
 	void directMessages(const QString &);
         void replyID(const QString &);
         void directMessagesID(const QString &);

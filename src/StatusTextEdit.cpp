@@ -60,17 +60,42 @@ void StatusTextEdit::keyPressEvent(QKeyEvent *e) {
 }
 
 void StatusTextEdit::reply(const QString &username) {
-	QString text = toPlainText().simplified();
-	if (text[0] == '@') {
-		int i = text.indexOf(" ");
-		if (i == -1) {
-			i = text.length();
-		}
-		text = text.mid(i + 1).simplified();
-	}
-	setText("@" + username + " " + text);
-	setFocus(Qt::OtherFocusReason);
-	moveCursor(QTextCursor::NextWord);
+        QString text = toPlainText().simplified();
+        if (text[0] == '@') {
+                int i = text.indexOf(" ");
+                if (i == -1) {
+                        i = text.length();
+                }
+                text = text.mid(i + 1).simplified();
+        }
+        setText("@" + username + " " + text);
+        setFocus(Qt::OtherFocusReason);
+        moveCursor(QTextCursor::NextWord);
+}
+
+void StatusTextEdit::setRetweetTag(const QString &rtTag, const bool &rtPlace) {
+        retweetTag = rtTag;
+        retweetTagPlace = rtPlace;
+}
+
+void StatusTextEdit::retweet(const QString &username, const QString &text) {
+    //need to add customizeable retweet message
+    emit getRetweetTag();
+    int i = retweetTag.indexOf("@");
+    if (i != -1) {
+        QString firsthalf = retweetTag.left(i+1);
+        QString secondhalf = retweetTag.right(retweetTag.size()-(i+1));
+        retweetTag = firsthalf + username + secondhalf;
+    }
+    if (retweetTagPlace) {
+        setText(text + " " + retweetTag);
+    }
+    else {
+        setText(retweetTag + " " + text);
+    }
+
+    setFocus(Qt::OtherFocusReason);
+    moveCursor(QTextCursor::NextWord);
 }
 
 void StatusTextEdit::directMessages(const QString &username) {
