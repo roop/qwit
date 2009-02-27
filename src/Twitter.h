@@ -27,7 +27,8 @@
 #define CUSTOM_XML_URL "/statuses/user_timeline/"
 #define INPUT_DIRECT_XML_URL "/direct_messages.xml"
 #define OUTPUT_DIRECT_XML_URL "/direct_messages/sent.xml"
-
+#define SEARCH_ATOM_URL "/search.atom"
+//http://search.twitter.com/search.atom?q=twitter
 
 #define STATUS_UPDATE_URL "/statuses/update.xml"
 
@@ -49,7 +50,7 @@ class Twitter: public QObject {
 	QString proxyUsername;
 	QString proxyPassword;
 	int currentType;
-	QString urls[6];
+	QString urls[7];
 	QString serviceBaseURL;
 	QString serviceAPIURL;
 

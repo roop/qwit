@@ -299,6 +299,35 @@
          <string>Direct messages outbox</string>
         </attribute>
        </widget>
+       <widget class="QWidget" name="searchTab" >
+        <attribute name="title" >
+         <string>Search</string>
+        </attribute>
+        <attribute name="toolTip" >
+         <string>Search user timeline</string>
+        </attribute>
+        <layout class="QGridLayout" >
+         <item row="0" column="0" >
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label_3" >
+               <property name="text" >
+                <string>Search:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="searchLineEdit" />
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       
       </widget>
      </item>
      <item>

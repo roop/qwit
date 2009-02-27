@@ -34,6 +34,7 @@ Twitter::Twitter() {
 	urls[3] = "";
 	urls[4] = INPUT_DIRECT_XML_URL;
 	urls[5] = OUTPUT_DIRECT_XML_URL;
+	urls[6] = SEARCH_ATOM_URL;
 	proxyAddress = "";
 	connect(&statusHttp, SIGNAL(done(bool)), this, SLOT(statusHttpDone(bool)));
 	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));
@@ -105,8 +106,12 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	}
 
 	currentType = type;
-
-	QUrl url(serviceAPIURL + urls[type]);
+	QUrl url;
+	if (type == 6) {
+		url=("http://search.twitter.com" + urls[type]);
+	} else {
+		url=(serviceAPIURL + urls[type]);
+	}
 
 	if (proxyAddress != "") {
 		timelineHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -118,9 +123,16 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 	timelineHttp.setUser(username, password);
 
 	buffer.open(QIODevice::WriteOnly);
-	timelineHttp.get(url.path() + "?count=" + QString::number(count) + (lastStatusId ? "&since_id=" + QString::number(lastStatusId) : ""), &buffer);
 
-	emit stateChanged(tr("Updating timeline: %1").arg(serviceAPIURL + urls[type]));
+	if (type == 6) {
+		timelineHttp.get(urls[type] + "&rpp=" + QString::number(count), &buffer);
+
+		emit stateChanged(tr("Updating timeline: %1").arg("http://search.twitter.com" + urls[type] + "&rpp=" + QString::number(count)));
+	} else {
+		timelineHttp.get(url.path() + "?count=" + QString::number(count) + (lastStatusId ? "&since_id=" + QString::number(lastStatusId) : ""), &buffer);
+
+		emit stateChanged(tr("Updating timeline: %1").arg(serviceAPIURL + urls[type]));
+	}
 }
 
 void Twitter::statusHttpDone(bool error) {
@@ -149,6 +161,7 @@ void Twitter::abort() {
 
 void Twitter::setUrl(int index, const QString &url) {
 	urls[index] = url;
+	emit stateChanged(url);
 }
 
 #endif
