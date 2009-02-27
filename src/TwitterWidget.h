@@ -28,6 +28,7 @@ public:
 	QTextBrowser *status;
 	QLabel *icon;
 	QLabel *sign;
+	QLabel *contrl;
 	QString iconFileName;
 	int top;
 	int height;
