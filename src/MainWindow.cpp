@@ -191,8 +191,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	for (int i = 0; i < TWITTER_TABS; ++i) {
 		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
 		connect(twitterTabs[i].twitterWidget, SIGNAL(replyID(const QString &)), this, SLOT(setReplyID(const QString &)));
-		connect(twitterTabs[i].twitterWidget, SIGNAL(retweet(const QString &, const QString &)), statusTextEdit, SLOT(retweet(const QString &,const QString &)));
-		connect(statusTextEdit, SIGNAL(getRetweetTag()), this, SLOT(setRetweetTag()));
+                connect(twitterTabs[i].twitterWidget, SIGNAL(retweet(const QString &, const QString &)), statusTextEdit, SLOT(retweet(const QString &,const QString &)));		connect(statusTextEdit, SIGNAL(getRetweetTag()), this, SLOT(setRetweetTag()));
 		connect(this, SIGNAL(sendRetweetTag(const QString &, const bool &)), statusTextEdit, SLOT(setRetweetTag(const QString &, const bool &)));
 		connect(twitterTabs[i].twitterWidget, SIGNAL(directMessages(const QString &)), statusTextEdit, SLOT(directMessages(const QString &)));
 		connect(twitterTabs[i].twitterWidget, SIGNAL(directMessagesID(const QString &)), this, SLOT(setDirectMessagesID(const QString &)));

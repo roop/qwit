@@ -76,7 +76,6 @@ public:
 	void setMessagesPerPage(int value);
 	void setUsernameUnderAvatar(bool value);
 	void setVerticalAlignControl(bool value);
-//        int replyStatusID;
 
 	static QString formatDateTime(const QDateTime &time);
 
@@ -88,7 +87,6 @@ protected:
 public slots:
 
 	void replyClicked(const QUrl &url);
-//        void rtClicked(const QUrl &url);
 	void directMessagesClicked(const QUrl &url);
 	void reloadUserpic(const QString &userpic);
 

@@ -43,7 +43,6 @@ void TwitterWidgetItem::loadIcon() {
 TwitterWidget::TwitterWidget(): QWidget() {
 	QDesktopServices::setUrlHandler("reply", this, "replyClicked");
 	QDesktopServices::setUrlHandler("directMessages", this, "directMessagesClicked");
-//        QDesktopServices::setUrlHandler("retweet", this, "rtClicked");
 }
 
 bool TwitterWidget::isUsernameChar(const QChar &c) const {
@@ -183,9 +182,11 @@ void TwitterWidget::updateItems() {
 		item.icon->move(MARGIN, height + MARGIN);
 
 		if (usernameUnderAvatar) {
+                QString tablew = "";
+                tablew.setNum(statusItemWidth + 70);
 			item.sign->setText(
-			    "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr valign=\"top\"><td width=\"50%\"><a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a></td><td width=\"50%\"><p align=\"right\"><a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + " </a></p></td>"  + (verticalAlignControl ? "" : "<td><p align=\"right\"><a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><a href=\"reply://tweet:" + QString::number(item.messageId) + "/q?user=" + item.username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><a href=\"reply://tweet:" + QString::number(item.messageId) + "/q?user=" + item.username + "&status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a></p></td>") + "</tr></table>");
-			item.sign->resize(width()+7 * MARGIN, 16);
+			    "<table border=\"0\" width=\"" + tablew + "\" cellpadding=\"0\" cellspacing=\"0\"><tr valign=\"top\"><td width=\"50%\"><a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a></td><td width=\"50%\"><p align=\"right\"><a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + " </a></p></td>"  + (verticalAlignControl ? "" : "<td><p align=\"right\"><a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><a href=\"reply://tweet:" + QString::number(item.messageId) + "/q?user=" + item.username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><a href=\"reply://tweet:" + QString::number(item.messageId) + "/q?user=" + item.username + "&status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a></p></td>") + "</tr></table>");
+			item.sign->resize(width()+(7 * MARGIN), 16);
 			item.sign->move(MARGIN, height + statusItemHeight + MARGIN);
 		} else{
 			item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> " + (verticalAlignControl ? "" : "<a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><a href=\"reply://tweet:" + QString::number(item.messageId) + "/q?user=" + item.username + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><a href=\"reply://tweet:" + QString::number(item.messageId) + "/q?user=" + item.username + "&status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a>"));
@@ -227,12 +228,6 @@ void TwitterWidget::replyClicked(const QUrl &url) {
         else emit reply(QUrl::fromPercentEncoding((url.queryItemValue("user")).toAscii()));
         emit replyID(QString::number(url.port()));
 }
-/*
-void TwitterWidget::rtClicked(const QUrl &url) {
-    //QByteArray tempmsg = ;
-
-        emit replyID(QString::number(url.port()));
-}*/
 
 void TwitterWidget::directMessagesClicked(const QUrl &url) {
 	emit directMessages(url.host());
