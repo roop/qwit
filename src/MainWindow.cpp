@@ -189,13 +189,13 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 
 	for (int i = 0; i < TWITTER_TABS; ++i) {
-                connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
-                connect(twitterTabs[i].twitterWidget, SIGNAL(replyID(const QString &)), this, SLOT(setReplyID(const QString &)));
-                connect(twitterTabs[i].twitterWidget, SIGNAL(retweet(const QString &, const QString &)), statusTextEdit, SLOT(retweet(const QString &,const QString &)));
-                connect(statusTextEdit, SIGNAL(getRetweetTag()), this, SLOT(setRetweetTag()));
-                connect(this, SIGNAL(sendRetweetTag(const QString &, const bool &)), statusTextEdit, SLOT(setRetweetTag(const QString &, const bool &)));
-                connect(twitterTabs[i].twitterWidget, SIGNAL(directMessages(const QString &)), statusTextEdit, SLOT(directMessages(const QString &)));
-                connect(twitterTabs[i].twitterWidget, SIGNAL(directMessagesID(const QString &)), this, SLOT(setDirectMessagesID(const QString &)));
+		connect(twitterTabs[i].twitterWidget, SIGNAL(reply(const QString &)), statusTextEdit, SLOT(reply(const QString &)));
+		connect(twitterTabs[i].twitterWidget, SIGNAL(replyID(const QString &)), this, SLOT(setReplyID(const QString &)));
+		connect(twitterTabs[i].twitterWidget, SIGNAL(retweet(const QString &, const QString &)), statusTextEdit, SLOT(retweet(const QString &,const QString &)));
+		connect(statusTextEdit, SIGNAL(getRetweetTag()), this, SLOT(setRetweetTag()));
+		connect(this, SIGNAL(sendRetweetTag(const QString &, const bool &)), statusTextEdit, SLOT(setRetweetTag(const QString &, const bool &)));
+		connect(twitterTabs[i].twitterWidget, SIGNAL(directMessages(const QString &)), statusTextEdit, SLOT(directMessages(const QString &)));
+		connect(twitterTabs[i].twitterWidget, SIGNAL(directMessagesID(const QString &)), this, SLOT(setDirectMessagesID(const QString &)));
 	}
 
 	connect(statusTextEdit, SIGNAL(leftCharsNumberChanged(int)), this, SLOT(leftCharsNumberChanged(int)));
@@ -249,8 +249,8 @@ void MainWindow::loadState() {
 	twitter.setServiceAPIURL(settings.value("serviceAPIURL", "http://twitter.com").toString());
 	twitter.setServiceBaseURL(settings.value("serviceBaseURL", "http://twitter.com").toString());
 	greetingMessageLabel->setText(settings.value("greetingMessage", "What are you doing?").toString());
-    retweetTag = settings.value("retweetTag", "RT @:").toString();
-    retweetTagPlace = settings.value("retweetTagPlace", false).toBool();
+	retweetTag = settings.value("retweetTag", "RT @:").toString();
+	retweetTagPlace = settings.value("retweetTagPlace", false).toBool();
 	settings.endGroup();
 	settings.beginGroup("Proxy");
 	useProxy = settings.value("useProxy", "").toBool();
@@ -270,16 +270,16 @@ void MainWindow::loadState() {
 
 	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
 	optionsDialog->messagesPerTrayLineEdit->setText(QString::number(messagesPerTray));
-        optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
-        optionsDialog->verticalControlCheckBox->setCheckState(verticalAlignControl ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->verticalControlCheckBox->setCheckState(verticalAlignControl ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->usernameUnderAvatarCheckBox->setCheckState(usernameUnderAvatar ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->serviceBaseURLLineEdit->setText(twitter.getServiceBaseURL());
 	optionsDialog->serviceAPIURLLineEdit->setText(twitter.getServiceAPIURL());
 	optionsDialog->usernameLineEdit->setText(username);
 	optionsDialog->passwordLineEdit->setText(password);
-        optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
-        optionsDialog->retweetTagEdit->setText(retweetTag);
-        optionsDialog->retweetAtEnd->setCheckState(retweetTagPlace ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->savePasswordCheckBox->setCheckState(savePassword ? Qt::Checked : Qt::Unchecked);
+	optionsDialog->retweetTagEdit->setText(retweetTag);
+	optionsDialog->retweetAtEnd->setCheckState(retweetTagPlace ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->intervalLineEdit->setText(QString::number(interval));
 	optionsDialog->greetingMessageLineEdit->setText(greetingMessageLabel->text());
 	optionsDialog->useProxyCheckBox->setCheckState(useProxy ? Qt::Checked : Qt::Unchecked);
@@ -331,17 +331,17 @@ void MainWindow::loadState() {
 }
 
 void MainWindow::setReplyID(const QString &replyID) {
-        replyStatusID = replyID;
-        isReply = true;
+	replyStatusID = replyID;
+	isReply = true;
 }
 
 void MainWindow::setDirectMessagesID(const QString &replyID) {
-        replyStatusID = replyID;
-        isReply = true;
+	replyStatusID = replyID;
+	isReply = true;
 }
 
 void MainWindow::setRetweetTag() {
-    emit sendRetweetTag(retweetTag,retweetTagPlace);
+	emit sendRetweetTag(retweetTag,retweetTagPlace);
 }
 
 void MainWindow::sendStatus() {
@@ -349,12 +349,13 @@ void MainWindow::sendStatus() {
 	if (status == "") {
 		return;
 	}
-        if (isReply) {
-                twitter.sendStatus(username, password, status, replyStatusID);
-                isReply = false;
-                replyStatusID = "";
-        }
-        else twitter.sendStatus(username, password, status, "");
+	if (isReply) {
+		twitter.sendStatus(username, password, status, replyStatusID);
+		isReply = false;
+		replyStatusID = "";
+	} else {
+		twitter.sendStatus(username, password, status, "");
+	}
 	statusTextEdit->setText("");
 	charsLeftLabel->setText(QString::number(statusTextEdit->getMaxStatusCharacter()));
 	charsLeftLabel->setForegroundRole(QPalette::Light);
@@ -392,8 +393,8 @@ void MainWindow::saveState() {
 	proxyPassword = optionsDialog->proxyPasswordLineEdit->text();
 	messagesPerPage = optionsDialog->messagesPerPageLineEdit->text().toInt();
 	messagesPerTray = optionsDialog->messagesPerTrayLineEdit->text().toInt();
-   retweetTag = optionsDialog->retweetTagEdit->text();
-   retweetTagPlace = optionsDialog->retweetAtEnd->checkState() == Qt::Checked;
+	retweetTag = optionsDialog->retweetTagEdit->text();
+	retweetTagPlace = optionsDialog->retweetAtEnd->checkState() == Qt::Checked;
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
 	verticalAlignControl = optionsDialog->verticalControlCheckBox->checkState() == Qt::Checked;
 	updatesNotification = optionsDialog->updatesNotificationCheckBox->checkState() == Qt::Checked;
@@ -415,8 +416,8 @@ void MainWindow::saveState() {
 	settings.setValue("interval", interval);
 	settings.setValue("messagesPerPage", messagesPerPage);
 	settings.setValue("messagesPerTray", messagesPerTray);
-   settings.setValue("retweetTag", retweetTag);
-   settings.setValue("retweetTagPlace", retweetTagPlace);
+	settings.setValue("retweetTag", retweetTag);
+	settings.setValue("retweetTagPlace", retweetTagPlace);
 	settings.setValue("verticalAlignControl", verticalAlignControl);
 	settings.setValue("updatesNotification", updatesNotification);
 	settings.setValue("usernameUnderAvatar", usernameUnderAvatar);
@@ -467,6 +468,8 @@ void MainWindow::saveState() {
 	settings.setValue("customUsername", customUsernameLineEdit->text());
 	settings.setValue("searchString", searchLineEdit->text());
 	settings.endGroup();
+
+	updateItems();
 
 	if (useProxy) {
 		twitter.useProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
@@ -607,7 +610,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			if (id > maxId) maxId = id;
 			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
-			if ((id > twitterTabs[type].lastId)  && j < messagesPerTray) {
+			if ((id > twitterTabs[type].lastId) && j < messagesPerTray) {
 				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n----------------------------\n";
 			}
 			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
@@ -700,7 +703,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			}
 			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
-			if ((id > twitterTabs[type].lastId)  && j < messagesPerTray) {
+			if ((id > twitterTabs[type].lastId) && j < messagesPerTray) {
 				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n----------------------------\n";
 			}
 			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
