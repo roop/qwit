@@ -155,7 +155,7 @@
            <item>
             <widget class="QCheckBox" name="verticalControlCheckBox" >
              <property name="text" >
-              <string>Vertical align control</string>
+              <string>Place controls vertically</string>
              </property>
              <property name="checked" >
               <bool>true</bool>
