@@ -11,17 +11,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="220"/>
+        <location filename="../src/MainWindow.cpp" line="218"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Показать / Скрыть</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="222"/>
+        <location filename="../src/MainWindow.cpp" line="220"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="740"/>
+        <location filename="../src/MainWindow.cpp" line="741"/>
         <source>Qwit updates</source>
         <translation>Обновления Qwit</translation>
     </message>

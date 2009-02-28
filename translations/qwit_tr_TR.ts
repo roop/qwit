@@ -11,12 +11,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/MainWindow.cpp" line="220"/>
+        <location filename="../src/MainWindow.cpp" line="218"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Göster / Gizle</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="222"/>
+        <location filename="../src/MainWindow.cpp" line="220"/>
         <source>&amp;Quit</source>
         <translation>Çı&amp;kış</translation>
     </message>
@@ -106,7 +106,7 @@
         <translation>Çıkış</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow.cpp" line="740"/>
+        <location filename="../src/MainWindow.cpp" line="741"/>
         <source>Qwit updates</source>
         <translation>Qwit güncellemeleri</translation>
     </message>

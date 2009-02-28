@@ -1,6 +1,6 @@
 GENERAL
 
-Qwit - free cross-platform Qt-based Twitter client.
+Qwit - free cross-platform Qt4-based Twitter client.
 Copyright (C) 2008, 2009 Artem Iglikov
 
 CONTACTS
@@ -8,7 +8,8 @@ CONTACTS
 Project's homepage: http://code.google.com/p/qwit/
 For submitting issues, please, use: http://code.google.com/p/qwit/issues/
 If you want to contact author or provide some help, use my email or GTalk / Jabber: artem.iglikov@gmail.com
-Also, some additional information can be found on my blog (mostly in Russian): http://arti.kz
+Also, there is a Qwit Google Group: http://groups.google.com/group/qwit
+Some additional information can be found on my blog (mostly in Russian): http://arti.kz
 
 LICENSE
 
@@ -30,5 +31,6 @@ THANKS
 ...to Linus Torvalds, for Linux
 ...to Richard Stallman, for GNU
 ...to Uğur Çetin, for Turkish translation
+...to Valentin Gritsinger, Perry Ismangil and kiracatgirl for becoming project members
 
-and to me, for this stuff :)
+and to me, for starting this stuff :)
