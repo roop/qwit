@@ -118,6 +118,7 @@ public:
 	TwitterTab twitterTabs[TWITTER_TABS];
 	Twitter twitter;
 	QMap<QString, int> monthes;
+	bool verticalAlignControl;
 	bool updatesNotification;
 	bool usernameUnderAvatar;
 

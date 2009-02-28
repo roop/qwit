@@ -58,6 +58,7 @@ class TwitterWidget: public QWidget {
 private:
 	int messagesPerPage;
 	bool usernameUnderAvatar;
+	bool verticalAlignControl;
 
 	QVector<TwitterWidgetItem> items;
 	QString prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL);
@@ -74,6 +75,7 @@ public:
 	int getItemsCount();
 	void setMessagesPerPage(int value);
 	void setUsernameUnderAvatar(bool value);
+	void setVerticalAlignControl(bool value);
 //        int replyStatusID;
 
 	static QString formatDateTime(const QDateTime &time);

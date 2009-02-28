@@ -152,6 +152,16 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QCheckBox" name="verticalControlCheckBox" >
+             <property name="text" >
+              <string>Vertical align control</string>
+             </property>
+             <property name="checked" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item row="1" column="0" >

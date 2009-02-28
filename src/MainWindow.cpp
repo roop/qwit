@@ -245,6 +245,7 @@ void MainWindow::loadState() {
 	interval = settings.value("interval", DEFAULT_UPDATE_INTERVAL).toInt();
 	messagesPerPage = settings.value("messagesPerPage", DEFAULT_MESSAGES_PER_PAGE).toInt();
 	messagesPerTray = settings.value("messagesPerTray", DEFAULT_MESSAGES_PER_TRAY).toInt();
+	verticalAlignControl = settings.value("verticalAlignControl", true).toBool();
 	updatesNotification = settings.value("updatesNotification", true).toBool();
 	usernameUnderAvatar = settings.value("usernameUnderAvatar", true).toBool();
 	twitter.setServiceAPIURL(settings.value("serviceAPIURL", "http://twitter.com").toString());
@@ -272,6 +273,7 @@ void MainWindow::loadState() {
 	optionsDialog->messagesPerPageLineEdit->setText(QString::number(messagesPerPage));
 	optionsDialog->messagesPerTrayLineEdit->setText(QString::number(messagesPerTray));
         optionsDialog->updatesNotificationCheckBox->setCheckState(updatesNotification ? Qt::Checked : Qt::Unchecked);
+        optionsDialog->verticalControlCheckBox->setCheckState(verticalAlignControl ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->usernameUnderAvatarCheckBox->setCheckState(usernameUnderAvatar ? Qt::Checked : Qt::Unchecked);
 	optionsDialog->serviceBaseURLLineEdit->setText(twitter.getServiceBaseURL());
 	optionsDialog->serviceAPIURLLineEdit->setText(twitter.getServiceAPIURL());
@@ -304,6 +306,7 @@ void MainWindow::loadState() {
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
 		twitterTabs[tab].twitterWidget->setUsernameUnderAvatar(usernameUnderAvatar);
+		twitterTabs[tab].twitterWidget->setVerticalAlignControl(verticalAlignControl);
 	}
 	settings.beginGroup("Twits");
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
@@ -374,6 +377,7 @@ void MainWindow::saveState() {
 	for (int tab = 0; tab < TWITTER_TABS; ++tab) {
 		twitterTabs[tab].twitterWidget->setMessagesPerPage(messagesPerPage);
 		twitterTabs[tab].twitterWidget->setUsernameUnderAvatar(usernameUnderAvatar);
+		twitterTabs[tab].twitterWidget->setVerticalAlignControl(verticalAlignControl);
 	}
 
 	username = optionsDialog->usernameLineEdit->text();
@@ -393,6 +397,7 @@ void MainWindow::saveState() {
    retweetTag = optionsDialog->retweetTagEdit->text();
    retweetTagPlace = optionsDialog->retweetAtEnd->checkState() == Qt::Checked;
 	bool proxySavePassword = optionsDialog->proxySavePasswordCheckBox->checkState() == Qt::Checked;
+	verticalAlignControl = optionsDialog->verticalControlCheckBox->checkState() == Qt::Checked;
 	updatesNotification = optionsDialog->updatesNotificationCheckBox->checkState() == Qt::Checked;
 	usernameUnderAvatar = optionsDialog->usernameUnderAvatarCheckBox->checkState() == Qt::Checked;
 	greetingMessageLabel->setText(optionsDialog->greetingMessageLineEdit->text());
@@ -414,6 +419,7 @@ void MainWindow::saveState() {
 	settings.setValue("messagesPerTray", messagesPerTray);
    settings.setValue("retweetTag", retweetTag);
    settings.setValue("retweetTagPlace", retweetTagPlace);
+	settings.setValue("verticalAlignControl", verticalAlignControl);
 	settings.setValue("updatesNotification", updatesNotification);
 	settings.setValue("usernameUnderAvatar", usernameUnderAvatar);
 	settings.setValue("serviceBaseURL", twitter.getServiceBaseURL());

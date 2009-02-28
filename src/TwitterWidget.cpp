@@ -183,16 +183,16 @@ void TwitterWidget::updateItems() {
 		item.icon->move(MARGIN, height + MARGIN);
 
 		if (usernameUnderAvatar) {
-			item.sign->setText("<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0><TR VALIGN=TOP><TD WIDTH=50%><P><a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a></P></TD><TD WIDTH=50%><P ALIGN=RIGHT><a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a></P></TD></TR></TABLE>");
-			item.sign->resize(width()-3 * MARGIN, 16);
+			item.sign->setText("<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0><TR VALIGN=TOP><TD WIDTH=50%><P><a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a></P></TD><TD WIDTH=50%><P ALIGN=RIGHT><a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + " </a></P></TD><P ALIGN=RIGHT>"  + (verticalAlignControl ? "" : "<TD><a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><a href=\"retweet://" + item.username + ":" + QString::number(item.messageId) + "/rt?status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a></TD>") + "</TR></TABLE>");
+			item.sign->resize(width()+7 * MARGIN, 16);
 			item.sign->move(MARGIN, height + statusItemHeight + MARGIN);
 		} else{
-			item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a>");
-//			item.sign->setText(+"<a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a> <a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a> <a href=\"retweet://" + item.username + ":" + QString::number(item.messageId) + "/rt?status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a>");
+			item.sign->setText("<a href=\"http://twitter.com/" + item.username + "\" style=\"font-weight:bold;text-decoration:none\">" + item.username + "</a> - <a href=\"http://twitter.com/" + item.username + "/statuses/" + QString::number(item.messageId) + "\" style=\"font-size:70%;text-decoration:none\">" + formatDateTime(item.time) + "</a> " + (verticalAlignControl ? "" : "<a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><a href=\"retweet://" + item.username + ":" + QString::number(item.messageId) + "/rt?status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a>"));
 			item.sign->adjustSize();
 			item.sign->move(width() - item.sign->width() - MARGIN, height + statusItemHeight + MARGIN);
 		}
-		item.contrl->setText("<a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><br><a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><br><a href=\"retweet://" + item.username + ":" + QString::number(item.messageId) + "/rt?status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a>");
+
+		item.contrl->setText(verticalAlignControl ? "<a href=\"directMessages://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/dms.png\"/></a><br><a href=\"reply://" + item.username + ":" + QString::number(item.messageId) + "\" style=\"text-decoration:none\"><img src=\":/images/reply.png\"/></a><br><a href=\"retweet://" + item.username + ":" + QString::number(item.messageId) + "/rt?status=" + QUrl::toPercentEncoding(item.cleanStatus) +  "\" style=\"text-decoration:none\"><img src=\":/images/rt.png\"/></a>" : "");
 		item.contrl->adjustSize();
 		item.contrl->move(width() - item.contrl->width() - MARGIN, height + MARGIN);
 
@@ -288,6 +288,10 @@ void TwitterWidget::setMessagesPerPage(int value) {
 
 void TwitterWidget::setUsernameUnderAvatar(bool value) {
 	usernameUnderAvatar = value;
+}
+
+void TwitterWidget::setVerticalAlignControl(bool value) {
+	verticalAlignControl = value;
 }
 
 #endif
