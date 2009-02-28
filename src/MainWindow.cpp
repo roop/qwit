@@ -611,7 +611,10 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
 			if ((id > twitterTabs[type].lastId) && j < messagesPerTray) {
-				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n----------------------------\n";
+				if (trayMessage.length()) {
+					trayMessage += "----------------------------\n";
+				}
+				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n";
 			}
 			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
 			QString imageFileName = "";
@@ -704,7 +707,10 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			QDateTime time = dateFromString(timeStr);
 			time = QDateTime(time.date(), time.time(), Qt::UTC);
 			if ((id > twitterTabs[type].lastId) && j < messagesPerTray) {
-				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n----------------------------\n";
+				if (trayMessage.length()) {
+					trayMessage += "----------------------------\n";
+				}
+				trayMessage += user + ": " + message + " /" + TwitterWidget::formatDateTime(time.toLocalTime()) + "\n";
 			}
 			QByteArray hash = QCryptographicHash::hash(image.toAscii(), QCryptographicHash::Md5);
 			QString imageFileName = "";
