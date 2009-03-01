@@ -113,37 +113,37 @@
     <message>
         <location filename="../src/MainWindow.ui" line="288"/>
         <source>Inbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelen kutusu</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="291"/>
         <source>Direct messages inbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrudan iletiler için gelen kutusu</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="296"/>
         <source>Outbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Giden kutusu</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="299"/>
         <source>Direct messages outbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrudan iletiler için giden kutusu</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="304"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="317"/>
         <source>Search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara:</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.ui" line="307"/>
         <source>Search for messages</source>
-        <translation type="unfinished"></translation>
+        <translation>İletileri ara</translation>
     </message>
 </context>
 <context>
@@ -256,27 +256,27 @@
     <message>
         <location filename="../src/OptionsDialog.ui" line="92"/>
         <source>Number of messages per tray:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem çekmecesi başına ileti sayısı:</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="138"/>
         <source>Username under avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı adı avatarın altında</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="115"/>
         <source>Display retweet tag after text instead of in front</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıtlama etiketini yazının başı yerine sonunda göster</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="105"/>
         <source>Retweeting tag:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıtlama etiketi:</translation>
     </message>
     <message>
         <location filename="../src/OptionsDialog.ui" line="158"/>
         <source>Place controls vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Düğmeleri yatay diz</translation>
     </message>
 </context>
 <context>
@@ -304,12 +304,12 @@
     <message>
         <location filename="../src/Twitter.cpp" line="95"/>
         <source>Sending status: %1</source>
-        <translation type="unfinished">Durum gönderiliyor: %1</translation>
+        <translation>Durum gönderiliyor: %1</translation>
     </message>
     <message>
         <location filename="../src/Twitter.cpp" line="134"/>
         <source>Updating timeline: %1</source>
-        <translation type="unfinished">Yazılar güncelleniyor: %1</translation>
+        <translation>Yazılar güncelleniyor: %1</translation>
     </message>
 </context>
 <context>
