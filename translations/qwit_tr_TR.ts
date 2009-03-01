@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="tr_TR">
+<defaultcodec></defaultcodec>
 <context>
     <name>LogsDialog</name>
     <message>
@@ -324,7 +325,7 @@
         <source>about %n second(s) ago</source>
         <translation>
             <numerusform>yaklaşık %n saniye önce</numerusform>
-            <numerusform></numerusform>
+            <numerusform>yaklaşık %n saniye önce</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -332,7 +333,7 @@
         <source>about %n minute(s) ago</source>
         <translation>
             <numerusform>yaklaşık %n dakika önce</numerusform>
-            <numerusform></numerusform>
+            <numerusform>yaklaşık %n dakika önce</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -340,7 +341,7 @@
         <source>about %n hour(s) ago</source>
         <translation>
             <numerusform>yaklaşık %n saat önce</numerusform>
-            <numerusform></numerusform>
+            <numerusform>yaklaşık %n saat önce</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -348,7 +349,7 @@
         <source>about %n day(s) ago</source>
         <translation>
             <numerusform>yaklaşık %n gün önce</numerusform>
-            <numerusform></numerusform>
+            <numerusform>yaklaşık %n gün önce</numerusform>
         </translation>
     </message>
 </context>
