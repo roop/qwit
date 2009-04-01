@@ -31,6 +31,7 @@ SOURCES += src/LogsDialog.cpp \
            src/UserpicsDownloader.cpp
 TRANSLATIONS += \
            translations/qwit_tr_TR.ts \
+           translations/qwit_es_ES.ts \
            translations/qwit_ru_RU.ts \
            translations/qwit_en_US.ts
 QT += network xml
