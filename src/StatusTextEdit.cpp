@@ -31,6 +31,7 @@ const int STANDARD_HEIGHT = 45;
 StatusTextEdit::StatusTextEdit(QWidget *parent): QTextEdit(parent) {
 	setFixedHeight(STANDARD_HEIGHT);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setAcceptRichText(false);
 	emit leftCharsNumberChanged(MAX_STATUS_CHARACTERS);
 	connect(this, SIGNAL(textChanged()), this, SLOT(textChangedToCharsNumberChanged()));
 }
