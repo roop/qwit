@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	scrollArea->setBackgroundRole(QPalette::Light);
 	scrollArea->setWidget(twitterWidget);
 	scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
 
