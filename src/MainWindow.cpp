@@ -909,4 +909,14 @@ void MainWindow::searchChanged() {
 	updateTimeline();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+	if (event->key() == Qt::Key_Escape) {
+		showhide();
+	} else if ((event->modifiers() == Qt::ControlModifier) && (event->key() == Qt::Key_Q)) {
+		quit();
+	} else {
+		QDialog::keyPressEvent(event);
+	}
+}
+
 #endif
