@@ -30,11 +30,12 @@ SOURCES += src/LogsDialog.cpp \
            src/TwitterWidget.cpp \
            src/UserpicsDownloader.cpp
 TRANSLATIONS += \
-           translations/qwit_tr_TR.ts \
-           translations/qwit_pt_BR.ts \
+           translations/qwit_en_US.ts \
            translations/qwit_es_ES.ts \
+           translations/qwit_it_IT.ts \
+           translations/qwit_pt_BR.ts \
            translations/qwit_ru_RU.ts \
-           translations/qwit_en_US.ts
+           translations/qwit_tr_TR.ts
 QT += network xml
 RESOURCES = qwit.qrc
 target.path = /usr/bin
