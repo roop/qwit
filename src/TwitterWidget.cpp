@@ -30,10 +30,6 @@ using namespace std;
 
 void TwitterWidgetItem::loadIcon() {
 	QPixmap pixmap(iconFileName);
-// Fix for stupid formats
-	if (pixmap.isNull()) {
-		pixmap.load(iconFileName, "JPG");
-	}
 	if (!pixmap.isNull()) {
 		icon->setPixmap(pixmap.scaled(ICON_SIZE, ICON_SIZE));
 	}
