@@ -738,7 +738,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 				}
 				imageFileName += (char)c;
 			}
-			imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
+			//imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
 			QDir dir(QDir::homePath());
 			dir.mkdir(".qwit");
 			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
@@ -815,7 +815,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 						}
 						imageFileName += (char)c;
 					}
-					imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
+					//imageFileName += "." + QFileInfo(QUrl(image).path()).suffix();
 					QDir dir(QDir::homePath());
 					dir.mkdir(".qwit");
 					imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
