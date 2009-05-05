@@ -40,4 +40,4 @@ QT += network xml
 RESOURCES = qwit.qrc
 target.path = /usr/bin
 INSTALLS = target
-CONFIG += debug
+CONFIG += debug x86 ppc x86_64 ppc64
