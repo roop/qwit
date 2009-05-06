@@ -71,7 +71,7 @@ QString TwitterWidget::prepare(const QString &text, const int &replyStatusId, co
 	t = "";
 	for (int i = 0; i < s.length(); ++i) {
 		t += s[i];
-		if ((s[i] == '@') && (!i || (s[i - 1] == ' '))) {
+		if ((s[i] == '@') && (!i || !isUsernameChar(s[i - 1]))) {
 			int j = i + 1;
 			while ((j < s.length()) && isUsernameChar(s[j])) {
 				++j;
