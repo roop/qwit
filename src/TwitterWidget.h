@@ -37,10 +37,11 @@ public:
 	QString username;
 	int messageId;
 
-        QString cleanStatus;
+	QString cleanStatus;
 	QString cacheUserpic;
 	QString cacheUsername;
 	QString cacheStatus;
+	bool reply;
 	QDateTime cacheTime;
 	int cacheMessageId;
 	int cacheReplyStatusId;
@@ -61,6 +62,7 @@ private:
 	bool verticalAlignControl;
 
 	QVector<TwitterWidgetItem> items;
+	QString getReplyUsername(const QString &text);
 	QString prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL);
 	bool isUsernameChar(const QChar &c) const;
 	QString serviceBaseURL;
@@ -69,7 +71,7 @@ public:
 
 	TwitterWidget();
 	void clear();
-	void addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i, const QString &serviceBaseURL);
+	void addItem(const QString &userpic, const QString &username, const QString &status, const QDateTime &time, int messageId, int replyStatusId, int i, const QString &serviceBaseURL, const QString &currentUsername);
 	void updateItems();
 	const TwitterWidgetItem getItem(int index);
 	int getItemsCount();

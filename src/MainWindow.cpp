@@ -328,7 +328,8 @@ void MainWindow::loadState() {
 				settings.value("messageId").toInt(),
 				settings.value("replyStatusId").toInt(),
 				-1,
-				twitter.getServiceBaseURL()
+				twitter.getServiceBaseURL(),
+				username
 			);
 		}
 		settings.endArray();
@@ -647,7 +648,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			dir.mkdir(".qwit");
 			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 			userpicsDownloader.download(image, imageFileName);
-			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++, twitter.getServiceBaseURL());
+			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, replyStatusId, j++, twitter.getServiceBaseURL(), username);
 		}
 		node = node.nextSibling();
 	}
@@ -743,7 +744,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 			dir.mkdir(".qwit");
 			imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 			userpicsDownloader.download(image, imageFileName);
-			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, id, j++, twitter.getServiceBaseURL());
+			twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, id, j++, twitter.getServiceBaseURL(), username);
 		}
 		node = node.nextSibling();
 	}
@@ -820,7 +821,7 @@ void MainWindow::updated(const QByteArray &buffer, int type) {
 					dir.mkdir(".qwit");
 					imageFileName = dir.absolutePath() + "/.qwit/" + imageFileName;
 					userpicsDownloader.download(image, imageFileName);
-					twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, id, j++, twitter.getServiceBaseURL());
+					twitterTabs[type].twitterWidget->addItem(imageFileName, user, message.simplified(), time.toLocalTime(), id, id, j++, twitter.getServiceBaseURL(), username);
 				}
 			}
 			twitterTabs[type].lastId = maxId;

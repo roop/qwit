@@ -122,8 +122,8 @@ public:
 	bool updatesNotification;
 	bool usernameUnderAvatar;
 
-        QString replyStatusID;
-        bool isReply;
+	QString replyStatusID;
+	bool isReply;
 
 	void setupTrayIcon();
 	void loadState();
