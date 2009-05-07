@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Qwit
+Comment=Qt4 Twitter Client
+GenericName=Twitter Client
+Name[it]=Qwit
+Comment[it]=Client di Twitter
+Exec=qwit
+Icon=qwit
+Terminal=false
+Categories=Qt;Network;Internet
