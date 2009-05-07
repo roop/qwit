@@ -62,7 +62,7 @@ private:
 	bool verticalAlignControl;
 
 	QVector<TwitterWidgetItem> items;
-	QString getReplyUsername(const QString &text);
+	bool isReplyTo(const QString &text, const QString &username);
 	QString prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL);
 	bool isUsernameChar(const QChar &c) const;
 	QString serviceBaseURL;

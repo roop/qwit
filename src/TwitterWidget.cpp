@@ -45,11 +45,8 @@ bool TwitterWidget::isUsernameChar(const QChar &c) const {
 	return ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) || ((c >= '0') && (c <= '9')) || (c == '_');
 }
 
-QString TwitterWidget::getReplyUsername(const QString &text) {
-	if (text[0] != '@') return "";
-	int i = 1;
-	while ((i < text.length()) && (QChar(text[i]).isLetterOrNumber() || (text[i] == '_'))) ++i;
-	return text.mid(1, i - 1);
+bool TwitterWidget::isReplyTo(const QString &text, const QString &username) {
+	return (text.indexOf("@" + username) != -1);
 }
 
 QString TwitterWidget::prepare(const QString &text, const int &replyStatusId, const QString &serviceBaseURL) {
@@ -122,7 +119,7 @@ void TwitterWidget::addItem(const QString &userpic, const QString &username, con
 
 	item.cleanStatus = status;
 
-	item.reply = (getReplyUsername(status) == currentUsername);
+	item.reply = isReplyTo(status, currentUsername);
 
 	item.status = new QTextBrowser(this);
 	item.status->setHtml(prepare(status, replyStatusId, serviceBaseURL));
