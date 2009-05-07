@@ -12,6 +12,12 @@ UI_SOURCES_DIR = var
 UI_HEADERS_DIR = var
 RCC_DIR = var
 
+unix {
+    # Prefix: base instalation directory
+    isEmpty( PREFIX ) {
+      PREFIX = /usr/local
+    }
+}
 # Input
 HEADERS += src/LogsDialog.h \
            src/MainWindow.h \
@@ -38,6 +44,10 @@ TRANSLATIONS += \
            translations/qwit_tr_TR.ts
 QT += network xml
 RESOURCES = qwit.qrc
-target.path = /usr/bin
-INSTALLS = target
+target.path = $${PREFIX}/bin
+desktop.path = $${PREFIX}/share/applications
+desktop.files += qwit.desktop
+icon.path = $${PREFIX}/share/icons
+icon.files += images/qwit.png
+INSTALLS = target desktop icon
 CONFIG += debug x86 ppc x86_64 ppc64
