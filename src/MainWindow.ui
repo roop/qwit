@@ -226,7 +226,7 @@
         <string/>
        </property>
        <property name="tabPosition" >
-        <enum>QTabWidget::South</enum>
+        <enum>QTabWidget::West</enum>
        </property>
        <property name="currentIndex" >
         <number>0</number>
@@ -327,7 +327,6 @@
          </item>
         </layout>
        </widget>
-       
       </widget>
      </item>
      <item>
