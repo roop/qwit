@@ -364,6 +364,12 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize" >
+          <size>
+           <width>26</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="toolTip" >
           <string>Refresh</string>
          </property>
@@ -393,6 +399,12 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize" >
+          <size>
+           <width>26</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="toolTip" >
           <string>Options</string>
          </property>
@@ -416,6 +428,12 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize" >
+          <size>
+           <width>26</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="text" >
           <string/>
          </property>
@@ -435,6 +453,12 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>26</width>
+           <height>25</height>
+          </size>
          </property>
          <property name="toolTip" >
           <string>Quit</string>
