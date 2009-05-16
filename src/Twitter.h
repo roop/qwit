@@ -20,6 +20,7 @@
 #include <QHttp>
 #include <QString>
 #include <QBuffer>
+#include <QSslError>
 
 #define HOME_XML_URL "/statuses/friends_timeline.xml"
 #define PUBLIC_XML_URL "/statuses/public_timeline.xml"
@@ -72,6 +73,7 @@ public slots:
 
 	void statusHttpDone(bool error);
 	void timelineHttpDone(bool error);
+	void httpsError(const QList<QSslError> & errors);
 
 signals:
 

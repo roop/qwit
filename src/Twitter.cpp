@@ -20,6 +20,7 @@
 #include <QHttpRequestHeader>
 #include <QByteArray>
 #include <QDateTime>
+#include <QNetworkProxy>
 
 #include "Twitter.h"
 
@@ -38,6 +39,8 @@ Twitter::Twitter() {
 	proxyAddress = "";
 	connect(&statusHttp, SIGNAL(done(bool)), this, SLOT(statusHttpDone(bool)));
 	connect(&timelineHttp, SIGNAL(done(bool)), this, SLOT(timelineHttpDone(bool)));
+	connect(&timelineHttp, SIGNAL(sslErrors(const QList<QSslError>&)), this, SLOT(httpsError(const QList<QSslError> &)));
+	connect(&statusHttp, SIGNAL(sslErrors(const QList<QSslError>&)), this, SLOT(httpsError(const QList<QSslError> &)));
 }
 
 void Twitter::setServiceBaseURL(const QString &url) {
@@ -78,9 +81,22 @@ void Twitter::sendStatus(QString username, QString password, QString status, QSt
 	if (proxyAddress != "") {
 		statusHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
 	} else {
-		statusHttp.setProxy("", 0);
+		timelineHttp.setProxy(QNetworkProxy(QNetworkProxy::NoProxy));
 	}
-	statusHttp.setHost(url.host(), url.port(80));
+    /* FIXME
+     * https (ssl) mode is not working if setProxy is called with ("", 0)
+     *   } else {
+     *	  timelineHttp.setProxy("", 0);
+     *   }
+     */
+    
+    if(url.toString().indexOf("https") == 0) {
+	    statusHttp.setHost(url.host(), QHttp::ConnectionModeHttps, 443);
+    }
+    else {
+        statusHttp.setHost(url.host(), url.port(80));
+    }
+
 	statusHttp.setUser(username, password);
 
 	QByteArray data = "status=";
@@ -115,11 +131,23 @@ void Twitter::update(QString username, QString password, int lastStatusId, int t
 
 	if (proxyAddress != "") {
 		timelineHttp.setProxy(proxyAddress, proxyPort, proxyUsername, proxyPassword);
-	} else {
-		timelineHttp.setProxy("", 0);
+    } else {
+		timelineHttp.setProxy(QNetworkProxy(QNetworkProxy::NoProxy));
 	}
+    /* FIXME
+     * https (ssl) mode is not working if setProxy is called with ("", 0)
+     *   } else {
+     *	  timelineHttp.setProxy("", 0);
+     *   }
+     */
 
-	timelineHttp.setHost(url.host(), url.port(80));
+    if(url.toString().indexOf("https") == 0) {
+	    timelineHttp.setHost(url.host(), QHttp::ConnectionModeHttps, 443);
+    }
+    else {
+        timelineHttp.setHost(url.host(), url.port(80));
+    }
+
 	timelineHttp.setUser(username, password);
 
 	buffer.open(QIODevice::WriteOnly);
@@ -153,6 +181,16 @@ void Twitter::timelineHttpDone(bool error) {
 	emit stateChanged(tr("Timeline updated: %1").arg(QDateTime::currentDateTime().toString("hh:mm:ss")));
 	emit updated(buffer.data(), currentType);
 }
+
+void Twitter::httpsError(const QList<QSslError> & errors) {
+    /*
+     * maybe here should be implemtend some error handling
+     * to just ignore all ssl errors (not recommended):
+     *  timelineHttp.ignoreSslErrors();
+     */
+    emit stateChanged(tr("SSL Error while updating/sending: %1").arg(errors[0].errorString()));
+}
+
 
 void Twitter::abort() {
 	timelineHttp.abort();
