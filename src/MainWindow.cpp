@@ -230,8 +230,9 @@ void MainWindow::postTwitPic() {
 	if (fileName.isEmpty())
 		return;
 	TwitPicDialog dialog(fileName, this);
+	dialog.setUser(username, password);
 	if (dialog.exec() == QDialog::Accepted) {
-		qDebug() << "ok";
+		statusTextEdit->append(dialog.twitPickedUrlString());
 	}
 }
 
