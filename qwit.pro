@@ -25,7 +25,8 @@ HEADERS += src/LogsDialog.h \
            src/StatusTextEdit.h \
            src/Twitter.h \
            src/TwitterWidget.h \
-           src/UserpicsDownloader.h
+           src/UserpicsDownloader.h \
+		   src/TwitPicDialog.h
 FORMS += src/LogsDialog.ui src/MainWindow.ui src/OptionsDialog.ui
 SOURCES += src/LogsDialog.cpp \
            src/MainWindow.cpp \
@@ -34,7 +35,8 @@ SOURCES += src/LogsDialog.cpp \
            src/StatusTextEdit.cpp \
            src/Twitter.cpp \
            src/TwitterWidget.cpp \
-           src/UserpicsDownloader.cpp
+           src/UserpicsDownloader.cpp \
+		   src/TwitPicDialog.cpp
 TRANSLATIONS += \
            translations/qwit_en_US.ts \
            translations/qwit_es_ES.ts \

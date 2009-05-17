@@ -19,9 +19,10 @@
 #include "MainWindow.h"
 
 #include "QwitException.h"
-
+#include "TwitPicDialog.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDialog>
 #include <iostream>
 
 using namespace std;
@@ -223,22 +224,14 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	connect(timer2, SIGNAL(timeout()), this, SLOT(updateItems()));
 	timer2->start(10000);
 }
-
+#include <QDebug>
 void MainWindow::postTwitPic() {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Pick an image"), QDir::homePath(), tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-	QPixmap pixmap(fileName);
-	QMessageBox msgBox;
-	msgBox.setWindowTitle("TwitPic");
-	QSize size(600, 200);
-	if (pixmap.width() > size.width() || pixmap.height() > size.height()) {
-		pixmap = pixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-	}
-	msgBox.setIconPixmap(pixmap);
-	QPushButton *acceptButton = msgBox.addButton("Post image", QMessageBox::AcceptRole);
-	QPushButton *cancelButton = msgBox.addButton(QMessageBox::Cancel);
-	msgBox.setDefaultButton(acceptButton);
-	msgBox.exec();
-	if (msgBox.clickedButton() == acceptButton) {
+	if (fileName.isEmpty())
+		return;
+	TwitPicDialog dialog(fileName, this);
+	if (dialog.exec() == QDialog::Accepted) {
+		qDebug() << "ok";
 	}
 }
 
