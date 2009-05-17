@@ -244,8 +244,12 @@
           </size>
          </property>
          <property name="text">
-          <string>pic</string>
+          <string></string>
          </property>
+         <property name="icon">
+          <iconset resource="../qwit.qrc">
+           <normaloff>:/images/twitpic.png</normaloff>:/images/twitpic.png</iconset>
+          </property>
         </widget>
        </item>
       </layout>
