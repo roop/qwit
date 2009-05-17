@@ -154,6 +154,7 @@ public slots:
 	void setDirectMessagesID(const QString &directMessagesID);
 	void clearTags(QString &text);
 	void setRetweetTag();
+	void postTwitPic();
 
 protected:
 

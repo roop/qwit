@@ -20,6 +20,8 @@
 
 #include "QwitException.h"
 
+#include <QFileDialog>
+#include <QMessageBox>
 #include <iostream>
 
 using namespace std;
@@ -182,6 +184,7 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	acceptClose = false;
 
 	connect(statusTextEdit, SIGNAL(returnPressed()), this, SLOT(sendStatus()));
+	connect(twitPicButton, SIGNAL(clicked()), this, SLOT(postTwitPic()));
 	connect(customUsernameLineEdit, SIGNAL(returnPressed()), this, SLOT(customUsernameChanged()));
 	connect(searchLineEdit, SIGNAL(returnPressed()), this, SLOT(searchChanged()));
 
@@ -219,6 +222,24 @@ MainWindow::MainWindow(QWidget *parent): QDialog(parent) {
 	timer2 = new QTimer(this);
 	connect(timer2, SIGNAL(timeout()), this, SLOT(updateItems()));
 	timer2->start(10000);
+}
+
+void MainWindow::postTwitPic() {
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Pick an image"), QDir::homePath(), tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+	QPixmap pixmap(fileName);
+	QMessageBox msgBox;
+	msgBox.setWindowTitle("TwitPic");
+	QSize size(600, 200);
+	if (pixmap.width() > size.width() || pixmap.height() > size.height()) {
+		pixmap = pixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	}
+	msgBox.setIconPixmap(pixmap);
+	QPushButton *acceptButton = msgBox.addButton("Post image", QMessageBox::AcceptRole);
+	QPushButton *cancelButton = msgBox.addButton(QMessageBox::Cancel);
+	msgBox.setDefaultButton(acceptButton);
+	msgBox.exec();
+	if (msgBox.clickedButton() == acceptButton) {
+	}
 }
 
 void MainWindow::setupTrayIcon() {
