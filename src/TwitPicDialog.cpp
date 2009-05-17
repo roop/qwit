@@ -89,6 +89,7 @@ void TwitPicDialog::accept() {
 	m_reply = manager->post(post, ba);
 	connect(m_reply, SIGNAL(uploadProgress(qint64, qint64)), this, SLOT(updateProgressBar(qint64,qint64)));
 	connect(m_reply, SIGNAL(finished()), this, SLOT(uploadFinished()));
+	m_postButton->setEnabled(false);
 }
 
 void TwitPicDialog::updateProgressBar(qint64 sent, qint64 total) {
@@ -122,6 +123,7 @@ void TwitPicDialog::uploadFinished() {
 		m_progressBar->hide();
 		m_errorMsgLabel->show();
 	}
+	m_postButton->setEnabled(true);
 }
 
 QString TwitPicDialog::twitPickedUrlString() const {
